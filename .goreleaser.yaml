@@ -1,0 +1,56 @@
+version: 2
+project_name: momus
+before:
+  hooks:
+    - go mod tidy
+builds:
+  - main: ./cmd/momus
+    id: momus
+    binary: momus
+    env: [CGO_ENABLED=0]
+    goos: [linux, darwin, windows]
+    goarch: [amd64, arm64]
+    ldflags:
+      - -s -w
+      - -X main.version={{.Version}}
+archives:
+  # Human-friendly archives (binary + LICENSE/README; packs are also embedded).
+  - id: targz
+    formats: [tar.gz]
+    format_overrides:
+      - goos: windows
+        formats: [zip]
+    name_template: '{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}'
+    files:
+      - LICENSE
+      - README.md
+  # Raw per-platform binaries that the npm (`npx momus`) installer downloads.
+  # The core attack pack is embedded in the binary, so these are self-contained.
+  - id: raw
+    formats: [binary]
+    name_template: '{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}'
+checksum:
+  name_template: 'checksums.txt'
+# Sign the checksum manifest so the hashes the npm installer trusts are
+# themselves authenticated (keyless cosign; the .pem/.sig ship as release assets).
+signs:
+  - cmd: cosign
+    signature: '${artifact}.sig'
+    certificate: '${artifact}.pem'
+    args:
+      - sign-blob
+      - '--output-signature=${signature}'
+      - '--output-certificate=${certificate}'
+      - '${artifact}'
+      - '--yes'
+    artifacts: checksum
+    output: true
+snapshot:
+  version_template: '{{ .Tag }}-next'
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^chore:'
+      - '^test:'

@@ -1,0 +1,23 @@
+/bin/
+/dist/
+.momus/
+*.swp
+.DS_Store
+coverage.out
+
+# docs site (Docusaurus)
+website/node_modules/
+website/build/
+website/.docusaurus/
+website/.cache-loader/
+
+# npm wrapper: the platform binary is downloaded at install time
+packages/momus-node/node_modules/
+packages/momus-node/vendor/
+
+# signing keys must never be committed
+*.key
+
+# internal project brief: generated, and its status figures ("0 users") are
+# not something to publish in the repo
+/Momus-Project-Brief.pdf

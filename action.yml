@@ -1,0 +1,87 @@
+name: "Momus AI Security Scan"
+description: "Scan an AI model, agent, or MCP endpoint for prompt injection, jailbreaks, and data exfiltration; emit SARIF."
+author: "The Momus contributors"
+branding:
+  icon: "shield"
+  color: "purple"
+
+inputs:
+  target:
+    description: "Target endpoint URL to scan (generic HTTP JSON or OpenAI-compatible chat completions)."
+    required: true
+  pack:
+    description: "Attack pack directory. The default uses the core pack bundled with this action."
+    required: false
+    default: "packs/core"
+  sarif:
+    description: "Path (in the workspace) to write the SARIF 2.1.0 report."
+    required: false
+    default: "momus.sarif"
+  html:
+    description: "Optional path to also write a self-contained HTML report."
+    required: false
+    default: ""
+  fail-on:
+    description: "Fail the job if a vulnerable finding meets this severity floor: any|low|medium|high|critical. Empty = report only."
+    required: false
+    default: ""
+  concurrency:
+    description: "Number of attacks to run in flight at once. Lower it if your target rate-limits."
+    required: false
+    default: "8"
+  judge-url:
+    description: "Optional llm_judge endpoint (OpenAI-compatible or Anthropic). Without it, semantic checks are inconclusive, never false-positive."
+    required: false
+    default: ""
+  judge-model:
+    description: "Optional judge model id."
+    required: false
+    default: ""
+
+outputs:
+  sarif:
+    description: "Path to the generated SARIF report."
+    value: ${{ inputs.sarif }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: "stable"
+
+    - name: Build Momus
+      shell: bash
+      env:
+        ACTION_PATH: ${{ github.action_path }}
+      run: |
+        set -euo pipefail
+        cd "$ACTION_PATH"
+        go build -o "$RUNNER_TEMP/momus" ./cmd/momus
+
+    - name: Run Momus scan
+      shell: bash
+      env:
+        # Inputs are passed via env (never interpolated into the script) to avoid
+        # shell/command injection through untrusted input values.
+        MOMUS_TARGET: ${{ inputs.target }}
+        MOMUS_PACK: ${{ inputs.pack }}
+        MOMUS_SARIF: ${{ inputs.sarif }}
+        MOMUS_HTML: ${{ inputs.html }}
+        MOMUS_FAILON: ${{ inputs.fail-on }}
+        MOMUS_CONCURRENCY: ${{ inputs.concurrency }}
+        MOMUS_JUDGE_URL: ${{ inputs.judge-url }}
+        MOMUS_JUDGE_MODEL: ${{ inputs.judge-model }}
+        ACTION_PATH: ${{ github.action_path }}
+      run: |
+        set -euo pipefail
+        pack="$MOMUS_PACK"
+        if [ "$pack" = "packs/core" ]; then
+          pack="$ACTION_PATH/packs/core"
+        fi
+        args=(scan "$MOMUS_TARGET" --pack "$pack" --sarif "$MOMUS_SARIF")
+        if [ -n "$MOMUS_HTML" ]; then args+=(--html "$MOMUS_HTML"); fi
+        if [ -n "$MOMUS_FAILON" ]; then args+=(--fail-on "$MOMUS_FAILON"); fi
+        if [ -n "$MOMUS_CONCURRENCY" ]; then args+=(--concurrency "$MOMUS_CONCURRENCY"); fi
+        "$RUNNER_TEMP/momus" "${args[@]}"

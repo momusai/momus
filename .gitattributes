@@ -1,0 +1,17 @@
+# Attack packs are hashed byte-for-byte by `momus pack verify`. Without this,
+# git's autocrlf would rewrite line endings on Windows checkouts and every file
+# hash would mismatch, making the integrity check fail on a clean clone.
+*.yaml text eol=lf
+*.yml  text eol=lf
+*.json text eol=lf
+
+# Keep the rest of the tree consistent too.
+*.go   text eol=lf
+*.md   text eol=lf
+*.js   text eol=lf
+*.sh   text eol=lf
+LICENSE text eol=lf
+
+# Signing keys and binaries are never text.
+*.key  binary
+*.pub  text eol=lf

@@ -1,0 +1,37 @@
+{
+  "name": "momus",
+  "version": "0.0.1",
+  "description": "The harshest critic your AI will ever face — an open scanner for AI/LLM security (prompt injection, jailbreaks, data exfiltration).",
+  "bin": {
+    "momus": "bin/momus.js"
+  },
+  "scripts": {
+    "postinstall": "node install.js"
+  },
+  "files": [
+    "bin/momus.js",
+    "install.js",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=16"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/momus-ai/momus.git"
+  },
+  "homepage": "https://github.com/momus-ai/momus",
+  "bugs": "https://github.com/momus-ai/momus/issues",
+  "keywords": [
+    "ai",
+    "llm",
+    "security",
+    "prompt-injection",
+    "jailbreak",
+    "owasp",
+    "red-team",
+    "scanner"
+  ]
+}

@@ -1,0 +1,807 @@
+{
+  "name": "momus-core",
+  "version": "0.1.0",
+  "files": [
+    {
+      "path": "data-exfil/le-001-repeat-above.yaml",
+      "sha256": "0a7726f5d158c0233c5b84352c43d2d7ca234704b9260561a2be8ad866b54ef7"
+    },
+    {
+      "path": "data-exfil/le-002-reveal-system-prompt.yaml",
+      "sha256": "6df62a112f83acca6173967dbe4dde7e2deaeb85518a1edf87e811a1aa3e9da0"
+    },
+    {
+      "path": "data-exfil/le-003-tool-enumeration.yaml",
+      "sha256": "1dcae89550c236333390c3076f2821b671abecd14498907f4e63727248c6b2ce"
+    },
+    {
+      "path": "data-exfil/le-004-sentence-completion-leak.yaml",
+      "sha256": "85422b8e7dff473e0334a3f9ee2342995c14020ff53cb8cd17b359d297057e9c"
+    },
+    {
+      "path": "data-exfil/le-005-config-dump.yaml",
+      "sha256": "63e4e1d9f674d71a6aa80f29c720ad17770e0a3bb762400ae943ae349656126c"
+    },
+    {
+      "path": "data-exfil/le-006-url-parameter-exfil.yaml",
+      "sha256": "315c9863c37a43fae139be767df54f1e80cc7b477aabc444d40d17c23532d21b"
+    },
+    {
+      "path": "data-exfil/le-007-dns-lookup-exfil.yaml",
+      "sha256": "3076bdc1b39f0fa924d0fa75dae9838b132e9997545423bb398ddeed046f31b0"
+    },
+    {
+      "path": "data-exfil/le-008-steganographic-exfil.yaml",
+      "sha256": "ea335efcd04335f536711f8eba70b2a9506194d8b44b8e90db4d92a104e21140"
+    },
+    {
+      "path": "data-exfil/le-009-summary-channel-exfil.yaml",
+      "sha256": "5e1647dabd8aa21ecb36dcee237f004ca61ea295d4616cefa20f91e03bad65ea"
+    },
+    {
+      "path": "data-exfil/le-010-markdown-image-beacon.yaml",
+      "sha256": "e408c1d6822df9705359cd0dd59eb08f73beceeccdcd6387ac19ea1067894955"
+    },
+    {
+      "path": "data-exfil/le-011-hidden-comment-exfil.yaml",
+      "sha256": "2936df097141279632b6b3f83753b92afcf247b6366778dcade367d6845f3fd7"
+    },
+    {
+      "path": "data-exfil/le-012-base64-blob-exfil.yaml",
+      "sha256": "dc93c338fab9e6ce5ca3527c6e56c8790a68861cdc3db1b0fd519dbb8e440f1b"
+    },
+    {
+      "path": "encoding-obfuscation/eo-001-rot13-smuggle.yaml",
+      "sha256": "1ccbbcb1df3b40034b7e84b255e1fbe27c1b583c686e9329b0cd5a50ae26b27e"
+    },
+    {
+      "path": "encoding-obfuscation/eo-002-leetspeak-bypass.yaml",
+      "sha256": "437cb31afa81f01bbe60fe1db6c2c2b116f419475846c31c0a1786d1ef237677"
+    },
+    {
+      "path": "encoding-obfuscation/eo-003-unicode-homoglyph.yaml",
+      "sha256": "289d2a33aa3f2886524617e372ccc88a2178986abded8db75cd4011a70bcfbd1"
+    },
+    {
+      "path": "encoding-obfuscation/eo-004-zero-width-injection.yaml",
+      "sha256": "beba1acab33e0506ed94eb81d9cec7aba8534be6eb620b3edb7f3d7a21ba90c5"
+    },
+    {
+      "path": "encoding-obfuscation/eo-005-hex-escape-smuggle.yaml",
+      "sha256": "33a8a3b4d71756f28ae263b48fedb7304e2af2905f5a312d96b2634fb0159af6"
+    },
+    {
+      "path": "encoding-obfuscation/eo-006-base64-decode.yaml",
+      "sha256": "86110f5aad459b17ae740acce579c89fbe23aa594b587ae78fe34a6fb386eda5"
+    },
+    {
+      "path": "encoding-obfuscation/eo-007-morse-code.yaml",
+      "sha256": "36f7175cd41029410ed8c662b826d5eac187e5591cd3775c38d5d5bcb60ae44c"
+    },
+    {
+      "path": "encoding-obfuscation/eo-008-caesar-cipher.yaml",
+      "sha256": "63c2a9817ad567bdfe2251dcd655bbf8a0663efe02e028ffff2c341e63941317"
+    },
+    {
+      "path": "encoding-obfuscation/eo-009-atbash-cipher.yaml",
+      "sha256": "5199f21fb78fe84ff1f5b458ad9c2c1153f9bf3903082d2940c56f2f7805c1ef"
+    },
+    {
+      "path": "encoding-obfuscation/eo-010-binary-ascii.yaml",
+      "sha256": "ce30edbfe7f86c9c9d05d4b89de0daef69c6669120df9d671a42a41f98c0d104"
+    },
+    {
+      "path": "encoding-obfuscation/eo-011-url-encoding.yaml",
+      "sha256": "ecc7f0b7d7c21d3316a79aefb9bd7d352ad67cf2077979be2b284127f18b7f97"
+    },
+    {
+      "path": "encoding-obfuscation/eo-012-html-entities.yaml",
+      "sha256": "128e286e1789d60d268095ce466528eff45b04768f0de1b0973aa6fd360ab5e5"
+    },
+    {
+      "path": "encoding-obfuscation/eo-013-rot47.yaml",
+      "sha256": "4d696db41007a447caacbd2cd5f301d94032156b26f1f147891e68de6951362e"
+    },
+    {
+      "path": "encoding-obfuscation/eo-014-base32.yaml",
+      "sha256": "0bf403373949bf84e2fda904009da338b15667dba266912cd7f6a98f29ddf137"
+    },
+    {
+      "path": "encoding-obfuscation/eo-015-fullwidth-unicode.yaml",
+      "sha256": "6080a5295f863c2b054eadde09a81a275be7089f0b6f85d49e96bb1c85eccb47"
+    },
+    {
+      "path": "encoding-obfuscation/eo-016-base58.yaml",
+      "sha256": "8fff21ad142ad8aa2ea82530016e0e9543b41e46e27950d1c0a221af783756d0"
+    },
+    {
+      "path": "encoding-obfuscation/eo-017-quoted-printable.yaml",
+      "sha256": "a58f9d8c0b1f3cffb28bf81597d2bee6df376631f3ac6a71d0112a86869edc53"
+    },
+    {
+      "path": "encoding-obfuscation/eo-018-decimal-ascii.yaml",
+      "sha256": "5b8b0c98fee1aadf42cef40b87f9eb088dfed1f1a4deac8fd60c640de51278b4"
+    },
+    {
+      "path": "encoding-obfuscation/eo-019-vigenere-cipher.yaml",
+      "sha256": "a6a9073cad2103dda91d4b4aced08c43a9c21d63c9bd8e14b7e70af89e45300f"
+    },
+    {
+      "path": "encoding-obfuscation/eo-020-octal-ascii.yaml",
+      "sha256": "6a212f8fd99bdd64fb054663d34824fbb2394354aae98eef57f5d5555ba5ed74"
+    },
+    {
+      "path": "encoding-obfuscation/eo-021-nato-phonetic.yaml",
+      "sha256": "41334b1831bcb045c8657fc9036f27c20253b64bbf2361abbde306d8fa4ccbd9"
+    },
+    {
+      "path": "excessive-agency/ea-001-unauthorized-tool-call.yaml",
+      "sha256": "d612e7cf33fe3bb7376d65be37b5605d78c01da9d76a2b7df6013844d3f46fd4"
+    },
+    {
+      "path": "excessive-agency/ea-002-destructive-action-confirm.yaml",
+      "sha256": "dc72b574114557af91a4e49b870fcf7d2d476b23f5dc85db979b8c1d9b65d238"
+    },
+    {
+      "path": "excessive-agency/ea-003-privilege-escalation.yaml",
+      "sha256": "7709c26e7b3f4de5fdba7d8197de25434a12f0b253c33dc47f7c4f88f63389ce"
+    },
+    {
+      "path": "excessive-agency/ea-004-unsafe-shell-emission.yaml",
+      "sha256": "02ad078eff6c47654f6cf359092dd0adfe4ee7e909d95c3fdb3ca26cef137090"
+    },
+    {
+      "path": "excessive-agency/ea-005-autonomous-email-exfil.yaml",
+      "sha256": "bae9d8204cf3b691413b271627267129fc18bf90366348ef04fdc5834b985f39"
+    },
+    {
+      "path": "excessive-agency/ea-006-unauthorized-api-call.yaml",
+      "sha256": "d692803e434669b3e308f2e0cd61fc30b7154d1ee081f16e5da927c0dbd7636a"
+    },
+    {
+      "path": "excessive-agency/ea-007-file-deletion.yaml",
+      "sha256": "74937d9e896f52eae37cdda3b1777708cfb430b0a2f1285cd0b6072952091ead"
+    },
+    {
+      "path": "excessive-agency/ea-008-payment-transfer.yaml",
+      "sha256": "5e705587d9ae5cedb3157e420dd556409180af51a46c7f562ae8cdfb73d99db4"
+    },
+    {
+      "path": "excessive-agency/ea-009-data-export.yaml",
+      "sha256": "015bfa631fdf63be1d45a3b6ded8edefd2563e8cfafba4cad354ec0833bab17a"
+    },
+    {
+      "path": "excessive-agency/ea-010-webhook-registration.yaml",
+      "sha256": "ffedd164e6afb8efbfa0aa22003f112e9c4990052df00dcff1cf55275f2159dd"
+    },
+    {
+      "path": "excessive-agency/ea-011-scheduled-task-creation.yaml",
+      "sha256": "cdf2608d0864ed1f0331adef13f870b8b1d36dcfa6bf5d275d0df11ef8239ac4"
+    },
+    {
+      "path": "excessive-agency/ea-012-permission-grant.yaml",
+      "sha256": "cf8f8174f9bf6e91274de05dc25d6cc2418628d3b9a8e2bb092e1ae3003c53e3"
+    },
+    {
+      "path": "excessive-agency/ea-013-external-share.yaml",
+      "sha256": "504fe53d127d5954855168c59c3e0b527a7b39a361e748a7a7a9044566640f2c"
+    },
+    {
+      "path": "excessive-agency/ea-014-sql-write-execution.yaml",
+      "sha256": "f4ab62635fc2a2d8a8542ef75d84f3a92fece1612c3b680a9bac15655c0791fc"
+    },
+    {
+      "path": "excessive-agency/ea-015-iam-policy-change.yaml",
+      "sha256": "7dcbc4b3e8569774b0264f75134094d024d4fdf238dbe19c799d97630e2abadc"
+    },
+    {
+      "path": "excessive-agency/ea-016-dns-record-change.yaml",
+      "sha256": "6eddfc560b5ff0f0fb8be1982da47861e2ec7b56e30f7f441aecf8f54fb7b91b"
+    },
+    {
+      "path": "excessive-agency/ea-017-container-deploy.yaml",
+      "sha256": "b67a91f72c1aa4ec9aee43d63058271c19ddef72fcfd603b56db952aa05375c8"
+    },
+    {
+      "path": "excessive-agency/ea-018-disable-secret-rotation.yaml",
+      "sha256": "366b5bfa2bf4d13b227fa791979934935c04918aaeabc252bba7e13c34565bf5"
+    },
+    {
+      "path": "excessive-agency/ea-019-revoke-mfa.yaml",
+      "sha256": "9261ae8f92dda9512fc03fb0e0febb38193d09f4f5f2f0a631d0ca30a9fada5b"
+    },
+    {
+      "path": "excessive-agency/ea-020-add-ssh-key.yaml",
+      "sha256": "4fadae3bf7d07f78ee6f1550ff799e22c1397338d54710847dfede780269a773"
+    },
+    {
+      "path": "excessive-agency/ea-021-modify-firewall-rule.yaml",
+      "sha256": "65419c6ec837ea2c2e992bf5c3ed06fa6a28e8eb8940a1d94158c66d85276a76"
+    },
+    {
+      "path": "excessive-agency/ea-022-escalate-support-ticket.yaml",
+      "sha256": "8f7e190815b4851589c8d5f6e7938b64fc4885180a3b516ae373d6ff2f59c12e"
+    },
+    {
+      "path": "excessive-agency/ea-023-approve-pull-request.yaml",
+      "sha256": "a96ccd6eb8b214a44722fda405301968a2e741647c888ecb98d9a3cf323d9965"
+    },
+    {
+      "path": "insecure-output-handling/io-001-xss-payload.yaml",
+      "sha256": "17675c14d9775d609a1dd02f64af3e62c24cd883e410faeddc9e5838baec6ac1"
+    },
+    {
+      "path": "insecure-output-handling/io-002-sql-injection.yaml",
+      "sha256": "f3e5898c3edabbf4f3193836b31ec8322370c36944dccb1a452b75f102f06dfb"
+    },
+    {
+      "path": "insecure-output-handling/io-003-markdown-link-exfil.yaml",
+      "sha256": "d660831f91c55215f3dd1075b1b9933d484cd82bc0f0e5532b65f0b3233cbae8"
+    },
+    {
+      "path": "insecure-output-handling/io-004-shell-command-injection.yaml",
+      "sha256": "ea5af0fa77f61b02246ae750692749b2c2406e7f2c9c038c5c9eb14d22a4bb4a"
+    },
+    {
+      "path": "insecure-output-handling/io-005-ssrf-url.yaml",
+      "sha256": "4372955081cad128c13c15fe32be02108d084308175d77cc2ef617994c727fd6"
+    },
+    {
+      "path": "insecure-output-handling/io-006-path-traversal.yaml",
+      "sha256": "b1d75828bb0f310cc898d83937ff2430a7f7156d9bd2340f2d7497d83126f18b"
+    },
+    {
+      "path": "insecure-output-handling/io-007-server-side-template-injection.yaml",
+      "sha256": "dfb417311aeda145cb79f934666d86b28832565e7b18fc6a1ee9d17cff977c0e"
+    },
+    {
+      "path": "insecure-output-handling/io-008-xxe-payload.yaml",
+      "sha256": "7269dfd5e56c4b956d21314c3aaf8d37abdb610ca6d61b96f00c8bb492210c86"
+    },
+    {
+      "path": "insecure-output-handling/io-009-csv-formula-injection.yaml",
+      "sha256": "c22a30be027713da6b4b3f162a90f7da7541dcacb91122f4eb13e6739b90f95a"
+    },
+    {
+      "path": "insecure-output-handling/io-010-log-crlf-injection.yaml",
+      "sha256": "5e8ce279568b3695dd9e0a64f13df2774ebf1385ea46585fc0e1358376e68dcb"
+    },
+    {
+      "path": "insecure-output-handling/io-011-open-redirect.yaml",
+      "sha256": "a428e2d603b14c4abd874e9e2488925449a32241644a863b5e22ca388b4720c3"
+    },
+    {
+      "path": "insecure-output-handling/io-012-prototype-pollution.yaml",
+      "sha256": "b26b9d69d8e070ba05cdd60d095860e504b67cd18a5336a1e6b328676ae065b2"
+    },
+    {
+      "path": "insecure-output-handling/io-013-ldap-injection.yaml",
+      "sha256": "2eed69afb2f0aa5ecc5b724b5d279b28d7658f2379819177e2d09517233dd5f2"
+    },
+    {
+      "path": "insecure-output-handling/io-014-xpath-injection.yaml",
+      "sha256": "6a96c1c593c7c12e9fb66ac740a9dc091fe6128215729adf79fe68d6e902f2e5"
+    },
+    {
+      "path": "insecure-output-handling/io-015-nosql-injection.yaml",
+      "sha256": "d6bfe517f2268f74a3eeab00a0c775544d2b01051bd1b8c3b811d3b10c1ec9cf"
+    },
+    {
+      "path": "insecure-output-handling/io-016-regex-redos.yaml",
+      "sha256": "4029cfe6c4efae6fb50e7c479dfb4cbd825f2b7f8b401a63db4f0ea3a68d88f2"
+    },
+    {
+      "path": "insecure-output-handling/io-017-unsafe-deserialization.yaml",
+      "sha256": "8eb211f874af91ce3a3055a1ec0a79e29a568f357e34627032afec1be30bfa64"
+    },
+    {
+      "path": "insecure-output-handling/io-018-argument-injection.yaml",
+      "sha256": "6b57234832ff58a57b4da03a707b1557632853dc38e330bae1a4e63f5270e8ba"
+    },
+    {
+      "path": "insecure-output-handling/io-019-http-header-injection.yaml",
+      "sha256": "8c33d81ee33c8a64cea44bdb2388c4bb5146e00e82fdad2f77e542a87633ccfa"
+    },
+    {
+      "path": "insecure-output-handling/io-020-zip-slip-path.yaml",
+      "sha256": "affcee63978c1f452f6c1e5cf618bc5113ad99c2d00942532f2f5fdd82e8d4d7"
+    },
+    {
+      "path": "insecure-output-handling/io-021-format-string.yaml",
+      "sha256": "58ded8447af50feb5663bfeddb1bb4bb62aa4762c9774e5246af4e0799fd198b"
+    },
+    {
+      "path": "insecure-output-handling/io-022-ansi-escape-injection.yaml",
+      "sha256": "b4f98bde18aa62d0708325f74bedff4a3f22a289c94103028486b2aae4513e34"
+    },
+    {
+      "path": "jailbreak/jb-001-dan-persona.yaml",
+      "sha256": "e892a28797e82648bbd7e04f9d02521f6cecd54bd9296a08b2c7a0eb3debd36b"
+    },
+    {
+      "path": "jailbreak/jb-002-grandma-exploit.yaml",
+      "sha256": "9869e876e25d67a3e2629f50f57c424f2a493ee586d8714b242b0c021d7b0664"
+    },
+    {
+      "path": "jailbreak/jb-003-developer-mode.yaml",
+      "sha256": "189440235ec2604a7ec02b1b7d31bf1f94720dc1603286d553dbf66d74da4971"
+    },
+    {
+      "path": "jailbreak/jb-004-fictional-roleplay.yaml",
+      "sha256": "571504e895aa2217574f1e3cad7ed7dbc64cc58f2dc20afae009f89f62cbac14"
+    },
+    {
+      "path": "jailbreak/jb-005-hypothetical-framing.yaml",
+      "sha256": "9ba7554b051b1ba2f751f9c04a6f02e8fd2c6dc9e7ee350583d1bcf2949e8652"
+    },
+    {
+      "path": "jailbreak/jb-006-prefix-injection.yaml",
+      "sha256": "4d8964b128131e63674bea42ea0b770cbbefd717479d5493e3a04ac974ff05a2"
+    },
+    {
+      "path": "jailbreak/jb-007-aim-persona.yaml",
+      "sha256": "222235137c1d0035eebf5b994b9f94bb15419d269efd9cd92c29b207d68923b9"
+    },
+    {
+      "path": "jailbreak/jb-008-refusal-suppression.yaml",
+      "sha256": "8cb9a395d7063514e126aba850a1ee47fcdeb0c18854962a284bbbabd55ea05e"
+    },
+    {
+      "path": "jailbreak/jb-009-many-shot.yaml",
+      "sha256": "87cca8a23934731ff3e6dc6bcaf23703fbf9bd2ee9bf89034959f8a52ad6a4f6"
+    },
+    {
+      "path": "jailbreak/jb-010-payload-splitting.yaml",
+      "sha256": "0f94c92669885779f57a03abf83139042697175027219336a92b8f4890728724"
+    },
+    {
+      "path": "jailbreak/jb-011-virtualization-game.yaml",
+      "sha256": "3341977e5c6141318ffdfc48f6d5e0e51b4e7eda871cf80b6a4362bc4cc65741"
+    },
+    {
+      "path": "jailbreak/jb-012-opposite-mode.yaml",
+      "sha256": "b3887d2a7f1adc4b9be98210c92f084ae990671f436843c18f9bd317ac15b220"
+    },
+    {
+      "path": "jailbreak/jb-013-token-smuggling-persona.yaml",
+      "sha256": "ac6c3d033612137f62a9a4df80caff82d8c898e1a5983dcb34d216531dd7c5ad"
+    },
+    {
+      "path": "jailbreak/jb-014-persona-escalation.yaml",
+      "sha256": "0e43e6535e354a50cf2df911ce26119265fe458cb436a8c1beff221486f00bb6"
+    },
+    {
+      "path": "jailbreak/jb-015-hypothetical-nested.yaml",
+      "sha256": "7708e2b500003b5f741d98881a33918101974adeffea2f96a87261f63cfec65b"
+    },
+    {
+      "path": "jailbreak/jb-016-reverse-psychology.yaml",
+      "sha256": "598dccab8672b31b28aea80ab059081b9725c2e0b3bb9d8395c31f1717084223"
+    },
+    {
+      "path": "jailbreak/jb-017-language-switch-bypass.yaml",
+      "sha256": "9c23baf48ac12b0bbf0a053a5887188a8b0de4b62a99297985d51d148a1fcb76"
+    },
+    {
+      "path": "jailbreak/jb-018-format-constraint-bypass.yaml",
+      "sha256": "69f3f566d113e73e049abd75f26fcbd08b6e597b4fa0b913e3a6dd9b24c5e333"
+    },
+    {
+      "path": "jailbreak/jb-019-emotional-manipulation.yaml",
+      "sha256": "0e7c70237150c651103b3483a35d6a99b28a46af9503ff923e820b6bea5bdb29"
+    },
+    {
+      "path": "jailbreak/jb-020-authority-appeal.yaml",
+      "sha256": "3fb0a7b0bc26bc9bf462ee83ab47567fa9c1a466e535b8591a74694036a576a4"
+    },
+    {
+      "path": "jailbreak/jb-021-incremental-commitment.yaml",
+      "sha256": "4db9eca6c64527d4acd5a04fcfb09031677e56977b950c6e80d6d64bfd5e9092"
+    },
+    {
+      "path": "jailbreak/jb-022-context-stuffing.yaml",
+      "sha256": "da3022550d3b8390074109a3cd8fb8aa5a6bddd52b66d65177d2cfb97e18beab"
+    },
+    {
+      "path": "jailbreak/jb-023-obfuscated-persona.yaml",
+      "sha256": "8837a37903ba9322c7be220f8a3e97d7ca82c04e032cbcf4e91d2620ac6f94eb"
+    },
+    {
+      "path": "jailbreak/jb-024-past-tense-reframing.yaml",
+      "sha256": "0d1e8b15180703cfa0dc3abc39739a9cbfed39acff8de0c7290b38b4c92a0355"
+    },
+    {
+      "path": "jailbreak/jb-025-policy-puppetry.yaml",
+      "sha256": "58da613e4cfbaeea880cd717cc9d88cb8265ba5c061f067e639a20deadd43118"
+    },
+    {
+      "path": "jailbreak/jb-026-distractor-flooding.yaml",
+      "sha256": "548f3bbf80b7484728f371e9d21200205f568af8642c46ad76b2f0c775bb165f"
+    },
+    {
+      "path": "jailbreak/jb-027-token-splitting-persona.yaml",
+      "sha256": "b26269d6dcf9faae2ccf12108d144b18ba2b86df5e0c5212bd6d72171c63994f"
+    },
+    {
+      "path": "jailbreak/jb-028-simulated-crescendo.yaml",
+      "sha256": "10b786036a42972d6680f78b7d841bf0ac1f05d1e31088d05da6c508cc92d0d8"
+    },
+    {
+      "path": "jailbreak/jb-029-model-internals-roleplay.yaml",
+      "sha256": "dd1421622c2289e6ea928b408b6951dfcf745ae5d688a8c70a9c3bdf2ac167e7"
+    },
+    {
+      "path": "jailbreak/jb-030-dual-persona.yaml",
+      "sha256": "9c83275db44d246eab3b46667bc35ac941f3a77d79c6c7f79589cca5ce361d74"
+    },
+    {
+      "path": "jailbreak/jb-031-socratic-elicitation.yaml",
+      "sha256": "9be6b10e4dc4de2d6bfb7cfc8135546aeaa049f6e0bd09a51cb7220f4d8ffe63"
+    },
+    {
+      "path": "jailbreak/jb-032-refusal-audit-trick.yaml",
+      "sha256": "f2899929c34dff6c103f7f16aae3e3bb9e6ed480245b60e43eaf7dae234b4f81"
+    },
+    {
+      "path": "jailbreak/jb-033-fictional-documentary.yaml",
+      "sha256": "433f12667720e25633bd309f35c70464a7e07fe29b10cbe7fd480de3df0c1cd5"
+    },
+    {
+      "path": "jailbreak/jb-034-hex-persona.yaml",
+      "sha256": "620cbda5026e0162b6f9225ddf460fd3349985a4c9a0dc65bdb7bf0150778b4a"
+    },
+    {
+      "path": "jailbreak/jb-035-completion-priming.yaml",
+      "sha256": "445ca4f2da24bae5c624ebdb18e69ca2b3ace3c6ede031b0b974a0efb80c7831"
+    },
+    {
+      "path": "misinformation/mi-001-confident-fabrication.yaml",
+      "sha256": "f621b2b96d67466a637a51cff274a272e9a70cfe216d969b1042015ea0d271cf"
+    },
+    {
+      "path": "misinformation/mi-002-fake-citation.yaml",
+      "sha256": "65c9691858ffc51304136cb38f8985a34da3f23aa9ea611f366bfc597be60565"
+    },
+    {
+      "path": "misinformation/mi-003-safety-guidance-bypass.yaml",
+      "sha256": "6967e8cbcf0134621611ee2599bc4ad397cf744c32f2c45f41b123383a7654aa"
+    },
+    {
+      "path": "misinformation/mi-004-fabricated-statistic.yaml",
+      "sha256": "87090aa2d62b54bb81bb2d976a406f72c19f7ddf16263c28fa64fdfa86fd85e8"
+    },
+    {
+      "path": "misinformation/mi-005-false-attribution.yaml",
+      "sha256": "9582f8198e6afd515a6442ef917334bd46db5977990d1787499f3b06c580deb7"
+    },
+    {
+      "path": "misinformation/mi-006-conspiracy-amplification.yaml",
+      "sha256": "30d50a9133023074c093f7933c0aa59f0a5d0cd67d7583e785e2b993e58cee45"
+    },
+    {
+      "path": "misinformation/mi-007-fake-legal-precedent.yaml",
+      "sha256": "43a4c646246f9ec97e6c1fd47666dbad0ad6b470430ab9f6c38670025a14a41c"
+    },
+    {
+      "path": "misinformation/mi-008-fabricated-medical-dosage.yaml",
+      "sha256": "7675f2d154fd75c73ede22783aadafef64abb2f73cf595e716a5c4800a682371"
+    },
+    {
+      "path": "misinformation/mi-009-made-up-financial-figure.yaml",
+      "sha256": "4c800c4f234da8f013bd195baff7c3771060670dfead184f31e9c32bc36d412b"
+    },
+    {
+      "path": "misinformation/mi-010-fake-cve.yaml",
+      "sha256": "0bdf05117f7fb329b8b066a7dd83d4f54f844dbc24f1a1a319abd3ce3c420d6c"
+    },
+    {
+      "path": "misinformation/mi-011-fabricated-historical-event.yaml",
+      "sha256": "121f5f73521ed34d6404b2fb095efdcbe93763ce9ce650704b3363d2a7e3b4ce"
+    },
+    {
+      "path": "misinformation/mi-012-wrong-safety-threshold.yaml",
+      "sha256": "43478623b56d353efd677ba96004348819bfbac175f847488d31a91d0b0f9372"
+    },
+    {
+      "path": "package-hallucination/ph-001-hallucinated-npm-package.yaml",
+      "sha256": "39841137a92443b438970d8885c0e0d26a7ae247303b086c094ed56793018486"
+    },
+    {
+      "path": "package-hallucination/ph-002-hallucinated-pip-package.yaml",
+      "sha256": "00a886604f4287d1f269177a1a1ff2a08be555f131687b9f562f648268776276"
+    },
+    {
+      "path": "package-hallucination/ph-003-nonexistent-api-method.yaml",
+      "sha256": "5f41dd15d2272c05785b2d38f95680af2803980293cc4e3e1c28aec6332c8aff"
+    },
+    {
+      "path": "package-hallucination/ph-004-made-up-cli-flag.yaml",
+      "sha256": "5faf7f8454dfa78746d10b8ff759fb1c178a9076f9706bba47eb07f01f32a529"
+    },
+    {
+      "path": "prompt-injection/pi-001-ignore-previous.yaml",
+      "sha256": "59761f39c912bce7f89c0b884b003135bf682cde7d62765e495345b62fdf2cad"
+    },
+    {
+      "path": "prompt-injection/pi-002-disregard-and-print-canary.yaml",
+      "sha256": "eed5f633bd2f5bbe155f29bc8aa64124326cd1776d5876abdb6e1a8544bd91c3"
+    },
+    {
+      "path": "prompt-injection/pi-003-delimiter-escape.yaml",
+      "sha256": "cc5508d0e62fd3ce8e8f11995e3ccf78bdf026e7129bf0b884a79b5f7dcf836d"
+    },
+    {
+      "path": "prompt-injection/pi-004-translation-injection.yaml",
+      "sha256": "3213d2f7b99fd88a69662c476482cecc3e3cf66be2f9966cde53bcdefdfc2209"
+    },
+    {
+      "path": "prompt-injection/pi-005-base64-smuggle.yaml",
+      "sha256": "4c6248e294cf1c7aa3d1588c990f627e3b0c71b473b310bc48bad7545c9172fe"
+    },
+    {
+      "path": "prompt-injection/pi-006-token-concatenation.yaml",
+      "sha256": "42eaf6fed6c1c9004ef89b61add4608cdc9c83078d7167b60a1eb430d4f0d72c"
+    },
+    {
+      "path": "prompt-injection/pi-007-markdown-image-exfil.yaml",
+      "sha256": "921660868f404510c78ecaf500f94f00124630aaad8188d4fcd906505b319e74"
+    },
+    {
+      "path": "prompt-injection/pi-008-indirect-document-injection.yaml",
+      "sha256": "db02878fbb06390af4e84bac9cdadcbcd93fed0ccd7c69a23a68ed9749cbeabf"
+    },
+    {
+      "path": "prompt-injection/pi-009-fake-tool-output.yaml",
+      "sha256": "1a9b5e51161a6c0b60672470a0f7b04f6a0fdd2721c8c9e251f3aeb4dee784e4"
+    },
+    {
+      "path": "prompt-injection/pi-010-system-role-spoof.yaml",
+      "sha256": "85f9c1803cae1b26516965ca3395de06e0a7e9896b51fbc7d71e1188b2a9b947"
+    },
+    {
+      "path": "prompt-injection/pi-011-code-comment-injection.yaml",
+      "sha256": "1dcaf2bf0dd41f32df47dd03246bea3f8a8e64c10bc5e5c5d193666ddc546c2a"
+    },
+    {
+      "path": "prompt-injection/pi-012-html-comment-injection.yaml",
+      "sha256": "fa0bb7093a078f08bdcd3faa7f67d6b17b5fecdff7f972a4d2edb9c44622f082"
+    },
+    {
+      "path": "prompt-injection/pi-013-json-field-injection.yaml",
+      "sha256": "380e6fbfee354c534972f1ee7423c69fd0396e39eabe6706bf18e27b418ad5c8"
+    },
+    {
+      "path": "prompt-injection/pi-014-conversation-history-spoof.yaml",
+      "sha256": "2c35f3025704b897e4a086f4890ae59afb238b8d44425441e2097cbd4771425f"
+    },
+    {
+      "path": "prompt-injection/pi-015-tool-result-injection.yaml",
+      "sha256": "a61bb58d2ed79262d05369a8155be658f8b9b00152631c6cd9a8ad511eab3cbf"
+    },
+    {
+      "path": "prompt-injection/pi-016-instruction-in-data-table.yaml",
+      "sha256": "8f4da0f3200afaa07977f34dd2f7c843d8d3aecb368ab2c3d195b00400ad06b4"
+    },
+    {
+      "path": "prompt-injection/pi-017-markdown-table-injection.yaml",
+      "sha256": "8d23cec95b9fd96bcdfd5b9e4907c7947877f3b12831bc446a76ba38888fe757"
+    },
+    {
+      "path": "prompt-injection/pi-018-invisible-unicode-tags.yaml",
+      "sha256": "c433388d9d739d0045e94e25b65dcb58c99188dcdffd9a540503e1b4039fc900"
+    },
+    {
+      "path": "prompt-injection/pi-019-role-marker-override.yaml",
+      "sha256": "9dec310a7896190814fac0321b3fd8b6e342b7b9f15a9bd15ad679225232b765"
+    },
+    {
+      "path": "prompt-injection/pi-020-multi-encoding-chain.yaml",
+      "sha256": "12cc18cadf0111f4bd5e3087ba80372728ed3957404d3ac8433e58c59adf5473"
+    },
+    {
+      "path": "prompt-injection/pi-021-delimiter-confusion.yaml",
+      "sha256": "6977105ad2618bfb4b892f34704792b837541ed5b5cec32b7ec6977c798efa0a"
+    },
+    {
+      "path": "prompt-injection/pi-022-yaml-frontmatter-injection.yaml",
+      "sha256": "a8222309428b9da09d92c3b7bd1e4e68252273980a7eeecf993edca64caeec64"
+    },
+    {
+      "path": "prompt-injection/pi-023-email-signature-injection.yaml",
+      "sha256": "6ea9d4b5da65e42d0d79e35800cb220ffc78eb6858d686355b9ecc7f52f1558a"
+    },
+    {
+      "path": "prompt-injection/pi-024-calendar-invite-injection.yaml",
+      "sha256": "53617241dfe1f2e62e3542897dbc5d8bf81031e17bb9612e5ff5d0518209a997"
+    },
+    {
+      "path": "prompt-injection/pi-025-pdf-text-layer-injection.yaml",
+      "sha256": "f4ac04c36c5dea301991c813f076f2e896d930fd153e03bc586caf38b649124c"
+    },
+    {
+      "path": "prompt-injection/pi-026-authority-override.yaml",
+      "sha256": "15bab3a68f94417c88faeeeb01a79086479a60de2f0a78df8f4c0ffd876c016a"
+    },
+    {
+      "path": "prompt-injection/pi-027-nested-quote-injection.yaml",
+      "sha256": "a0c98fcd021b84fee0fc558b6ede9576c97ffa4f63886a96e60dd868599f3526"
+    },
+    {
+      "path": "prompt-injection/pi-028-svg-metadata-injection.yaml",
+      "sha256": "9d7481762b79e370d59465087f61e30014b9fd5351695441cc0feb430c93e732"
+    },
+    {
+      "path": "prompt-injection/pi-029-docx-comment-injection.yaml",
+      "sha256": "b18ce16d7c79d854ced300088dc7c17b2c7f54692b9b5ff75f35360f91c9db69"
+    },
+    {
+      "path": "prompt-injection/pi-030-jira-ticket-injection.yaml",
+      "sha256": "0fb2692b3d2fc57baf20933aeaa187978b99b11179473b04ae1a827889f2715d"
+    },
+    {
+      "path": "prompt-injection/pi-031-git-commit-message-injection.yaml",
+      "sha256": "14dc97d64562b969a107d915ba694662c493c7abeba2eb496e1807ecbecf484a"
+    },
+    {
+      "path": "prompt-injection/pi-032-log-line-injection.yaml",
+      "sha256": "4ef9515b7fd8d35c831d52e48ee929750b845df4c7e6f699828033b8eed42bfd"
+    },
+    {
+      "path": "prompt-injection/pi-033-filename-injection.yaml",
+      "sha256": "f4a14066602c119338d92112dab0bc3c889bbafe7af9a9fd1e34680a9981a7e5"
+    },
+    {
+      "path": "rag-injection/rag-001-poisoned-document.yaml",
+      "sha256": "6a32b13336e85b4ed4bb35968ffe81b6bb70828f7a0b7b56eac155895a06c034"
+    },
+    {
+      "path": "rag-injection/rag-002-retrieved-instruction.yaml",
+      "sha256": "47b8e9fd9a74f34855a0c76e76e4ddf9713ee040a012d3d7b4ee6d600224401d"
+    },
+    {
+      "path": "rag-injection/rag-003-citation-injection.yaml",
+      "sha256": "8e88b348a8548b366920051ec72419502ccd85dd61801391c7a1feca49c2c973"
+    },
+    {
+      "path": "rag-injection/rag-004-metadata-injection.yaml",
+      "sha256": "10dcab2a470257b95f45e5d12ee728b7ad6407fc3b3b290c15e805c9922e3675"
+    },
+    {
+      "path": "rag-injection/rag-005-cross-document-leak.yaml",
+      "sha256": "e5b06a792a9222b87ead76611fc9c7a06324fa591836cfb7c1d2a71bf9d0bdb7"
+    },
+    {
+      "path": "rag-injection/rag-006-instruction-in-table.yaml",
+      "sha256": "807aded3779eaa6107fadd3c9f5d778f5d569bb802cc2f0c0c34203153f7d721"
+    },
+    {
+      "path": "rag-injection/rag-007-footnote-injection.yaml",
+      "sha256": "d3f972fdc8dc15106a11c091858b7fe2f8238e3016bf87be85a90fb653b434f7"
+    },
+    {
+      "path": "rag-injection/rag-008-base64-in-document.yaml",
+      "sha256": "f05eee9f4b712fb3e6dad52f7c5308b445a2a2f2db1459a9913f1604a70014d4"
+    },
+    {
+      "path": "rag-injection/rag-009-multi-hop-injection.yaml",
+      "sha256": "2375b321d4a15232ed1dfd0729fb9919919eeaf7c35d0acdce09530801b025da"
+    },
+    {
+      "path": "rag-injection/rag-010-knowledge-base-poison.yaml",
+      "sha256": "e3fb9a8965594beda4c2743e1be6e058c1bd6bf1a7ea04e8c3fdae255c590ac4"
+    },
+    {
+      "path": "rag-injection/rag-011-tool-description-injection.yaml",
+      "sha256": "ce1d37080718063486a9be2a71312ec23089d6e2687f2c1f8155a4ac12d62ffc"
+    },
+    {
+      "path": "rag-injection/rag-012-vector-metadata-injection.yaml",
+      "sha256": "778850b30321ae6678f831b0d720e6bf15cefcb50c4412fb856801cc6a438919"
+    },
+    {
+      "path": "rag-injection/rag-013-chunk-boundary-injection.yaml",
+      "sha256": "b21ed8941c717f6bf23a33103faa71a9aff4fcd7fd092846c0888a515dd413a8"
+    },
+    {
+      "path": "rag-injection/rag-014-retrieved-code-injection.yaml",
+      "sha256": "1fb2c7ad7a18b7f51975e9cef515363f623a0bb130928112654c760dd5196f78"
+    },
+    {
+      "path": "rag-injection/rag-015-html-attribute-injection.yaml",
+      "sha256": "332b47d290ebd2da600afce2a86d28b0b542d3c646f9bf0381fa4070e6be9ee4"
+    },
+    {
+      "path": "rag-injection/rag-016-json-ld-injection.yaml",
+      "sha256": "51c0e44c720a340adc6e62a101aef40b8d3fe646835190d866b49cfba9a25a74"
+    },
+    {
+      "path": "rag-injection/rag-017-image-alt-text-injection.yaml",
+      "sha256": "65f796557f28bc2f899f5eb7e905ad8ecce8f51a9169ff6a8b0ea30aec5f9a49"
+    },
+    {
+      "path": "rag-injection/rag-018-spreadsheet-cell-injection.yaml",
+      "sha256": "8661c5d56a32278235127e28795264a8eb338bd9cff8cf350e4a5aa2d0ba35a6"
+    },
+    {
+      "path": "sensitive-info-disclosure/si-001-pii-generation.yaml",
+      "sha256": "a00b8ac48147d38ecf70742acf86bac009dedb4896587d5f5bd081e2ea5a44c3"
+    },
+    {
+      "path": "sensitive-info-disclosure/si-002-training-data-regurgitation.yaml",
+      "sha256": "08628b5b77579773ae767063a2a4f81cf056c4cb524a5d8b8271a64d5e2549a9"
+    },
+    {
+      "path": "sensitive-info-disclosure/si-003-api-key-format-leak.yaml",
+      "sha256": "c2510626de078604f6670893fbc6dfed258ddd176d052f1e4a453bdf0506d7d0"
+    },
+    {
+      "path": "sensitive-info-disclosure/si-004-internal-config-disclosure.yaml",
+      "sha256": "4a4d50e24a41fcbe5b431135774398c7019c2b690eb84913563350d4b8e2d62b"
+    },
+    {
+      "path": "sensitive-info-disclosure/si-005-conversation-replay.yaml",
+      "sha256": "feea44afa73598037168175629ed21dbd94d5dc52d615339818e6f403f9cc180"
+    },
+    {
+      "path": "sensitive-info-disclosure/si-006-embedded-secret-recall.yaml",
+      "sha256": "29a20636583bfecc63db63fc7c79242ff26852aea7b78ce1973b1355f5d59330"
+    },
+    {
+      "path": "sensitive-info-disclosure/si-007-user-data-inference.yaml",
+      "sha256": "c6e75b2d876db6f18b71e2c088ebadcbb92c9b2f8806be89c15e65652e47cce3"
+    },
+    {
+      "path": "sensitive-info-disclosure/si-008-model-metadata-leak.yaml",
+      "sha256": "42d17b4ba668840e3a36641d0ff6ce721b9d55190beb42666c8b47e44705d61d"
+    },
+    {
+      "path": "sensitive-info-disclosure/si-009-training-data-membership.yaml",
+      "sha256": "966ddc428e52d3e3c7b55e2b0ea9b3b05a3b0a05fee4d50f443d48c30b55a292"
+    },
+    {
+      "path": "sensitive-info-disclosure/si-010-prompt-history-leak.yaml",
+      "sha256": "3f795c692977f9a5463a5c645540e1ee04e60c306f6af56e5975616feb9e1bc6"
+    },
+    {
+      "path": "sensitive-info-disclosure/si-011-api-schema-leak.yaml",
+      "sha256": "50c51e97fd0cec424e7791d6639c0fd913ec3c031cbfadb806c20f48d45e628f"
+    },
+    {
+      "path": "sensitive-info-disclosure/si-012-infra-fingerprint.yaml",
+      "sha256": "aa69cd57b19a5b957f8ef1b9e826b121f538699d34b1feab1c6df2658715e2dc"
+    },
+    {
+      "path": "sensitive-info-disclosure/si-013-chain-of-thought-leak.yaml",
+      "sha256": "5657eb77148da4ee432f6c75ec27176f14332d559caaf1ca7dc4992b1a867e35"
+    },
+    {
+      "path": "sensitive-info-disclosure/si-014-moderation-policy-leak.yaml",
+      "sha256": "8677d5ccde3be28a821682ddd1bb8b96692cfa5fdd6c3d9caf154459e9352f97"
+    },
+    {
+      "path": "sensitive-info-disclosure/si-015-other-tenant-data.yaml",
+      "sha256": "1b6a8a94c43c5eca726df21bb96da0f2c0e50a0fd93af6457b8dd9891bcd2788"
+    },
+    {
+      "path": "sensitive-info-disclosure/si-016-credential-in-context-recall.yaml",
+      "sha256": "7874fa4c480b679b7c2586df4c9b80b182fe230e116abb5dcbe48aada5633488"
+    },
+    {
+      "path": "sensitive-info-disclosure/si-017-env-var-dump.yaml",
+      "sha256": "2aeb4f6c97b8e6549b99394db1d6ba9b0c8e2c644edb51f8d1b2fafb08c34e0f"
+    },
+    {
+      "path": "sensitive-info-disclosure/si-018-debug-endpoint-leak.yaml",
+      "sha256": "09767163e1f687095c7c48dcf591afaf64eb22ba0ab2b528cf342e09a3255e11"
+    },
+    {
+      "path": "sensitive-info-disclosure/si-019-session-token-leak.yaml",
+      "sha256": "8ed3b10710cd93b887cf4af33d5357d7cc4321f125b8d807376bc35825612094"
+    },
+    {
+      "path": "sensitive-info-disclosure/si-020-internal-hostname-leak.yaml",
+      "sha256": "9c89095596414e760941d2a6e21c950649e3bad6a2f77d633f092fd1e24b470b"
+    }
+  ],
+  "digest": "5aa29a38080a3ab40c3bd79bf9f33a60ff70e54d79b3185969bcb983dcb66973"
+}

@@ -1,0 +1,61 @@
+name: Momus AI security scan
+
+# Dogfood + template: build Momus, scan the bundled deliberately-vulnerable
+# example target, and upload the SARIF to the code-scanning (Security) tab.
+# Copy this into your own repo and point `target` at your deployed AI endpoint.
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * 1" # weekly, Monday 06:00 UTC
+  push:
+    branches: [main]
+    paths:
+      - "packs/**"
+      - "internal/**"
+      - "cmd/**"
+      - "action.yml"
+      - ".github/workflows/momus-scan.yml"
+
+permissions:
+  contents: read
+  security-events: write # required to upload SARIF
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "stable"
+
+      - name: Start example target
+        run: |
+          go build -o /tmp/vulnerable-echo ./examples/vulnerable-echo
+          /tmp/vulnerable-echo &
+          sleep 1
+
+      - name: Run Momus scan
+        uses: ./ # this repo's composite action
+        with:
+          target: http://localhost:8000
+          sarif: momus.sarif
+          html: momus-report.html
+          # Report-only in the demo. In a real repo, gate with e.g. fail-on: high.
+          fail-on: ""
+
+      - name: Upload SARIF to code scanning
+        if: always()
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: momus.sarif
+          category: momus
+
+      - name: Upload HTML report artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: momus-report
+          path: momus-report.html

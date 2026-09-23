@@ -1,0 +1,101 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+          cache: true
+      - name: vet
+        run: go vet ./...
+      - name: test
+        run: go test -race -coverprofile=coverage.out ./...
+      - name: build
+        run: go build -o bin/momus ./cmd/momus
+      - name: smoke test
+        run: |
+          go run ./examples/vulnerable-echo &
+          sleep 1
+          # JSON + SARIF + HTML outputs all produced from one scan.
+          ./bin/momus scan http://localhost:8000 --pack packs/core \
+            --json --sarif momus.sarif --html momus-report.html > findings.json
+          test -s findings.json
+          test -s momus.sarif
+          test -s momus-report.html
+          # SARIF must be valid JSON and declare version 2.1.0.
+          python3 -c "import json,sys; d=json.load(open('momus.sarif')); assert d['version']=='2.1.0', d.get('version'); assert d['runs'][0]['tool']['driver']['name']=='Momus'; print('SARIF ok:', len(d['runs'][0]['results']), 'results')"
+      - name: fail-on gating exits non-zero
+        run: |
+          go run ./examples/vulnerable-echo &
+          sleep 1
+          if ./bin/momus scan http://localhost:8000 --pack packs/core --fail-on high >/dev/null 2>&1; then
+            echo "expected non-zero exit from --fail-on high against the vulnerable target"; exit 1
+          fi
+          echo "fail-on gating works"
+      - name: safe target passes fail-on
+        run: |
+          go run ./examples/safe-echo &
+          sleep 1
+          ./bin/momus scan http://localhost:8001 --pack packs/core --fail-on any
+          echo "safe target passes gating"
+
+  # Exercise the npm wrapper so asset-name drift or a broken launcher can't ship
+  # silently. Uses a locally built binary via MOMUS_BINARY (no release needed).
+  npm-wrapper:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: build momus and install it through the npm wrapper
+        shell: bash
+        run: |
+          go build -o "$RUNNER_TEMP/momus" ./cmd/momus
+          cd packages/momus-node
+          MOMUS_BINARY="$RUNNER_TEMP/momus" node install.js
+          node bin/momus.js --version
+          node bin/momus.js pack verify        # verifies the embedded pack
+      - name: the installer must resolve this platform's release asset name
+        shell: bash
+        run: node .github/scripts/check-asset-name.js
+
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: build docs site
+        working-directory: website
+        run: |
+          npm install --no-audit --no-fund
+          npm run build
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+      - uses: golangci/golangci-lint-action@v6
+        with:
+          version: latest
