@@ -34,6 +34,13 @@ type Attack struct {
 	Payload     string   `yaml:"payload" json:"payload"`
 	Detect      Detect   `yaml:"detect" json:"detect"`
 	Tags        []string `yaml:"tags,omitempty" json:"tags,omitempty"`
+
+	// Source is the path this attack was loaded from, relative to the repo or
+	// pack root. It is not part of the YAML; the loader fills it in. Reports use
+	// it to point a finding at the attack that produced it — GitHub code
+	// scanning in particular requires a repo-relative file location and rejects
+	// an upload whose locations carry an "http" scheme.
+	Source string `yaml:"-" json:"source,omitempty"`
 }
 
 // Validate returns an error if the attack is not well-formed.
@@ -71,7 +78,8 @@ func LoadAttack(path string) (*Attack, error) {
 	return ParseAttack(data, path)
 }
 
-// ParseAttack parses MAL YAML bytes; source is used only for error messages.
+// ParseAttack parses MAL YAML bytes. source names the file for error messages
+// and is retained on the attack for report locations.
 // Used by both the on-disk loader and the embedded/fs.FS loader.
 func ParseAttack(data []byte, source string) (*Attack, error) {
 	var a Attack
@@ -84,5 +92,6 @@ func ParseAttack(data []byte, source string) (*Attack, error) {
 	if err := a.Validate(); err != nil {
 		return nil, fmt.Errorf("%s: %w", source, err)
 	}
+	a.Source = source
 	return &a, nil
 }

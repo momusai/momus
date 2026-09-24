@@ -261,3 +261,58 @@ func TestSARIFFromCorePackIsAcceptable(t *testing.T) {
 	}
 	t.Logf("checked %d rules from the core pack", len(log.Runs[0].Tool.Driver.Rules))
 }
+
+// GitHub code scanning resolves every SARIF location against the checkout and
+// rejects the entire upload when a location carries a URL scheme:
+//
+//	SARIF URI scheme "http" did not match the checkout URI scheme "file"
+//
+// Momus used to put the scanned target there, so no finding could ever reach
+// the Security tab. Locations must be repo-relative paths.
+func TestSARIFLocationsAreRepoRelative(t *testing.T) {
+	findings := []scanner.Finding{
+		{AttackID: "a", AttackSource: "packs/core/jailbreak/jb-001.yaml", Verdict: scanner.VerdictVulnerable},
+		{AttackID: "b", AttackSource: "", Verdict: scanner.VerdictVulnerable},   // embedded/unknown pack
+		{AttackID: "c", AttackSource: "  ", Verdict: scanner.VerdictVulnerable}, // blank
+		// A Source that somehow arrived as a URL must not be emitted as one.
+		{AttackID: "d", AttackSource: "https://example.com/a.yaml", Verdict: scanner.VerdictVulnerable},
+	}
+	doc := sarifOf(t, findings)
+	results := doc["runs"].([]any)[0].(map[string]any)["results"].([]any)
+	if len(results) != len(findings) {
+		t.Fatalf("got %d results, want %d", len(results), len(findings))
+	}
+	for i, r := range results {
+		loc := r.(map[string]any)["locations"].([]any)[0].(map[string]any)
+		uri := loc["physicalLocation"].(map[string]any)["artifactLocation"].(map[string]any)["uri"].(string)
+		if uri == "" {
+			t.Errorf("result %d has an empty location uri", i)
+		}
+		if strings.Contains(uri, "://") {
+			t.Errorf("result %d location %q carries a URL scheme; GitHub rejects the whole upload", i, uri)
+		}
+		if strings.HasPrefix(uri, "/") {
+			t.Errorf("result %d location %q is absolute; it must be repo-relative", i, uri)
+		}
+	}
+	// The useful case resolves to the attack's own file.
+	first := results[0].(map[string]any)["locations"].([]any)[0].(map[string]any)
+	if got := first["physicalLocation"].(map[string]any)["artifactLocation"].(map[string]any)["uri"]; got != "packs/core/jailbreak/jb-001.yaml" {
+		t.Errorf("uri = %v, want the attack's pack file", got)
+	}
+}
+
+// Losing the target would make a report useless, so check it survives the move
+// off the location field.
+func TestSARIFStillRecordsTheTarget(t *testing.T) {
+	doc := sarifOf(t, []scanner.Finding{
+		{AttackID: "a", AttackSource: "packs/core/x.yaml", Verdict: scanner.VerdictVulnerable},
+	})
+	props, ok := doc["runs"].([]any)[0].(map[string]any)["properties"].(map[string]any)
+	if !ok {
+		t.Fatal("run has no properties")
+	}
+	if props["target"] == nil || props["target"] == "" {
+		t.Errorf("the scanned target is not recorded on the run: %v", props)
+	}
+}

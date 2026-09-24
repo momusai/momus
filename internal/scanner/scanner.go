@@ -25,18 +25,22 @@ const (
 // Finding is one attack's result: the request, response, and the scorer's
 // verdict, plus any judge audit records.
 type Finding struct {
-	AttackID   string           `json:"attack_id"`
-	AttackName string           `json:"attack_name"`
-	Category   string           `json:"category"`
-	Severity   mal.Severity     `json:"severity"`
-	OWASPLLM   string           `json:"owasp_llm,omitempty"`
-	Tags       []string         `json:"tags,omitempty"`
-	References []string         `json:"references,omitempty"`
-	Payload    string           `json:"payload"`
-	Response   *target.Response `json:"response,omitempty"`
-	Verdict    Verdict          `json:"verdict"`
-	Reason     string           `json:"reason"`
-	Evidence   []judge.Evidence `json:"evidence,omitempty"`
+	AttackID   string       `json:"attack_id"`
+	AttackName string       `json:"attack_name"`
+	Category   string       `json:"category"`
+	Severity   mal.Severity `json:"severity"`
+	OWASPLLM   string       `json:"owasp_llm,omitempty"`
+	Tags       []string     `json:"tags,omitempty"`
+	References []string     `json:"references,omitempty"`
+	// AttackSource is the pack file this attack came from, relative to the repo
+	// root. Reports use it to locate a finding: GitHub code scanning requires a
+	// repo-relative file and rejects a location with an "http" scheme.
+	AttackSource string           `json:"attack_source,omitempty"`
+	Payload      string           `json:"payload"`
+	Response     *target.Response `json:"response,omitempty"`
+	Verdict      Verdict          `json:"verdict"`
+	Reason       string           `json:"reason"`
+	Evidence     []judge.Evidence `json:"evidence,omitempty"`
 }
 
 // defaultConcurrency bounds how many attacks are dispatched at once when the
@@ -162,7 +166,7 @@ func (s *Scanner) runOne(ctx context.Context, a *mal.Attack) Finding {
 	f := Finding{
 		AttackID: a.ID, AttackName: a.Name, Category: a.Category,
 		Severity: a.Severity, OWASPLLM: a.OWASPLLM, Tags: a.Tags, References: a.References,
-		Payload: a.Payload,
+		AttackSource: a.Source, Payload: a.Payload,
 	}
 
 	resp, err := s.Target.Send(ctx, target.Request{Payload: a.Payload})

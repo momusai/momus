@@ -5,6 +5,9 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"io"
+	"os"
+	"path/filepath"
+	"strings"
 
 	"github.com/momusai/momus/internal/scanner"
 )
@@ -166,7 +169,7 @@ func buildSARIF(meta Meta, findings []scanner.Finding) sarifLog {
 			Level:     sarifLevel(f),
 			Message:   sarifText{Text: nonEmpty(msg, string(f.Verdict))},
 			Locations: []sarifLocation{{PhysicalLocation: sarifPhysical{
-				ArtifactLocation: sarifArtifact{URI: nonEmpty(meta.Target, "target")},
+				ArtifactLocation: sarifArtifact{URI: resultURI(f)},
 			}}},
 			PartialFingerprints: map[string]string{
 				"momusAttackTarget": fingerprint(f.AttackID, meta.Target, f.Payload),
@@ -205,6 +208,56 @@ func runProperties(meta Meta) map[string]any {
 		props["scope"] = meta.PartialScope
 	}
 	return props
+}
+
+// resultURI is the file a finding points at.
+//
+// It must be a REPO-RELATIVE PATH, never the scanned URL. GitHub code scanning
+// resolves every location against the checkout and rejects the whole upload
+// otherwise: 'SARIF URI scheme "http" did not match the checkout URI scheme
+// "file"'. Putting the target here therefore meant no Momus finding could ever
+// reach the Security tab, which is the one place a CI user looks for them.
+//
+// The attack's own pack file is the natural answer: it is a real file, it is
+// where the rule that fired is defined, and clicking the alert lands on the
+// attack rather than on a URL that says nothing. The target URL is not lost —
+// it is on the run's properties and in every result's message.
+//
+// The fallback matters for a pack loaded from outside the repo, where no
+// relative path is meaningful. It is deliberately extension-less and stable so
+// alerts group together rather than scattering across invented filenames.
+func resultURI(f scanner.Finding) string {
+	src := strings.TrimSpace(f.AttackSource)
+	if src == "" || hasURIScheme(src) {
+		return scanURIFallback
+	}
+	// An absolute path is what you get from `--pack /abs/path/to/pack`, and it is
+	// no more usable to GitHub than a URL was. Re-root it on the working
+	// directory; if it lies outside, there is no repo-relative path to give.
+	if filepath.IsAbs(src) {
+		wd, err := os.Getwd()
+		if err != nil {
+			return scanURIFallback
+		}
+		rel, err := filepath.Rel(wd, src)
+		if err != nil || rel == ".." || strings.HasPrefix(rel, ".."+string(filepath.Separator)) {
+			return scanURIFallback
+		}
+		src = rel
+	}
+	return filepath.ToSlash(src)
+}
+
+// scanURIFallback is used when a finding has no path that means anything
+// inside the checkout — an embedded pack, or one loaded from elsewhere on
+// disk. Extension-less and stable, so those alerts group together instead of
+// scattering across invented filenames.
+const scanURIFallback = "momus-scan"
+
+// hasURIScheme reports whether s looks like "scheme://..." rather than a path.
+func hasURIScheme(s string) bool {
+	i := strings.Index(s, "://")
+	return i > 0 && !strings.ContainsAny(s[:i], "/\\.")
 }
 
 // ruleTags builds a rule's SARIF tags, deduplicated.

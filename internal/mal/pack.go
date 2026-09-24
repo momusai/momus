@@ -6,6 +6,7 @@ import (
 	"log/slog"
 	"os"
 	"path"
+	"path/filepath"
 	"strings"
 )
 
@@ -39,7 +40,15 @@ func LoadPackDetailed(root string) ([]Attack, []Skipped, error) {
 	if !info.IsDir() {
 		return nil, nil, fmt.Errorf("pack %s is not a directory", root)
 	}
-	return LoadPackFSDetailed(os.DirFS(root), ".")
+	attacks, skipped, err := LoadPackFSDetailed(os.DirFS(root), ".")
+	// os.DirFS roots the walk at the pack directory, so the paths that come back
+	// are relative to it and drop the directory itself. Put it back: Source has
+	// to be usable from the repo root, because that is what SARIF locations and
+	// GitHub code scanning resolve against.
+	for i := range attacks {
+		attacks[i].Source = filepath.ToSlash(filepath.Join(root, attacks[i].Source))
+	}
+	return attacks, skipped, err
 }
 
 // LoadPackFS walks root within fsys and returns every well-formed MAL attack.
