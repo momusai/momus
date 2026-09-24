@@ -57,7 +57,7 @@ body:
     attributes:
       label: Version
       description: Output of `momus --version`.
-      placeholder: momus version 0.1.0
+      placeholder: paste the output of `momus --version`
     validations:
       required: true
 

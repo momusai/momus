@@ -1,6 +1,6 @@
 # Design: the `llm_judge` scorer
 
-Status: accepted (v0.0.1). Synthesized from a 4-lens design panel
+Status: accepted. Synthesized from a 4-lens design panel
 (false-positive minimization, prompt-injection resistance, provider abstraction,
 integration/determinism).
 
@@ -107,7 +107,7 @@ Both tri-states use **`Inconclusive` as the zero value** — an uninitialized re
 is never accidentally `Matched`/`Yes`. `judge.Decision` maps to `mal.Outcome` at the
 `llm_judge` leaf: `Yes→Matched`, `No→NotMatched`, `Inconclusive→Inconclusive`.
 
-`ConfirmStructural` (regex-hit downgrade) is specified but **deferred** past v0.0.1
+`ConfirmStructural` (regex-hit downgrade) is specified but **deferred**
 to keep the core `EvalContext` minimal; `VotingJudge` ships but defaults off.
 
 ## Judge verdict schema

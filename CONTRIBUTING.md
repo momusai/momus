@@ -38,7 +38,7 @@ Before opening a PR:
 
 ```bash
 go run ./cmd/momus validate packs/core   # must pass
-go run ./cmd/momus pack lock packs/core --name momus-core --pack-version 0.1.0   # re-lock after editing attacks
+go run ./cmd/momus pack lock packs/core   # re-lock after editing attacks
 go test ./...                            # must pass — the pack + its lock are covered by tests
 ```
 

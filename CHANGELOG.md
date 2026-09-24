@@ -7,11 +7,11 @@ Until 1.0, the MAL attack format may gain fields but will not silently change
 the meaning of existing ones. A change that would alter what an existing
 detector matches goes through an RFC, never a point release.
 
-## [Unreleased]
+## Unreleased
 
-## [0.1.0] — 2026-09-24
-
-First public release.
+Nothing has been released yet. The entries below describe what is built and
+working on `main`; they will be grouped under a version when the first release
+is actually cut.
 
 ### Scanning
 
@@ -83,5 +83,3 @@ buried in the design docs:
 - Momus tests behaviour over HTTP. It does not audit your agent's tool
   permissions or read your source.
 
-[Unreleased]: https://github.com/momusai/momus/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/momusai/momus/releases/tag/v0.1.0

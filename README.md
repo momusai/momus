@@ -22,7 +22,7 @@ Every company is shipping AI agents. Almost none can prove those agents are safe
 
 Momus is what happens when Metasploit, Semgrep, and OWASP ZAP have a child raised on the OWASP LLM Top 10.
 
-## What works today (v0.1.0)
+## What works today
 
 - **Scan almost any model endpoint** — OpenAI-compatible (OpenAI, Ollama, vLLM, Groq), Azure OpenAI, the Anthropic Messages API, Google Gemini, Google Vertex AI, AWS Bedrock, and plain HTTP/JSON for your own agent. The adapter is picked from the URL; credentials are only ever sent to their genuine host.
 - **200 attacks across 10 categories** — prompt injection, jailbreak, data exfiltration, encoding/obfuscation, excessive agency, insecure output handling, sensitive-info disclosure, RAG injection, misinformation, and package hallucination (slopsquatting). Mapped to OWASP LLM Top 10.
