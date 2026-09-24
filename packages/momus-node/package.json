@@ -20,10 +20,10 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/momus-ai/momus.git"
+    "url": "https://github.com/momusai/momus.git"
   },
-  "homepage": "https://github.com/momus-ai/momus",
-  "bugs": "https://github.com/momus-ai/momus/issues",
+  "homepage": "https://github.com/momusai/momus",
+  "bugs": "https://github.com/momusai/momus/issues",
   "keywords": [
     "ai",
     "llm",

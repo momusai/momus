@@ -4,8 +4,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/momus-ai/momus/internal/mal"
-	"github.com/momus-ai/momus/internal/scanner"
+	"github.com/momusai/momus/internal/mal"
+	"github.com/momusai/momus/internal/scanner"
 )
 
 func TestFailCount(t *testing.T) {

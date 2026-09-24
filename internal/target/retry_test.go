@@ -9,7 +9,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/momus-ai/momus/internal/httpx"
+	"github.com/momusai/momus/internal/httpx"
 )
 
 // fastBackoff shrinks the retry waits for tests and restores them after.

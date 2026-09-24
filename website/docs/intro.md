@@ -37,7 +37,7 @@ npx momus scan https://your-agent.example/chat
 Or with Go 1.25+:
 
 ```bash
-go install github.com/momus-ai/momus/cmd/momus@latest
+go install github.com/momusai/momus/cmd/momus@latest
 ```
 
 The core attack pack is embedded in the binary, so a scan works out of the box.

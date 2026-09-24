@@ -14,7 +14,7 @@ import (
 	"strings"
 	"unicode/utf8"
 
-	"github.com/momus-ai/momus/internal/scanner"
+	"github.com/momusai/momus/internal/scanner"
 )
 
 // Meta is scan-level context shown in the report header.

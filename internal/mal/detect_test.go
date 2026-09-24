@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/momus-ai/momus/internal/judge"
+	"github.com/momusai/momus/internal/judge"
 )
 
 // mustEval evaluates d against text with no judge (pure evaluation) and fails

@@ -45,9 +45,9 @@ npx momus scan https://your-agent.example/chat
 Or with Go 1.25+:
 
 ```bash
-go install github.com/momus-ai/momus/cmd/momus@latest   # single binary, no extra files
+go install github.com/momusai/momus/cmd/momus@latest   # single binary, no extra files
 # or from a clone:
-git clone https://github.com/momus-ai/momus && cd momus && go build -o momus ./cmd/momus
+git clone https://github.com/momusai/momus && cd momus && go build -o momus ./cmd/momus
 ```
 
 The **core attack pack is embedded in the binary**, so an installed `momus`
@@ -118,7 +118,7 @@ permissions:
 
 steps:
   - name: Momus AI security scan
-    uses: momus-ai/momus@v0      # this repo's composite action
+    uses: momusai/momus@v0      # this repo's composite action
     with:
       target: https://your-agent.example/chat
       sarif: momus.sarif

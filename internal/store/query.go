@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"sort"
 
-	"github.com/momus-ai/momus/internal/scanner"
+	"github.com/momusai/momus/internal/scanner"
 )
 
 // RunSummary is one row of `momus history`.

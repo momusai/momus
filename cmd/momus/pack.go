@@ -7,8 +7,8 @@ import (
 
 	"github.com/spf13/cobra"
 
-	momus "github.com/momus-ai/momus"
-	"github.com/momus-ai/momus/internal/pack"
+	momus "github.com/momusai/momus"
+	"github.com/momusai/momus/internal/pack"
 )
 
 func newPackCmd() *cobra.Command {

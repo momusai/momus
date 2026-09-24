@@ -12,7 +12,7 @@ import (
 	"time"
 	"unicode/utf8"
 
-	"github.com/momus-ai/momus/internal/buildinfo"
+	"github.com/momusai/momus/internal/buildinfo"
 )
 
 // HTTPTarget dispatches an attack payload to a generic JSON HTTP endpoint.

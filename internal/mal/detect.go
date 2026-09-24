@@ -6,7 +6,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/momus-ai/momus/internal/judge"
+	"github.com/momusai/momus/internal/judge"
 )
 
 // Detect is a matcher tree. Exactly one field should be non-zero in a given

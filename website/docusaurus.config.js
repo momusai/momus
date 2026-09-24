@@ -21,7 +21,7 @@ const config = {
   url: 'https://momus.dev',
   baseUrl: '/',
 
-  organizationName: 'momus-ai',
+  organizationName: 'momusai',
   projectName: 'momus',
 
   onBrokenLinks: 'warn',
@@ -44,7 +44,7 @@ const config = {
         docs: {
           sidebarPath: './sidebars.js',
           routeBasePath: '/', // docs are the site root
-          editUrl: 'https://github.com/momus-ai/momus/tree/main/website/',
+          editUrl: 'https://github.com/momusai/momus/tree/main/website/',
         },
         blog: false,
         theme: {
@@ -70,7 +70,7 @@ const config = {
             label: 'Docs',
           },
           {
-            href: 'https://github.com/momus-ai/momus',
+            href: 'https://github.com/momusai/momus',
             label: 'GitHub',
             position: 'right',
           },
@@ -90,9 +90,9 @@ const config = {
           {
             title: 'Project',
             items: [
-              {label: 'GitHub', href: 'https://github.com/momus-ai/momus'},
-              {label: 'Roadmap', href: 'https://github.com/momus-ai/momus/blob/main/ROADMAP.md'},
-              {label: 'Contributing', href: 'https://github.com/momus-ai/momus/blob/main/CONTRIBUTING.md'},
+              {label: 'GitHub', href: 'https://github.com/momusai/momus'},
+              {label: 'Roadmap', href: 'https://github.com/momusai/momus/blob/main/ROADMAP.md'},
+              {label: 'Contributing', href: 'https://github.com/momusai/momus/blob/main/CONTRIBUTING.md'},
             ],
           },
         ],

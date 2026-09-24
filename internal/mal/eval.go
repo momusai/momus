@@ -1,6 +1,6 @@
 package mal
 
-import "github.com/momus-ai/momus/internal/judge"
+import "github.com/momusai/momus/internal/judge"
 
 // Outcome is a three-valued (Kleene) matcher result. The zero value is
 // Inconclusive on purpose: an un-set result must never read as Matched.

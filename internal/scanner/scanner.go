@@ -8,9 +8,9 @@ import (
 	"sync"
 	"sync/atomic"
 
-	"github.com/momus-ai/momus/internal/judge"
-	"github.com/momus-ai/momus/internal/mal"
-	"github.com/momus-ai/momus/internal/target"
+	"github.com/momusai/momus/internal/judge"
+	"github.com/momusai/momus/internal/mal"
+	"github.com/momusai/momus/internal/target"
 )
 
 // Verdict is a scanner's judgment on one attack.

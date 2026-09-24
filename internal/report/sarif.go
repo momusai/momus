@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"io"
 
-	"github.com/momus-ai/momus/internal/scanner"
+	"github.com/momusai/momus/internal/scanner"
 )
 
 // SARIF 2.1.0 output so Momus findings integrate with GitHub code scanning and
@@ -186,7 +186,7 @@ func buildSARIF(meta Meta, findings []scanner.Finding) sarifLog {
 		Runs: []sarifRun{{
 			Tool: sarifTool{Driver: sarifDriver{
 				Name:           "Momus",
-				InformationURI: "https://github.com/momus-ai/momus",
+				InformationURI: "https://github.com/momusai/momus",
 				Version:        nonEmpty(meta.Version, "dev"),
 				Rules:          rules,
 			}},

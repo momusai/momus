@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/momus-ai/momus/internal/buildinfo"
-	"github.com/momus-ai/momus/internal/httpx"
+	"github.com/momusai/momus/internal/buildinfo"
+	"github.com/momusai/momus/internal/httpx"
 )
 
 // AnthropicJudge speaks the Anthropic Messages API. Anthropic has no

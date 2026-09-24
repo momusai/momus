@@ -8,9 +8,9 @@ import (
 	"testing"
 	"unicode/utf8"
 
-	"github.com/momus-ai/momus/internal/judge"
-	"github.com/momus-ai/momus/internal/scanner"
-	"github.com/momus-ai/momus/internal/target"
+	"github.com/momusai/momus/internal/judge"
+	"github.com/momusai/momus/internal/scanner"
+	"github.com/momusai/momus/internal/target"
 )
 
 func sampleFindings() []scanner.Finding {

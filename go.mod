@@ -1,4 +1,4 @@
-module github.com/momus-ai/momus
+module github.com/momusai/momus
 
 go 1.25.0
 

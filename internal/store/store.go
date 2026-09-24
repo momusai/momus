@@ -19,7 +19,7 @@ import (
 	"time"
 	"unicode/utf8"
 
-	"github.com/momus-ai/momus/internal/scanner"
+	"github.com/momusai/momus/internal/scanner"
 )
 
 // DefaultDriver is the driver name registered by modernc.org/sqlite.

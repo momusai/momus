@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/momus-ai/momus/internal/buildinfo"
-	"github.com/momus-ai/momus/internal/httpx"
+	"github.com/momusai/momus/internal/buildinfo"
+	"github.com/momusai/momus/internal/httpx"
 )
 
 // OpenAIJudge speaks the OpenAI /v1/chat/completions API and any provider that

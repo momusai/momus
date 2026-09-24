@@ -48,7 +48,7 @@ momus scan <url> --limit 20                   # first 20 attacks
 
 ```yaml
 - name: Momus AI security scan
-  uses: momus-ai/momus@v0
+  uses: momusai/momus@v0
   with:
     target: https://your-agent.example/chat
     sarif: momus.sarif

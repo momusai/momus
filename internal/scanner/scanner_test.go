@@ -8,9 +8,9 @@ import (
 	"regexp"
 	"testing"
 
-	"github.com/momus-ai/momus/internal/judge"
-	"github.com/momus-ai/momus/internal/mal"
-	"github.com/momus-ai/momus/internal/target"
+	"github.com/momusai/momus/internal/judge"
+	"github.com/momusai/momus/internal/mal"
+	"github.com/momusai/momus/internal/target"
 )
 
 // corePackPath is relative to this test's package directory.

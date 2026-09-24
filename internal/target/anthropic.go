@@ -11,7 +11,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/momus-ai/momus/internal/buildinfo"
+	"github.com/momusai/momus/internal/buildinfo"
 )
 
 // AnthropicTarget speaks the Anthropic Messages API (/v1/messages). It is the

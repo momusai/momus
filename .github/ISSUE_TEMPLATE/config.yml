@@ -1,8 +1,8 @@
 blank_issues_enabled: true
 contact_links:
   - name: Security vulnerability in Momus itself
-    url: https://github.com/momus-ai/momus/security/advisories/new
+    url: https://github.com/momusai/momus/security/advisories/new
     about: Please report privately via a security advisory, not a public issue. See SECURITY.md.
   - name: Question or idea
-    url: https://github.com/momus-ai/momus/discussions
+    url: https://github.com/momusai/momus/discussions
     about: Use Discussions for questions, "is this a bug?", and design conversations.

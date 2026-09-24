@@ -6,8 +6,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/momus-ai/momus/internal/scanner"
-	"github.com/momus-ai/momus/internal/target"
+	"github.com/momusai/momus/internal/scanner"
+	"github.com/momusai/momus/internal/target"
 )
 
 func sarifOf(t *testing.T, findings []scanner.Finding) map[string]any {

@@ -6,10 +6,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/momus-ai/momus/internal/judge"
-	"github.com/momus-ai/momus/internal/mal"
-	"github.com/momus-ai/momus/internal/scanner"
-	"github.com/momus-ai/momus/internal/target"
+	"github.com/momusai/momus/internal/judge"
+	"github.com/momusai/momus/internal/mal"
+	"github.com/momusai/momus/internal/scanner"
+	"github.com/momusai/momus/internal/target"
 
 	// The store itself talks only to database/sql; the driver is registered by
 	// the caller. Importing it here (and nowhere else in the package) is what

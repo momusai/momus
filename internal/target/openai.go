@@ -10,7 +10,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/momus-ai/momus/internal/buildinfo"
+	"github.com/momusai/momus/internal/buildinfo"
 )
 
 // OpenAITarget speaks the OpenAI /v1/chat/completions API. It also works with

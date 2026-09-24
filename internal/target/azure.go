@@ -10,7 +10,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/momus-ai/momus/internal/buildinfo"
+	"github.com/momusai/momus/internal/buildinfo"
 )
 
 // AzureOpenAITarget speaks the Azure OpenAI chat-completions API. It shares the

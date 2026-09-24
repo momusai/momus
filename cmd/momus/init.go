@@ -81,7 +81,7 @@ const tmplInitReadme = "# Custom Momus attack pack\n\n" +
 	"export MOMUS_JUDGE_URL=http://localhost:11434/v1/chat/completions   # local Ollama\n" +
 	"export MOMUS_JUDGE_MODEL=llama3.1\n" +
 	"```\n\n" +
-	"Docs: https://github.com/momus-ai/momus\n"
+	"Docs: https://github.com/momusai/momus\n"
 
 const tmplCanary = `mal_version: "1"
 id: pi-001-example-canary

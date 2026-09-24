@@ -20,14 +20,14 @@ import (
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 
-	momus "github.com/momus-ai/momus"
-	"github.com/momus-ai/momus/internal/buildinfo"
-	"github.com/momus-ai/momus/internal/judge"
-	"github.com/momus-ai/momus/internal/mal"
-	"github.com/momus-ai/momus/internal/report"
-	"github.com/momus-ai/momus/internal/scanner"
-	"github.com/momus-ai/momus/internal/store"
-	"github.com/momus-ai/momus/internal/target"
+	momus "github.com/momusai/momus"
+	"github.com/momusai/momus/internal/buildinfo"
+	"github.com/momusai/momus/internal/judge"
+	"github.com/momusai/momus/internal/mal"
+	"github.com/momusai/momus/internal/report"
+	"github.com/momusai/momus/internal/scanner"
+	"github.com/momusai/momus/internal/store"
+	"github.com/momusai/momus/internal/target"
 
 	// The SQLite driver is registered here and nowhere else: internal/store
 	// talks to database/sql only, so this single import is what binds it to a
@@ -80,7 +80,7 @@ func banner() string {
 		"the security of AI models, agents, and MCP servers.\n" +
 		"\n" +
 		"  docs:    https://momus.dev\n" +
-		"  source:  https://github.com/momus-ai/momus"
+		"  source:  https://github.com/momusai/momus"
 }
 
 // ---- momus scan --------------------------------------------------------

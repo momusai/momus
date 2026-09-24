@@ -83,5 +83,5 @@ buried in the design docs:
 - Momus tests behaviour over HTTP. It does not audit your agent's tool
   permissions or read your source.
 
-[Unreleased]: https://github.com/momus-ai/momus/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/momus-ai/momus/releases/tag/v0.1.0
+[Unreleased]: https://github.com/momusai/momus/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/momusai/momus/releases/tag/v0.1.0

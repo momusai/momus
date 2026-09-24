@@ -7,8 +7,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/momus-ai/momus/internal/scanner"
-	"github.com/momus-ai/momus/internal/store"
+	"github.com/momusai/momus/internal/scanner"
+	"github.com/momusai/momus/internal/store"
 
 	_ "modernc.org/sqlite"
 )

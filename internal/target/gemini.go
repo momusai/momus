@@ -11,7 +11,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/momus-ai/momus/internal/buildinfo"
+	"github.com/momusai/momus/internal/buildinfo"
 )
 
 // GeminiTarget speaks the Google Gemini generateContent API. The model is part

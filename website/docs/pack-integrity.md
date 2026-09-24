@@ -31,7 +31,7 @@ during a postinstall. Verify it yourself for a supply-chain guarantee:
 ```bash
 cosign verify-blob checksums.txt \
   --signature checksums.txt.sig --certificate checksums.txt.pem \
-  --certificate-identity-regexp 'https://github.com/momus-ai/momus/.*' \
+  --certificate-identity-regexp 'https://github.com/momusai/momus/.*' \
   --certificate-oidc-issuer https://token.actions.githubusercontent.com
 ```
 

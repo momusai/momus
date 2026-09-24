@@ -13,7 +13,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/momus-ai/momus/internal/httpx"
+	"github.com/momusai/momus/internal/httpx"
 )
 
 // parseChatCompletionText extracts choices[0].message.content from an

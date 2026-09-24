@@ -3,7 +3,7 @@ package momus
 import (
 	"testing"
 
-	"github.com/momus-ai/momus/internal/mal"
+	"github.com/momusai/momus/internal/mal"
 )
 
 // TestEmbeddedCorePackMatchesDisk ensures the pack embedded in the binary loads

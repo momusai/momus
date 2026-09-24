@@ -8,7 +8,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/momus-ai/momus/internal/store"
+	"github.com/momusai/momus/internal/store"
 )
 
 func newHistoryCmd() *cobra.Command {

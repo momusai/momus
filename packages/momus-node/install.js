@@ -10,7 +10,7 @@ const path = require("path");
 const https = require("https");
 const crypto = require("crypto");
 
-const REPO = process.env.MOMUS_REPO || "momus-ai/momus";
+const REPO = process.env.MOMUS_REPO || "momusai/momus";
 const { version } = require("./package.json");
 
 // Map Node's platform/arch to the release asset tokens (see .goreleaser.yaml).
@@ -181,7 +181,7 @@ main().catch((err) => {
   console.error(`\nmomus: could not install the prebuilt binary: ${err.message}`);
   console.error("Alternatives:");
   console.error("  • build from source (Go 1.25+):");
-  console.error("      go install github.com/momus-ai/momus/cmd/momus@latest");
+  console.error("      go install github.com/momusai/momus/cmd/momus@latest");
   console.error("  • point the installer at a local binary:");
   console.error("      MOMUS_BINARY=/path/to/momus npm install");
   console.error("  • re-run `npm rebuild momus` once network access is available\n");

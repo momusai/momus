@@ -8,7 +8,7 @@ import (
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 
-	"github.com/momus-ai/momus/internal/store"
+	"github.com/momusai/momus/internal/store"
 )
 
 func newDiffCmd() *cobra.Command {

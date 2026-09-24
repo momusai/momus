@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/momus-ai/momus/internal/mal"
+	"github.com/momusai/momus/internal/mal"
 )
 
 // TestInitScaffoldIsValid: a freshly scaffolded pack must load and pass strict

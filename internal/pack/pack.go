@@ -23,7 +23,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/momus-ai/momus/internal/mal"
+	"github.com/momusai/momus/internal/mal"
 )
 
 // LockFileName is the integrity manifest written at a pack's root.

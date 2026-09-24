@@ -24,7 +24,7 @@ if (!fs.existsSync(binPath)) {
         "Fix one of these ways:\n" +
         "  • npm rebuild momus            (re-runs the installer)\n" +
         "  • MOMUS_BINARY=/path/to/momus npm rebuild momus\n" +
-        "  • go install github.com/momus-ai/momus/cmd/momus@latest"
+        "  • go install github.com/momusai/momus/cmd/momus@latest"
     );
     process.exit(1);
   }

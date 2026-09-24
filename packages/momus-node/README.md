@@ -1,6 +1,6 @@
 # momus (npm)
 
-Run [Momus](https://github.com/momus-ai/momus), the open AI/LLM security scanner,
+Run [Momus](https://github.com/momusai/momus), the open AI/LLM security scanner,
 without installing Go:
 
 ```bash
@@ -29,6 +29,6 @@ npx momus validate my-pack           # validate a pack
   works. To fetch it eagerly, run `npm rebuild momus`.
 - Set `MOMUS_BINARY=/path/to/momus` before install to use a local binary instead
   of downloading.
-- Prefer Go? `go install github.com/momus-ai/momus/cmd/momus@latest`.
+- Prefer Go? `go install github.com/momusai/momus/cmd/momus@latest`.
 
 License: Apache-2.0.

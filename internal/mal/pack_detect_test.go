@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/momus-ai/momus/internal/mal"
+	"github.com/momusai/momus/internal/mal"
 )
 
 // jb-018 demands a rigid JSON object, but its detector only matched a BARE
