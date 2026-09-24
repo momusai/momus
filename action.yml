@@ -37,11 +37,22 @@ inputs:
     description: "Optional judge model id."
     required: false
     default: ""
+  store:
+    description: "Optional path to a SQLite evidence database. Recording runs there enables regression gating; cache or commit the file so a baseline survives between jobs."
+    required: false
+    default: ""
+  fail-on-regression:
+    description: "With 'store' set, fail the job if any attack newly succeeds since the previous run for this target. The first run has no baseline and never fails."
+    required: false
+    default: "false"
 
 outputs:
   sarif:
     description: "Path to the generated SARIF report."
     value: ${{ inputs.sarif }}
+  store:
+    description: "Path to the evidence database, when one was requested."
+    value: ${{ inputs.store }}
 
 runs:
   using: "composite"
@@ -73,6 +84,7 @@ runs:
         MOMUS_CONCURRENCY: ${{ inputs.concurrency }}
         MOMUS_JUDGE_URL: ${{ inputs.judge-url }}
         MOMUS_JUDGE_MODEL: ${{ inputs.judge-model }}
+        MOMUS_STORE: ${{ inputs.store }}
         ACTION_PATH: ${{ github.action_path }}
       run: |
         set -euo pipefail
@@ -84,4 +96,31 @@ runs:
         if [ -n "$MOMUS_HTML" ]; then args+=(--html "$MOMUS_HTML"); fi
         if [ -n "$MOMUS_FAILON" ]; then args+=(--fail-on "$MOMUS_FAILON"); fi
         if [ -n "$MOMUS_CONCURRENCY" ]; then args+=(--concurrency "$MOMUS_CONCURRENCY"); fi
+        if [ -n "$MOMUS_STORE" ]; then args+=(--store "$MOMUS_STORE"); fi
         "$RUNNER_TEMP/momus" "${args[@]}"
+
+    # Regression gating runs as its own step so a tripped --fail-on gate above
+    # does not hide the comparison, and vice versa.
+    - name: Check for regressions
+      # always() so this still runs when the scan step failed its own --fail-on
+      # gate: the two gates answer different questions.
+      if: always() && inputs.store != '' && inputs.fail-on-regression == 'true'
+      shell: bash
+      env:
+        MOMUS_TARGET: ${{ inputs.target }}
+        MOMUS_STORE: ${{ inputs.store }}
+      run: |
+        set -euo pipefail
+        if [ ! -f "$MOMUS_STORE" ]; then
+          echo "::notice::no evidence database at $MOMUS_STORE; nothing to compare"
+          exit 0
+        fi
+        # A single recorded run has no baseline. Failing the job on the first
+        # ever scan would read as a bug, so say so and pass; `momus diff` itself
+        # stays strict and errors rather than passing quietly.
+        runs=$("$RUNNER_TEMP/momus" history --store "$MOMUS_STORE" --target "$MOMUS_TARGET" --limit 2 | tail -n +2 | wc -l)
+        if [ "$runs" -lt 2 ]; then
+          echo "::notice::only $runs recorded run(s) for this target; a baseline is needed before regressions can be detected"
+          exit 0
+        fi
+        "$RUNNER_TEMP/momus" diff --store "$MOMUS_STORE" --target "$MOMUS_TARGET" --fail-on-regression

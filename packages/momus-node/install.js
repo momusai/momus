@@ -180,7 +180,7 @@ async function main() {
 main().catch((err) => {
   console.error(`\nmomus: could not install the prebuilt binary: ${err.message}`);
   console.error("Alternatives:");
-  console.error("  • build from source (Go 1.22+):");
+  console.error("  • build from source (Go 1.25+):");
   console.error("      go install github.com/momus-ai/momus/cmd/momus@latest");
   console.error("  • point the installer at a local binary:");
   console.error("      MOMUS_BINARY=/path/to/momus npm install");

@@ -49,6 +49,42 @@ jobs:
           ./bin/momus scan http://localhost:8001 --pack packs/core --fail-on any
           echo "safe target passes gating"
 
+      # The evidence store exists to gate CI on regressions, so the gate itself
+      # is exercised here. Both directions matter: an unchanged target must NOT
+      # fail the build, and a target that newly fails an attack MUST.
+      - name: regression diff gating
+        run: |
+          go run ./examples/safe-echo &
+          go run ./examples/vulnerable-echo &
+          sleep 2
+
+          # Two identical scans of the same target: nothing changed, so the gate
+          # must pass. A false regression here would make the feature unusable.
+          ./bin/momus scan http://localhost:8000 --pack packs/core --store ci.db >/dev/null
+          ./bin/momus scan http://localhost:8000 --pack packs/core --store ci.db >/dev/null
+          ./bin/momus diff --store ci.db --target http://localhost:8000 --fail-on-regression
+          echo "unchanged target does not trip the regression gate"
+
+          # A safe baseline compared against the vulnerable target: every attack
+          # that now succeeds is a regression, so the gate must trip (exit 2).
+          ./bin/momus scan http://localhost:8001 --pack packs/core --store ci.db >/dev/null
+          SAFE_RUN=$(./bin/momus history --store ci.db --target http://localhost:8001 --limit 1 | awk 'NR==2 {print $1}')
+          VULN_RUN=$(./bin/momus history --store ci.db --target http://localhost:8000 --limit 1 | awk 'NR==2 {print $1}')
+          test -n "$SAFE_RUN" && test -n "$VULN_RUN"
+          if ./bin/momus diff --store ci.db --base "$SAFE_RUN" --head "$VULN_RUN" --fail-on-regression >/dev/null 2>&1; then
+            echo "expected exit 2 from --fail-on-regression when attacks newly succeed"; exit 1
+          fi
+          echo "regression gating works"
+
+          # A partial run must never look like a pile of fixes: the attacks that
+          # did not run are unknown, not passing.
+          ./bin/momus scan http://localhost:8000 --pack packs/core --store ci.db \
+            --limit 3 --category jailbreak >/dev/null
+          ./bin/momus diff --store ci.db --target http://localhost:8000 > diff.txt
+          grep -q "0 fixed" diff.txt
+          grep -q "unknown, not safe" diff.txt
+          echo "partial runs are not reported as fixes"
+
   # Exercise the npm wrapper so asset-name drift or a broken launcher can't ship
   # silently. Uses a locally built binary via MOMUS_BINARY (no release needed).
   npm-wrapper:
