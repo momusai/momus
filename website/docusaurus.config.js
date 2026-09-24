@@ -12,6 +12,10 @@ const config = {
 
   future: {
     v4: true,
+    // Explicitly opt OUT of the Rspack-based bundler. @docusaurus/faster is a
+    // dependency, and with v4 it would otherwise be used; its native binding
+    // aborts with SIGBUS on some CPUs, which takes the docs build down with it.
+    faster: false,
   },
 
   url: 'https://momus.dev',
