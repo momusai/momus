@@ -12,6 +12,8 @@ An open, modular framework for testing the security of AI models, agents, and (s
 
 <img src="docs/demo.svg" alt="momus scan finds 31 vulnerabilities in the bundled example target and exits 2, failing the build" width="860">
 
+**[How the verdict is decided →](https://momus.dev/how-it-works.html)** — an interactive walkthrough of why a refusal that quotes the canary is still *safe*.
+
 </div>
 
 ---

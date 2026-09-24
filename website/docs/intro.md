@@ -13,6 +13,12 @@ Momus is an open framework for testing the security of AI models, agents, and
 scores the responses — with a false-positive discipline baked into the core, so
 you can run it in CI without it flagging every well-behaved refusal.
 
+:::tip Start here
+**[The Verdict Machine](pathname:///how-it-works.html)** is an interactive walkthrough of
+the part that actually matters: given what a model sent back, how Momus decides
+whether it gave in — and why a refusal that quotes the canary is still *safe*.
+:::
+
 ## What works today
 
 - Scan **HTTP/JSON, OpenAI-compatible, Azure OpenAI, Anthropic, or Google Gemini**
