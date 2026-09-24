@@ -18,6 +18,8 @@ packages/momus-node/vendor/
 # signing keys must never be committed
 *.key
 
-# internal project brief: generated, and its status figures ("0 users") are
-# not something to publish in the repo
+# internal operational notes: publishing checklist, launch drafts, and the
+# generated project brief (its status figures are not for the public repo)
 /Momus-Project-Brief.pdf
+/HANDOVER.md
+/LAUNCH-POSTS.md
