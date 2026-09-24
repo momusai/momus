@@ -82,8 +82,21 @@ type sarifArtifact struct {
 }
 
 // securitySeverity maps a MAL severity to a GitHub 0-10 security-severity score.
-func securitySeverity(sev string) string {
-	switch sev {
+// securitySeverity maps a finding to GitHub's 0-10 security-severity score,
+// which is what colours an alert in the Security tab.
+//
+// An INCONCLUSIVE finding gets no score at all. The attack's severity describes
+// what a confirmed hit would mean, not what was observed, and scoring on it
+// anyway made every "the judge could not decide" result show up as a High
+// alert: 78 of them on this repo's own scan, drowning the 31 real ones. That is
+// the crying-wolf failure this project exists to avoid, just relocated to the
+// Security tab. With no score, GitHub falls back to the SARIF level, which is
+// already "note" for inconclusive — visible, and ranked below real findings.
+func securitySeverity(f scanner.Finding) string {
+	if f.Verdict == scanner.VerdictInconclusive {
+		return ""
+	}
+	switch string(f.Severity) {
 	case "critical":
 		return "9.5"
 	case "high":
@@ -146,7 +159,7 @@ func buildSARIF(meta Meta, findings []scanner.Finding) sarifLog {
 				ShortDescription: sarifText{Text: nonEmpty(f.AttackName, f.AttackID)},
 				Properties: sarifRuleProps{
 					Tags:             ruleTags(f),
-					SecuritySeverity: securitySeverity(string(f.Severity)),
+					SecuritySeverity: securitySeverity(f),
 				},
 			}
 			if len(f.References) > 0 {

@@ -316,3 +316,46 @@ func TestSARIFStillRecordsTheTarget(t *testing.T) {
 		t.Errorf("the scanned target is not recorded on the run: %v", props)
 	}
 }
+
+// An inconclusive finding must not be scored as a real vulnerability. GitHub
+// colours alerts by the rule's security-severity, so scoring inconclusive
+// results on the attack's severity made every "the judge could not decide"
+// result appear as a High alert — 78 of them on this repo's own scan against
+// 31 genuine ones. Severity describes what a confirmed hit would mean, not what
+// was observed.
+func TestSARIFDoesNotScoreInconclusiveAsVulnerable(t *testing.T) {
+	doc := sarifOf(t, []scanner.Finding{
+		{AttackID: "vuln-high", Severity: "high", Verdict: scanner.VerdictVulnerable},
+		{AttackID: "incon-high", Severity: "high", Verdict: scanner.VerdictInconclusive},
+		{AttackID: "incon-crit", Severity: "critical", Verdict: scanner.VerdictInconclusive},
+	})
+	rules := doc["runs"].([]any)[0].(map[string]any)["tool"].(map[string]any)["driver"].(map[string]any)["rules"].([]any)
+	byID := map[string]map[string]any{}
+	for _, r := range rules {
+		rm := r.(map[string]any)
+		byID[rm["id"].(string)] = rm["properties"].(map[string]any)
+	}
+
+	if got := byID["vuln-high"]["security-severity"]; got != "7.5" {
+		t.Errorf("a confirmed high finding should still score 7.5, got %v", got)
+	}
+	for _, id := range []string{"incon-high", "incon-crit"} {
+		if got, present := byID[id]["security-severity"]; present {
+			t.Errorf("%s: inconclusive finding scored %v; it must carry no security-severity "+
+				"or GitHub ranks it as a real vulnerability", id, got)
+		}
+	}
+
+	// The results themselves must still be present and levelled as notes —
+	// suppressing them entirely would hide that those attacks went untested.
+	results := doc["runs"].([]any)[0].(map[string]any)["results"].([]any)
+	if len(results) != 3 {
+		t.Fatalf("got %d results, want all three reported", len(results))
+	}
+	for _, r := range results {
+		rm := r.(map[string]any)
+		if rm["properties"].(map[string]any)["verdict"] == "inconclusive" && rm["level"] != "note" {
+			t.Errorf("inconclusive result levelled %v, want note", rm["level"])
+		}
+	}
+}
