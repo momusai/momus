@@ -38,6 +38,8 @@ momus pack lock|verify|sign|keygen ...
 | `MOMUS_MODEL` | Model for OpenAI/Anthropic targets |
 | `MOMUS_TARGET_API_KEY` | Explicit key for a non-standard target host |
 | `OPENAI_API_KEY` / `ANTHROPIC_API_KEY` / `AZURE_OPENAI_API_KEY` (or `AZURE_OPENAI_KEY`) / `GEMINI_API_KEY` (or `GOOGLE_API_KEY`) | Provider keys (sent only to their genuine host) |
+| `GOOGLE_ACCESS_TOKEN` (or `VERTEX_ACCESS_TOKEN`) | Vertex AI bearer token — `gcloud auth print-access-token` |
+| `AWS_REGION` / `AWS_PROFILE` / `AWS_ACCESS_KEY_ID` / … | AWS Bedrock, via the standard credential chain |
 | `MOMUS_JUDGE_URL` / `MOMUS_JUDGE_MODEL` / `MOMUS_JUDGE_API_KEY` / `MOMUS_JUDGE_PROVIDER` | Judge configuration |
 | `MOMUS_JUDGE_THRESHOLD` / `MOMUS_JUDGE_TIMEOUT` / `MOMUS_JUDGE_VOTES` | Judge tuning |
 

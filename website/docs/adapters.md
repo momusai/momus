@@ -12,9 +12,50 @@ Momus picks an adapter from the target URL:
 | Azure OpenAI | host `*.openai.azure.com` | `AZURE_OPENAI_API_KEY` (`api-key` header) |
 | Anthropic | path `/v1/messages` or host `api.anthropic.com` | `ANTHROPIC_API_KEY` (`x-api-key`) |
 | Google Gemini | path `:generateContent` or the Gemini host | `GEMINI_API_KEY` / `GOOGLE_API_KEY` |
+| Google Vertex AI | host `*-aiplatform.googleapis.com` | `GOOGLE_ACCESS_TOKEN` (Bearer) |
+| AWS Bedrock | host `bedrock-runtime.*` | the standard AWS credential chain (SigV4) |
 | Generic HTTP | anything else | `MOMUS_TARGET_API_KEY` (Bearer), if set |
 
 The OpenAI-compatible adapter also covers Ollama, vLLM, and Groq.
+
+Vertex is matched **before** Gemini: the two serve the same `generateContent`
+API and differ only in auth, so a Vertex URL routed to the Gemini adapter would
+send an API-key header and get a 401 on every attack.
+
+## AWS Bedrock
+
+The model and region come from the URL, so there is nothing else to configure:
+
+```bash
+momus scan https://bedrock-runtime.us-east-1.amazonaws.com/model/anthropic.claude-3-5-sonnet-20240620-v1:0/converse
+```
+
+Momus uses Bedrock's **Converse** API rather than `InvokeModel`. `InvokeModel`
+has a different request and response shape for every model family (Anthropic,
+Titan, Llama, Mistral, Cohere), so an adapter built on it has to guess at the
+reply format for any family it does not recognise — and guessing is how a
+scanner ends up scoring a non-reply as "safe". Converse normalises all of them.
+
+Credentials come from the standard AWS chain: environment variables, a shared
+profile (`AWS_PROFILE`), SSO, EC2/ECS instance roles, or EKS IRSA. Production
+Bedrock is usually reached with an IAM role rather than a static key pair, which
+is why the official SDK is used here instead of a hand-rolled signature.
+
+The role needs `bedrock:InvokeModel` on the model, and **model access must be
+enabled** for that model in that region — an access-denied error names both
+possibilities rather than leaving you to guess.
+
+## Google Vertex AI
+
+```bash
+export GOOGLE_ACCESS_TOKEN=$(gcloud auth print-access-token)
+momus scan "https://us-central1-aiplatform.googleapis.com/v1/projects/PROJECT/locations/us-central1/publishers/google/models/gemini-1.5-pro:generateContent"
+```
+
+Momus does not implement Application Default Credentials — the token is supplied
+explicitly, as above. These tokens last about an hour, which is comfortably
+longer than a scan; if one does expire mid-run the remaining attacks report
+`inconclusive` (HTTP 401), never "safe".
 
 ## Key isolation
 

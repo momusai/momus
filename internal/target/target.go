@@ -162,8 +162,16 @@ func Build(url string) (Target, error) {
 		return NewOpenAI(url), nil
 	case strings.Contains(url, "/v1/messages") || isAnthropicHost(url):
 		return NewAnthropic(url), nil
+	// Vertex serves the same generateContent API as public Gemini but
+	// authenticates with a bearer token, so it must be matched FIRST — the
+	// shared ":generateContent" marker would otherwise send it down the
+	// API-key path and every request would come back 401.
+	case isVertexHost(url):
+		return NewVertex(url), nil
 	case strings.Contains(url, ":generateContent") || isGeminiHost(url):
 		return NewGemini(url), nil
+	case isBedrockHost(url):
+		return NewBedrock(url), nil
 	default:
 		return NewHTTP(url), nil
 	}

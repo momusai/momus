@@ -22,7 +22,7 @@ Momus is what happens when Metasploit, Semgrep, and OWASP ZAP have a child raise
 
 ## What works today (v0.0.1)
 
-- **Scan HTTP/JSON, OpenAI-compatible, Azure OpenAI, Anthropic (Claude), or Google Gemini endpoints** — OpenAI, Ollama, vLLM, Groq, Azure OpenAI, the Anthropic Messages API, the Gemini generateContent API, and most self-hosted models. The adapter is picked from the URL; API keys are only ever sent to their genuine host.
+- **Scan almost any model endpoint** — OpenAI-compatible (OpenAI, Ollama, vLLM, Groq), Azure OpenAI, the Anthropic Messages API, Google Gemini, Google Vertex AI, AWS Bedrock, and plain HTTP/JSON for your own agent. The adapter is picked from the URL; credentials are only ever sent to their genuine host.
 - **200 attacks across 10 categories** — prompt injection, jailbreak, data exfiltration, encoding/obfuscation, excessive agency, insecure output handling, sensitive-info disclosure, RAG injection, misinformation, and package hallucination (slopsquatting). Mapped to OWASP LLM Top 10.
 - **Three-valued detection engine** (`matched` / `not-matched` / **`inconclusive`**) so "I can't tell" is a first-class result, never a guess.
 - **`llm_judge` scorer** — an optional, prompt-injection-resistant, evidence-verifying model-as-judge. Works with OpenAI-compatible, Anthropic, or local (Ollama) judges; with none configured, semantic checks degrade to *inconclusive* — never a false positive.
@@ -223,7 +223,7 @@ Editing attacks requires re-running `momus pack lock`.
 ```
 cmd/momus/         CLI
 internal/mal/      MAL schema + three-valued (Kleene) evaluator
-internal/target/   target adapters (HTTP, OpenAI-compatible, Azure OpenAI, Anthropic, Gemini)
+internal/target/   target adapters (HTTP, OpenAI-compatible, Azure, Anthropic, Gemini, Vertex, Bedrock)
 internal/judge/    llm_judge: nonce-fenced, evidence-verified; OpenAI/Anthropic/Ollama/fake
 internal/scanner/  concurrent worker pool: runs a pack against a target -> findings
 internal/report/   terminal / JSON / HTML / SARIF reporters

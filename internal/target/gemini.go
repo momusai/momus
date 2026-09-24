@@ -17,8 +17,14 @@ import (
 // endpoint and no model env is needed.
 type GeminiTarget struct {
 	URL    string
-	APIKey string
+	APIKey string // x-goog-api-key, for the public Gemini endpoint
+	Bearer string // OAuth2 access token, for Vertex AI
 	Client *http.Client
+
+	// adapter names the service in reports and error messages. Empty means
+	// "gemini"; NewVertex sets it to "vertex" so a Vertex failure does not get
+	// reported against the public Gemini endpoint.
+	adapter string
 }
 
 // NewGemini constructs a GeminiTarget. Auth is resolved by geminiAPIKey, which
@@ -31,8 +37,14 @@ func NewGemini(url string) *GeminiTarget {
 	}
 }
 
-// Name identifies this adapter.
-func (t *GeminiTarget) Name() string { return "gemini" }
+// Name identifies this adapter — "gemini" or "vertex", which share a wire
+// format and differ only in how they authenticate.
+func (t *GeminiTarget) Name() string {
+	if t.adapter != "" {
+		return t.adapter
+	}
+	return "gemini"
+}
 
 // Send posts a single user turn and concatenates the candidate's text parts.
 func (t *GeminiTarget) Send(ctx context.Context, req Request) (*Response, error) {
@@ -49,8 +61,13 @@ func (t *GeminiTarget) Send(ctx context.Context, req Request) (*Response, error)
 		}
 		r.Header.Set("content-type", "application/json")
 		r.Header.Set("user-agent", "momus/0.0.1")
-		if t.APIKey != "" {
-			// Header auth keeps the key out of the URL / logs.
+		switch {
+		case t.Bearer != "":
+			// Vertex AI: an OAuth2 access token for the Cloud project.
+			r.Header.Set("authorization", "Bearer "+t.Bearer)
+		case t.APIKey != "":
+			// Public Gemini endpoint. Header auth keeps the key out of the
+			// URL, and so out of logs and proxy access records.
 			r.Header.Set("x-goog-api-key", t.APIKey)
 		}
 		return r, nil
@@ -63,20 +80,21 @@ func (t *GeminiTarget) Send(ctx context.Context, req Request) (*Response, error)
 	if err != nil {
 		return nil, err
 	}
-	if err := requireOK(resp, "gemini", data); err != nil {
+	name := t.Name()
+	if err := requireOK(resp, name, data); err != nil {
 		return nil, err
 	}
-	if err := requireNotStream(resp, "gemini", data); err != nil {
+	if err := requireNotStream(resp, name, data); err != nil {
 		return nil, err
 	}
 
 	var raw map[string]any
 	if err := json.Unmarshal(data, &raw); err != nil {
-		return nil, fmt.Errorf("gemini target: unparseable response (streaming not supported?): %s", snippet(data))
+		return nil, fmt.Errorf("%s target: unparseable response (streaming not supported?): %s", name, snippet(data))
 	}
 	candidates, ok := raw["candidates"].([]any)
 	if !ok {
-		return nil, fmt.Errorf("gemini target: response has no 'candidates' field: %s", snippet(data))
+		return nil, fmt.Errorf("%s target: response has no 'candidates' field: %s", name, snippet(data))
 	}
 	var text strings.Builder
 	for _, c := range candidates {
@@ -100,7 +118,7 @@ func (t *GeminiTarget) Send(ctx context.Context, req Request) (*Response, error)
 			}
 		}
 	}
-	if err := requireReply(text.String(), "gemini", data); err != nil {
+	if err := requireReply(text.String(), name, data); err != nil {
 		return nil, err
 	}
 	return &Response{

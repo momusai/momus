@@ -44,7 +44,7 @@ By 2028, Momus should be to AI security what Metasploit was to network security 
 - [x] Adapter: Anthropic native (Messages API) *(target-side)*
 - [x] Adapter: Google Gemini (generateContent API) *(target-side)*
 - [x] Adapter: Azure OpenAI (api-key auth) *(target-side)*
-- [ ] Adapters: AWS Bedrock, Google Vertex *(target-side)*
+- [x] Adapters: AWS Bedrock, Google Vertex *(target-side; Bedrock via the Converse API)*
 - [x] Adapters: Ollama, vLLM, llama.cpp servers *(covered by the OpenAI-compatible adapter)*
 - [x] LLM-as-judge scorer using pluggable judge models *(OpenAI/Ollama/Anthropic/Fake; nonce-fenced, evidence-verified)*
 - [x] 200 attacks total
