@@ -1,11 +1,13 @@
 package report
 
 import (
+	"bytes"
 	"encoding/json"
 	"os"
 	"strings"
 	"testing"
 
+	"github.com/momusai/momus/internal/mal"
 	"github.com/momusai/momus/internal/scanner"
 	"github.com/momusai/momus/internal/target"
 )
@@ -166,4 +168,96 @@ func TestWriteSARIFFileValid(t *testing.T) {
 	if err := json.Unmarshal(b, &doc); err != nil {
 		t.Fatalf("written file not valid JSON: %v", err)
 	}
+}
+
+// GitHub's SARIF ingestion rejects the ENTIRE upload when any rule's
+// properties.tags repeats an item — "contains duplicate item". Duplicates are
+// the normal case for this pack (an attack in the prompt-injection category
+// also carries a "prompt-injection" tag, and most carry "owasp-llm-01"
+// alongside the OWASPLLM field), so before dedup every upload failed and no
+// finding ever reached the Security tab.
+func TestSARIFRuleTagsHaveNoDuplicates(t *testing.T) {
+	cases := []scanner.Finding{
+		{
+			// The exact shape that broke it: category and OWASP id repeated in Tags.
+			AttackID: "pi-002", Category: "prompt-injection", OWASPLLM: "LLM01",
+			Tags:     []string{"prompt-injection", "classic", "LLM01", "owasp-llm-01"},
+			Severity: "high", Verdict: scanner.VerdictVulnerable,
+		},
+		{AttackID: "a", Category: "security", Tags: []string{"security"}, Verdict: scanner.VerdictSafe},
+		{AttackID: "b", Tags: []string{"x", "x", "x"}, Verdict: scanner.VerdictSafe},
+		{AttackID: "c", Verdict: scanner.VerdictSafe},
+	}
+	for _, f := range cases {
+		tags := ruleTags(f)
+		seen := map[string]bool{}
+		for _, tg := range tags {
+			if seen[tg] {
+				t.Errorf("%s: duplicate tag %q in %v — GitHub would reject the whole upload",
+					f.AttackID, tg, tags)
+			}
+			seen[tg] = true
+			if tg == "" {
+				t.Errorf("%s: empty tag in %v", f.AttackID, tags)
+			}
+		}
+		if len(tags) == 0 || tags[0] != "security" {
+			t.Errorf("%s: expected \"security\" first, got %v", f.AttackID, tags)
+		}
+	}
+}
+
+// The pack-wide version: emit SARIF for every attack in packs/core and assert
+// no rule has duplicate tags. A new attack whose tags repeat its category would
+// otherwise silently break code-scanning upload again.
+func TestSARIFFromCorePackIsAcceptable(t *testing.T) {
+	attacks, err := mal.LoadPack("../../packs/core")
+	if err != nil || len(attacks) == 0 {
+		t.Skipf("core pack unavailable: %v", err)
+	}
+	findings := make([]scanner.Finding, 0, len(attacks))
+	for i := range attacks {
+		a := &attacks[i]
+		findings = append(findings, scanner.Finding{
+			AttackID: a.ID, AttackName: a.Name, Category: a.Category,
+			Severity: a.Severity, OWASPLLM: a.OWASPLLM, Tags: a.Tags,
+			Payload: a.Payload, Verdict: scanner.VerdictVulnerable,
+			Reason: "test",
+		})
+	}
+
+	var buf bytes.Buffer
+	if err := WriteSARIF(&buf, Meta{Target: "t", Pack: "packs/core"}, findings); err != nil {
+		t.Fatal(err)
+	}
+	var log struct {
+		Runs []struct {
+			Tool struct {
+				Driver struct {
+					Rules []struct {
+						ID         string `json:"id"`
+						Properties struct {
+							Tags []string `json:"tags"`
+						} `json:"properties"`
+					} `json:"rules"`
+				} `json:"driver"`
+			} `json:"tool"`
+		} `json:"runs"`
+	}
+	if err := json.Unmarshal(buf.Bytes(), &log); err != nil {
+		t.Fatalf("emitted SARIF is not valid JSON: %v", err)
+	}
+	if len(log.Runs) != 1 || len(log.Runs[0].Tool.Driver.Rules) == 0 {
+		t.Fatal("SARIF has no rules")
+	}
+	for _, r := range log.Runs[0].Tool.Driver.Rules {
+		seen := map[string]bool{}
+		for _, tg := range r.Properties.Tags {
+			if seen[tg] {
+				t.Errorf("rule %s has duplicate tag %q: %v", r.ID, tg, r.Properties.Tags)
+			}
+			seen[tg] = true
+		}
+	}
+	t.Logf("checked %d rules from the core pack", len(log.Runs[0].Tool.Driver.Rules))
 }

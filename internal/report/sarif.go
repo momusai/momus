@@ -207,15 +207,30 @@ func runProperties(meta Meta) map[string]any {
 	return props
 }
 
+// ruleTags builds a rule's SARIF tags, deduplicated.
+//
+// The dedup is load-bearing, not tidiness: GitHub's SARIF ingestion rejects the
+// ENTIRE upload if any rule's properties.tags contains a repeated item, with
+// "contains duplicate item". Duplicates are the normal case here — an attack in
+// the prompt-injection category also carries a "prompt-injection" tag, and most
+// carry an "owasp-llm-01" tag alongside the OWASPLLM field — so before this the
+// upload failed for every scan and no findings ever reached the Security tab.
 func ruleTags(f scanner.Finding) []string {
-	tags := []string{"security"}
-	if f.Category != "" {
-		tags = append(tags, f.Category)
+	tags := make([]string, 0, len(f.Tags)+3)
+	seen := make(map[string]bool, len(f.Tags)+3)
+	add := func(t string) {
+		if t == "" || seen[t] {
+			return
+		}
+		seen[t] = true
+		tags = append(tags, t)
 	}
-	if f.OWASPLLM != "" {
-		tags = append(tags, f.OWASPLLM)
+	add("security")
+	add(f.Category)
+	add(f.OWASPLLM)
+	for _, t := range f.Tags {
+		add(t)
 	}
-	tags = append(tags, f.Tags...)
 	return tags
 }
 
