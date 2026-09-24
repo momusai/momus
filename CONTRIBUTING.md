@@ -66,3 +66,8 @@ a test.
 Small, self-contained PRs get reviewed faster. Explain what and why in the
 description. If it's a big change, open an issue first so we can talk about it
 before you sink time into it.
+
+## Conduct
+
+Be decent to people; argue about the work, not the person. The full version is in
+[CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).

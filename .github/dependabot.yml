@@ -1,0 +1,36 @@
+# A security scanner that ships stale dependencies is not a good look, and the
+# AWS SDK in particular moves quickly. Weekly, grouped, so the tracker does not
+# fill with one PR per module.
+version: 2
+updates:
+  - package-ecosystem: gomod
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      aws-sdk:
+        patterns: ["github.com/aws/*"]
+      all-go:
+        patterns: ["*"]
+        exclude-patterns: ["github.com/aws/*"]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      actions:
+        patterns: ["*"]
+
+  - package-ecosystem: npm
+    directory: /packages/momus-node
+    schedule:
+      interval: weekly
+
+  - package-ecosystem: npm
+    directory: /website
+    schedule:
+      interval: monthly
+    groups:
+      docusaurus:
+        patterns: ["@docusaurus/*"]

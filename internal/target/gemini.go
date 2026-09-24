@@ -10,6 +10,8 @@ import (
 	"os"
 	"strings"
 	"time"
+
+	"github.com/momus-ai/momus/internal/buildinfo"
 )
 
 // GeminiTarget speaks the Google Gemini generateContent API. The model is part
@@ -60,7 +62,7 @@ func (t *GeminiTarget) Send(ctx context.Context, req Request) (*Response, error)
 			return nil, err
 		}
 		r.Header.Set("content-type", "application/json")
-		r.Header.Set("user-agent", "momus/0.0.1")
+		r.Header.Set("user-agent", buildinfo.UserAgent("momus"))
 		switch {
 		case t.Bearer != "":
 			// Vertex AI: an OAuth2 access token for the Cloud project.

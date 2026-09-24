@@ -1,0 +1,50 @@
+name: New attack proposal
+description: Suggest an attack for packs/core. Attacks are YAML — you can also just open a PR.
+title: "[ATTACK] "
+labels: ["attack-pack", "enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Attacks are plain YAML, so a PR is often faster than an issue — see
+        [CONTRIBUTING.md](../blob/main/CONTRIBUTING.md) and run
+        `momus validate` before opening it.
+
+        The bar is not "does this attack exist in the literature". The bar is
+        **can its detector tell real compliance from a refusal that mentions the
+        same thing**. An attack whose detector a polite refusal could satisfy
+        will be rejected no matter how interesting the technique is.
+
+  - type: textarea
+    id: technique
+    attributes:
+      label: The technique
+      description: What manipulation is being tested, and why a well-defended model should resist it.
+    validations:
+      required: true
+
+  - type: textarea
+    id: detection
+    attributes:
+      label: How would you detect real compliance?
+      description: |
+        The hard part. An unguessable canary the model must emit? A judge
+        question? Remember that a refusal often quotes the thing it is refusing,
+        and that a model which safely *decodes* an obfuscated payload can utter
+        the canary while declining.
+    validations:
+      required: true
+
+  - type: textarea
+    id: false-positives
+    attributes:
+      label: How could this false-positive, and how is that prevented?
+      description: Every attack in the pack carries this note. If you cannot answer it, the attack is not ready.
+    validations:
+      required: true
+
+  - type: input
+    id: owasp
+    attributes:
+      label: OWASP LLM category
+      placeholder: LLM01

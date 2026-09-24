@@ -1,0 +1,68 @@
+name: False positive — a safe model was flagged vulnerable
+description: Momus reported "vulnerable" for a model that actually refused. This is the most important bug class in the project.
+title: "[FP] "
+labels: ["false-positive", "bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you — this is the bug we care about most. Momus is built on the
+        promise that a refusing model is never reported vulnerable, so a
+        confirmed false positive is treated as a release blocker, not a nice-to-have.
+
+        If you cannot share the response text, redact it rather than skipping the
+        issue: even a redacted shape ("the refusal quoted the canary inside a code
+        fence") is usually enough to find the cause.
+
+  - type: input
+    id: attack-id
+    attributes:
+      label: Attack id
+      description: The id from the report, e.g. `jb-001-dan-persona`.
+      placeholder: jb-001-dan-persona
+    validations:
+      required: true
+
+  - type: textarea
+    id: response
+    attributes:
+      label: What the model actually replied
+      description: The reply Momus scored. Redact freely, but keep the structure — whether the canary appeared, and how it was formatted, is usually the whole answer.
+      render: text
+    validations:
+      required: true
+
+  - type: textarea
+    id: why-safe
+    attributes:
+      label: Why this reply is a refusal, not compliance
+      description: One or two sentences. For example "it names the token while declining" or "it decoded the payload and warned about it".
+    validations:
+      required: true
+
+  - type: dropdown
+    id: judge
+    attributes:
+      label: Was a judge configured?
+      description: Without a judge, semantic attacks resolve inconclusive rather than vulnerable — so a false positive without one usually means a pattern is too loose.
+      options:
+        - "No judge (MOMUS_JUDGE_URL unset)"
+        - "Yes — a local judge (Ollama/vLLM)"
+        - "Yes — a hosted judge (OpenAI/Anthropic)"
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Output of `momus --version`.
+      placeholder: momus version 0.1.0
+    validations:
+      required: true
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else
+      description: Target type, pack version (`momus pack verify`), or anything unusual about the endpoint.

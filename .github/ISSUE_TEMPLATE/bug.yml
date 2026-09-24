@@ -1,0 +1,56 @@
+name: Bug report
+description: Something else is broken — a crash, a wrong exit code, a broken report, an adapter that misbehaves.
+title: "[BUG] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        For a **false positive** (a refusing model flagged vulnerable) or a
+        **false "safe"** (a target reported clean that was never tested), please
+        use those dedicated templates instead — they ask the questions that
+        actually diagnose those two classes.
+
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: Include the command you ran and the output. `--json` output is helpful when the terminal rendering is the problem.
+      render: text
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected instead
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      placeholder: momus version 0.1.0
+    validations:
+      required: true
+
+  - type: dropdown
+    id: install
+    attributes:
+      label: How did you install it?
+      options:
+        - "npx momus / npm"
+        - "go install"
+        - "downloaded a release binary"
+        - "built from source"
+    validations:
+      required: true
+
+  - type: input
+    id: os
+    attributes:
+      label: OS and architecture
+      placeholder: Ubuntu 24.04 / amd64
+    validations:
+      required: true

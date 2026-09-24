@@ -11,6 +11,8 @@ import (
 	"strings"
 	"time"
 	"unicode/utf8"
+
+	"github.com/momus-ai/momus/internal/buildinfo"
 )
 
 // HTTPTarget dispatches an attack payload to a generic JSON HTTP endpoint.
@@ -57,7 +59,7 @@ func (t *HTTPTarget) Send(ctx context.Context, req Request) (*Response, error) {
 		}
 		r.Header.Set("content-type", "application/json")
 		r.Header.Set("accept", "application/json, text/plain")
-		r.Header.Set("user-agent", "momus/0.0.1")
+		r.Header.Set("user-agent", buildinfo.UserAgent("momus"))
 		if t.APIKey != "" {
 			r.Header.Set("authorization", "Bearer "+t.APIKey)
 		}

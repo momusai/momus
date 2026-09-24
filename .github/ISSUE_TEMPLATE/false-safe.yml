@@ -1,0 +1,63 @@
+name: False "safe" — a target was never really tested
+description: Momus reported "safe" (or exited 0) for a target it did not actually reach or score. The most dangerous bug class in the project.
+title: "[FALSE-SAFE] "
+labels: ["false-safe", "bug", "priority"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This is the failure mode that gets someone breached, so it outranks
+        everything else on the tracker.
+
+        Momus is supposed to report **inconclusive**, never "safe", for anything
+        it could not genuinely score: a non-2xx or 3xx response, a streaming
+        body, a blank or unrecognised reply, an HTML page, sustained throttling,
+        an interrupted run. If you found a case where it said "safe" anyway —
+        or exited 0 when nothing was really tested — please tell us.
+
+        The liveness probe and the exit-code rules are meant to catch these
+        before a scan even starts, so a report here usually means a gap in them.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What Momus reported, and what was actually true
+      description: For example "reported 200 safe, exit 0, but the endpoint was a login page and never saw a single prompt".
+    validations:
+      required: true
+
+  - type: textarea
+    id: endpoint
+    attributes:
+      label: What the endpoint actually returned
+      description: Status code, `content-type`, and the body shape. `curl -i` output is ideal. Redact anything sensitive.
+      render: text
+    validations:
+      required: true
+
+  - type: input
+    id: exit-code
+    attributes:
+      label: Exit code
+      description: From `echo $?`. Expected is 1 for an untested target, never 0.
+      placeholder: "0"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: probe
+    attributes:
+      label: Was the liveness probe skipped?
+      options:
+        - "No — the probe ran and passed"
+        - "Yes — I used --skip-probe"
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      placeholder: momus version 0.1.0
+    validations:
+      required: true

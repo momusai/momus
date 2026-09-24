@@ -10,6 +10,8 @@ import (
 	"os"
 	"strings"
 	"time"
+
+	"github.com/momus-ai/momus/internal/buildinfo"
 )
 
 // AnthropicTarget speaks the Anthropic Messages API (/v1/messages). It is the
@@ -58,7 +60,7 @@ func (t *AnthropicTarget) Send(ctx context.Context, req Request) (*Response, err
 			return nil, err
 		}
 		r.Header.Set("content-type", "application/json")
-		r.Header.Set("user-agent", "momus/0.0.1")
+		r.Header.Set("user-agent", buildinfo.UserAgent("momus"))
 		r.Header.Set("anthropic-version", "2023-06-01")
 		if t.APIKey != "" {
 			r.Header.Set("x-api-key", t.APIKey)

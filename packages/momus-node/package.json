@@ -1,6 +1,6 @@
 {
   "name": "momus",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "The harshest critic your AI will ever face — an open scanner for AI/LLM security (prompt injection, jailbreaks, data exfiltration).",
   "bin": {
     "momus": "bin/momus.js"

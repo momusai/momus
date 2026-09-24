@@ -9,6 +9,8 @@ import (
 	"os"
 	"strings"
 	"time"
+
+	"github.com/momus-ai/momus/internal/buildinfo"
 )
 
 // AzureOpenAITarget speaks the Azure OpenAI chat-completions API. It shares the
@@ -49,7 +51,7 @@ func (t *AzureOpenAITarget) Send(ctx context.Context, req Request) (*Response, e
 			return nil, err
 		}
 		r.Header.Set("content-type", "application/json")
-		r.Header.Set("user-agent", "momus/0.0.1")
+		r.Header.Set("user-agent", buildinfo.UserAgent("momus"))
 		if t.APIKey != "" {
 			r.Header.Set("api-key", t.APIKey) // Azure uses api-key, not Bearer
 		}

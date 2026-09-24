@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/momus-ai/momus/internal/buildinfo"
 	"github.com/momus-ai/momus/internal/httpx"
 )
 
@@ -76,7 +77,7 @@ func (j *AnthropicJudge) Judge(ctx context.Context, req Request) (*Result, error
 			return nil, err
 		}
 		r.Header.Set("content-type", "application/json")
-		r.Header.Set("user-agent", "momus-judge/0.0.1")
+		r.Header.Set("user-agent", buildinfo.UserAgent("momus-judge"))
 		r.Header.Set("x-api-key", j.APIKey)
 		r.Header.Set("anthropic-version", "2023-06-01")
 		return r, nil

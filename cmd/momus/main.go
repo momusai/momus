@@ -21,6 +21,7 @@ import (
 	"github.com/spf13/cobra"
 
 	momus "github.com/momus-ai/momus"
+	"github.com/momus-ai/momus/internal/buildinfo"
 	"github.com/momus-ai/momus/internal/judge"
 	"github.com/momus-ai/momus/internal/mal"
 	"github.com/momus-ai/momus/internal/report"
@@ -37,6 +38,10 @@ import (
 
 // version is stamped by the build (-ldflags "-X main.version=...").
 var version = "dev"
+
+// Hand the stamped version to the packages that send it as a User-Agent but
+// cannot import main. One linker flag, one source of truth.
+func init() { buildinfo.Version = version }
 
 func main() {
 	// Cancel in-flight work on Ctrl-C / SIGTERM so a long scan stops gracefully.

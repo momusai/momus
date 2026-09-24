@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/momus-ai/momus/internal/buildinfo"
 	"github.com/momus-ai/momus/internal/httpx"
 )
 
@@ -65,7 +66,7 @@ func (j *OpenAIJudge) Judge(ctx context.Context, req Request) (*Result, error) {
 			return nil, err
 		}
 		r.Header.Set("content-type", "application/json")
-		r.Header.Set("user-agent", "momus-judge/0.0.1")
+		r.Header.Set("user-agent", buildinfo.UserAgent("momus-judge"))
 		if j.APIKey != "" {
 			r.Header.Set("authorization", "Bearer "+j.APIKey)
 		}

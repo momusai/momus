@@ -9,6 +9,8 @@ import (
 	"os"
 	"strings"
 	"time"
+
+	"github.com/momus-ai/momus/internal/buildinfo"
 )
 
 // OpenAITarget speaks the OpenAI /v1/chat/completions API. It also works with
@@ -80,7 +82,7 @@ func (t *OpenAITarget) Send(ctx context.Context, req Request) (*Response, error)
 			return nil, err
 		}
 		r.Header.Set("content-type", "application/json")
-		r.Header.Set("user-agent", "momus/0.0.1")
+		r.Header.Set("user-agent", buildinfo.UserAgent("momus"))
 		if t.APIKey != "" {
 			r.Header.Set("authorization", "Bearer "+t.APIKey)
 		}

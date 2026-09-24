@@ -7,8 +7,10 @@
 An open, modular framework for testing the security of AI models, agents, and (soon) MCP servers — with a false-positive discipline baked into the core.
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
-[![Status: pre-alpha](https://img.shields.io/badge/status-pre--alpha-orange)](ROADMAP.md)
+[![Status: alpha](https://img.shields.io/badge/status-alpha-orange)](ROADMAP.md)
 [![Go](https://img.shields.io/badge/built%20with-Go-00ADD8.svg)](go.mod)
+
+<img src="docs/demo.svg" alt="momus scan finds 31 vulnerabilities in the bundled example target and exits 2, failing the build" width="860">
 
 </div>
 
@@ -20,7 +22,7 @@ Every company is shipping AI agents. Almost none can prove those agents are safe
 
 Momus is what happens when Metasploit, Semgrep, and OWASP ZAP have a child raised on the OWASP LLM Top 10.
 
-## What works today (v0.0.1)
+## What works today (v0.1.0)
 
 - **Scan almost any model endpoint** — OpenAI-compatible (OpenAI, Ollama, vLLM, Groq), Azure OpenAI, the Anthropic Messages API, Google Gemini, Google Vertex AI, AWS Bedrock, and plain HTTP/JSON for your own agent. The adapter is picked from the URL; credentials are only ever sent to their genuine host.
 - **200 attacks across 10 categories** — prompt injection, jailbreak, data exfiltration, encoding/obfuscation, excessive agency, insecure output handling, sensitive-info disclosure, RAG injection, misinformation, and package hallucination (slopsquatting). Mapped to OWASP LLM Top 10.
