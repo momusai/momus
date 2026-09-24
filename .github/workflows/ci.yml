@@ -132,6 +132,11 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version: 'stable'
-      - uses: golangci/golangci-lint-action@v6
+      # v8 installs golangci-lint v2. v6 caps at v1.x, whose released binaries
+      # are built with Go 1.24 and refuse to load a config targeting Go 1.25:
+      # "the Go language version used to build golangci-lint is lower than the
+      # targeted Go version". Pinned to a minor series rather than `latest` so a
+      # new linter release cannot turn CI red without a commit here.
+      - uses: golangci/golangci-lint-action@v8
         with:
-          version: latest
+          version: v2.13

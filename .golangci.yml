@@ -1,21 +1,33 @@
+version: "2"
+
 run:
   timeout: 3m
 
 linters:
+  # errcheck, govet, ineffassign, staticcheck and unused are on by default in
+  # v2, so they are deliberately not repeated here.
   enable:
-    - errcheck
-    - govet
-    - ineffassign
-    - staticcheck
-    - unused
-    - gofmt
-    - goimports
     - misspell
     - unconvert
+  exclusions:
+    # v1 shipped these exclusions by default; v2 does not. Every issue they
+    # suppress here is a deferred Close() or an fmt.Fprint* to the terminal —
+    # the two canonical false-positive classes for errcheck. Restoring them
+    # keeps parity with the rules this code was written and reviewed under,
+    # rather than adding `_ =` noise to eighteen call sites.
+    presets:
+      - common-false-positives
+      - std-error-handling
+    rules:
+      # Table-driven tests get long; don't nag about unchecked errors there.
+      - path: _test\.go
+        linters:
+          - errcheck
+    # Note: the v2 defaults would also skip paths matching "examples$". This
+    # project's examples/ holds the vulnerable and safe fixture targets that CI
+    # scans on every run, so they are real code and stay linted.
 
-issues:
-  exclude-rules:
-    # Table-driven tests get long; don't nag about it.
-    - path: _test\.go
-      linters:
-        - errcheck
+formatters:
+  enable:
+    - gofmt
+    - goimports
