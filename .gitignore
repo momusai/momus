@@ -23,3 +23,17 @@ packages/momus-node/vendor/
 /Momus-Project-Brief.pdf
 /HANDOVER.md
 /LAUNCH-POSTS.md
+
+# Scan output. Running Momus inside its own repo — which CI does, and which is
+# the obvious way to try a change — otherwise leaves these untracked in the
+# working tree and invites committing someone's scan results by accident.
+/momus.sarif
+/momus-report.html
+/findings.json
+/*.db
+/diff.txt
+
+# npm only belongs in packages/momus-node and website; a lockfile at the repo
+# root means someone ran npm install in the wrong directory.
+/package-lock.json
+/node_modules/
