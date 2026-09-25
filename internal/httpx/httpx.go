@@ -166,7 +166,7 @@ func Do(ctx context.Context, client *http.Client, newReq func() (*http.Request, 
 			}
 			if notWorthRetrying(err) {
 				return nil, fmt.Errorf("%w (not retried: a timed-out request may still have been billed; "+
-					"raise the timeout for slow models)", err)
+					"raise MOMUS_TIMEOUT for slow models, e.g. MOMUS_TIMEOUT=180s)", err)
 			}
 			lastErr = err
 			wait = BackoffFor(attempt, nil)

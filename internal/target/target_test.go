@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 )
 
 func TestBuildHeuristic(t *testing.T) {
@@ -353,5 +354,31 @@ func TestTargetAPIKeyIsolation(t *testing.T) {
 	t.Setenv("MOMUS_TARGET_API_KEY", "explicit")
 	if k := targetAPIKey("https://evil.example/v1/chat/completions"); k != "explicit" {
 		t.Errorf("explicit MOMUS_TARGET_API_KEY not honored: %q", k)
+	}
+}
+
+// A quantized model on CPU answers at single-digit tokens per second, so a long
+// reply can legitimately exceed the default minute. Those timeouts score
+// inconclusive, so without this knob a slow local model degrades into a wall of
+// "undecided" — and the message printed on timeout tells the user to raise it.
+func TestRequestTimeout(t *testing.T) {
+	cases := []struct {
+		name, env string
+		want      time.Duration
+	}{
+		{"unset falls back to the default", "", 60 * time.Second},
+		{"a duration is honoured", "300s", 300 * time.Second},
+		{"minutes work too", "5m", 5 * time.Minute},
+		{"garbage falls back rather than panicking", "soon", 60 * time.Second},
+		{"zero is not a timeout", "0s", 60 * time.Second},
+		{"negative is rejected", "-30s", 60 * time.Second},
+	}
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			t.Setenv("MOMUS_TIMEOUT", tc.env)
+			if got := requestTimeout(); got != tc.want {
+				t.Errorf("requestTimeout() = %v, want %v", got, tc.want)
+			}
+		})
 	}
 }

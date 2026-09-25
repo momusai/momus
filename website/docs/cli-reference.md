@@ -37,6 +37,7 @@ momus pack lock|verify|sign|keygen ...
 |---|---|
 | `MOMUS_MODEL` | Model for OpenAI/Anthropic targets |
 | `MOMUS_TARGET_API_KEY` | Explicit key for a non-standard target host |
+| `MOMUS_TIMEOUT` | How long to wait for one reply (default `60s`). Raise it for a local model on CPU — a timeout scores *inconclusive*, never *safe* |
 | `OPENAI_API_KEY` / `ANTHROPIC_API_KEY` / `AZURE_OPENAI_API_KEY` (or `AZURE_OPENAI_KEY`) / `GEMINI_API_KEY` (or `GOOGLE_API_KEY`) | Provider keys (sent only to their genuine host) |
 | `GOOGLE_ACCESS_TOKEN` (or `VERTEX_ACCESS_TOKEN`) | Vertex AI bearer token — `gcloud auth print-access-token` |
 | `AWS_REGION` / `AWS_PROFILE` / `AWS_ACCESS_KEY_ID` / … | AWS Bedrock, via the standard credential chain |

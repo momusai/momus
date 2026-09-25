@@ -8,8 +8,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	neturl "net/url"
+	"os"
 	"strings"
 	"time"
 
@@ -103,7 +105,25 @@ func requireReply(text, provider string, body []byte) error {
 // retries for throttling/transient failures) with the judge providers via
 // internal/httpx, so the two can't drift apart.
 
-func newHTTPClient() *http.Client { return httpx.NewClient(60 * time.Second) }
+// requestTimeout is how long an adapter waits for a reply. The default suits a
+// hosted API, but a quantized model on CPU emits only a handful of tokens a
+// second, and a long answer there legitimately runs past a minute. Those
+// timeouts are scored inconclusive, so a slow local model quietly turns into a
+// wall of "undecided" — which is exactly what MOMUS_TIMEOUT exists to prevent.
+// The advice printed on a timeout names this variable, so it has to work.
+func requestTimeout() time.Duration {
+	if v := os.Getenv("MOMUS_TIMEOUT"); v != "" {
+		if d, err := time.ParseDuration(v); err == nil && d > 0 {
+			return d
+		}
+		// A malformed value must not silently mean "60s": the user asked for
+		// something specific and deserves to know it was ignored.
+		slog.Warn("ignoring malformed MOMUS_TIMEOUT (want a Go duration like 180s)", "value", v)
+	}
+	return 60 * time.Second
+}
+
+func newHTTPClient() *http.Client { return httpx.NewClient(requestTimeout()) }
 
 func readCappedBody(r io.Reader) ([]byte, error) { return httpx.ReadCapped(r) }
 
