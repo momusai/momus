@@ -4,7 +4,7 @@
 
 **The harshest critic your AI will ever face.**
 
-An open, modular framework for testing the security of AI models, agents, and (soon) MCP servers — with a false-positive discipline baked into the core.
+An open, modular framework for testing the security of AI models, agents, and MCP servers — with a false-positive discipline baked into the core.
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![Status: alpha](https://img.shields.io/badge/status-alpha-orange)](ROADMAP.md)
@@ -32,6 +32,7 @@ Momus is what happens when Metasploit, Semgrep, and OWASP ZAP have a child raise
 - **`llm_judge` scorer** — an optional, prompt-injection-resistant, evidence-verifying model-as-judge. Works with OpenAI-compatible, Anthropic, or local (Ollama) judges; with none configured, semantic checks degrade to *inconclusive* — never a false positive.
 - **Four output formats** — colorized terminal, JSON, self-contained **HTML report**, and **SARIF 2.1.0** for GitHub code scanning.
 - **CI gating** via `--fail-on <severity>` and a ready-to-use **GitHub Action**.
+- **MCP servers as first-class targets** — `momus mcp audit` flags injection hidden in a server's own tool descriptions and resources (including text made of invisible Unicode); `momus mcp scan` fires the pack at a tool and probes whether it reflects caller text into the host model's context.
 - **SQLite evidence store** — `--store` records every run, then `momus history` and `momus diff --fail-on-regression` answer the question CI actually asks: *did it get worse than last time?* The diff keeps `vulnerable -> inconclusive` out of the "fixed" column, because losing the ability to decide is not a fix.
 
 See [ROADMAP.md](ROADMAP.md) for what's next (native Anthropic/Bedrock targets, MCP, blue-team middleware, runtime monitoring, compliance packs).

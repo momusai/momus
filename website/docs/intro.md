@@ -9,7 +9,7 @@ sidebar_position: 1
 **The harshest critic your AI will ever face.**
 
 Momus is an open framework for testing the security of AI models, agents, and
-(soon) MCP servers. It sends a library of adversarial prompts at an endpoint and
+MCP servers. It sends a library of adversarial prompts at an endpoint and
 scores the responses — with a false-positive discipline baked into the core, so
 you can run it in CI without it flagging every well-behaved refusal.
 
