@@ -63,6 +63,7 @@ func main() {
 	root.AddCommand(newPackCmd())
 	root.AddCommand(newHistoryCmd())
 	root.AddCommand(newDiffCmd())
+	root.AddCommand(newMCPCmd())
 
 	if err := root.ExecuteContext(ctx); err != nil {
 		// Exit 2 when the run succeeded but the --fail-on gate tripped on
@@ -121,44 +122,60 @@ func newScanCmd() *cobra.Command {
 			return nil
 		},
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			// Validate --fail-on up front: an unrecognized value must be an error,
-			// not silently disable the gate (which would fail open in CI).
-			switch opts.failOn {
-			case "", "any", "info", "low", "medium", "high", "critical":
-			default:
-				return fmt.Errorf("invalid --fail-on %q (want any|info|low|medium|high|critical)", opts.failOn)
-			}
-			opts.judgeProvider = strings.ToLower(strings.TrimSpace(opts.judgeProvider))
-			switch opts.judgeProvider {
-			case "", "openai", "anthropic", "fake":
-			default:
-				return fmt.Errorf("invalid --judge-provider %q (want openai|anthropic)", opts.judgeProvider)
-			}
-			if opts.concurrency < 1 {
-				return fmt.Errorf("--concurrency must be at least 1, got %d", opts.concurrency)
-			}
-			// A negative --limit was silently ignored (selectAttacks only
-			// narrows when limit > 0), so `--limit -1` dispatched the whole
-			// pack at a target the user meant to sample.
-			if opts.limit < 0 {
-				return fmt.Errorf("--limit must be 0 (the whole pack) or a positive number, got %d", opts.limit)
-			}
-			// Check report destinations BEFORE scanning: discovering an unwritable
-			// path after a long (and possibly paid) scan wastes the whole run. The
-			// evidence database is checked here too — runScan opens it before
-			// dispatching attacks, but that is still after the liveness probe has
-			// spent two real calls on the target.
-			for _, p := range []string{opts.html, opts.sarif, opts.store} {
-				if err := checkWritable(p); err != nil {
-					return err
-				}
-			}
-			return nil
+			return opts.validate()
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return runScan(cmd.Context(), args[0], opts)
 		},
 	}
+	opts.addFlags(cmd)
+	return cmd
+}
+
+// validate checks the scan flags before anything is sent. It is shared with
+// `momus mcp scan`, which takes the same options against a different transport;
+// duplicating it would let the two drift, and a gate that silently fails open
+// in one of them is exactly the kind of difference nobody notices.
+func (opts *scanOpts) validate() error {
+	{
+		// Validate --fail-on up front: an unrecognized value must be an error,
+		// not silently disable the gate (which would fail open in CI).
+		switch opts.failOn {
+		case "", "any", "info", "low", "medium", "high", "critical":
+		default:
+			return fmt.Errorf("invalid --fail-on %q (want any|info|low|medium|high|critical)", opts.failOn)
+		}
+		opts.judgeProvider = strings.ToLower(strings.TrimSpace(opts.judgeProvider))
+		switch opts.judgeProvider {
+		case "", "openai", "anthropic", "fake":
+		default:
+			return fmt.Errorf("invalid --judge-provider %q (want openai|anthropic)", opts.judgeProvider)
+		}
+		if opts.concurrency < 1 {
+			return fmt.Errorf("--concurrency must be at least 1, got %d", opts.concurrency)
+		}
+		// A negative --limit was silently ignored (selectAttacks only
+		// narrows when limit > 0), so `--limit -1` dispatched the whole
+		// pack at a target the user meant to sample.
+		if opts.limit < 0 {
+			return fmt.Errorf("--limit must be 0 (the whole pack) or a positive number, got %d", opts.limit)
+		}
+		// Check report destinations BEFORE scanning: discovering an unwritable
+		// path after a long (and possibly paid) scan wastes the whole run. The
+		// evidence database is checked here too — runScan opens it before
+		// dispatching attacks, but that is still after the liveness probe has
+		// spent two real calls on the target.
+		for _, p := range []string{opts.html, opts.sarif, opts.store} {
+			if err := checkWritable(p); err != nil {
+				return err
+			}
+		}
+		return nil
+	}
+}
+
+// addFlags registers the scan options on a command.
+func (opts *scanOpts) addFlags(cmd *cobra.Command) {
 	cmd.Flags().StringVar(&opts.pack, "pack", "packs/core", "path to an attack pack directory")
 	cmd.Flags().BoolVar(&opts.json, "json", false, "emit findings as JSON to stdout")
 	cmd.Flags().StringVar(&opts.html, "html", "", "write a self-contained HTML report to this path")
@@ -174,16 +191,22 @@ func newScanCmd() *cobra.Command {
 	cmd.Flags().StringVar(&opts.judgeProvider, "judge-provider", "", "judge provider: openai|anthropic (else auto)")
 	cmd.Flags().Float64Var(&opts.judgeThresh, "judge-threshold", 0, "min judge confidence 0..1 (else MOMUS_JUDGE_THRESHOLD, default 0.7)")
 	cmd.Flags().StringVar(&opts.store, "store", "", "record the run in this SQLite evidence file, for `momus history` and `momus diff`")
-	return cmd
 }
 
 func runScan(ctx context.Context, url string, opts *scanOpts) error {
-	if ctx == nil {
-		ctx = context.Background()
-	}
 	tgt, err := target.Build(url)
 	if err != nil {
 		return err
+	}
+	return runScanWith(ctx, tgt, url, opts)
+}
+
+// runScanWith drives a scan against an already-built target. `scan` resolves
+// one from a URL; `mcp scan` builds one by connecting to an MCP server and
+// choosing a tool.
+func runScanWith(ctx context.Context, tgt target.Target, url string, opts *scanOpts) error {
+	if ctx == nil {
+		ctx = context.Background()
 	}
 	attacks, packLabel, skipped, err := loadAttacks(opts.pack)
 	if err != nil {
