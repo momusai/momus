@@ -246,6 +246,9 @@ func runScanWith(ctx context.Context, tgt target.Target, url string, opts *scanO
 		jcfg.Threshold = opts.judgeThresh
 	}
 	jcfg.TargetURL = url
+	// So one endpoint serving several models is not mistaken for the model
+	// grading itself — the usual shape for a local Ollama or vLLM.
+	jcfg.TargetModel = os.Getenv("MOMUS_MODEL")
 	j, err := judge.New(jcfg)
 	if err != nil {
 		return err

@@ -13,14 +13,16 @@ import (
 
 // Config is the resolved judge configuration (env-derived, overridable by CLI).
 type Config struct {
-	Provider  string        // "openai" | "anthropic" | "fake" | "" (auto)
-	BaseURL   string        // judge endpoint
-	Model     string        // default model / resolves "judge/default"
-	APIKey    string        // optional (local Ollama/vLLM need none)
-	Threshold float64       // min confidence; default 0.7
-	Timeout   time.Duration // per-call; default 30s
-	Votes     int           // self-consistency samples; default 1 (off)
-	TargetURL string        // the target under test, to reject self-grading
+	Provider    string        // "openai" | "anthropic" | "fake" | "" (auto)
+	BaseURL     string        // judge endpoint
+	Model       string        // default model / resolves "judge/default"
+	APIKey      string        // optional (local Ollama/vLLM need none)
+	Threshold   float64       // min confidence; default 0.7
+	Timeout     time.Duration // per-call; default 30s
+	Votes       int           // self-consistency samples; default 1 (off)
+	TargetURL   string        // the target under test, to reject self-grading
+	TargetModel string        // the model under test, so one endpoint serving many
+	//                         models is not mistaken for self-grading
 }
 
 // ConfigFromEnv reads MOMUS_JUDGE_* (with OPENAI/ANTHROPIC key fallbacks).
@@ -57,8 +59,14 @@ func New(c Config) (Judge, error) {
 		if !strings.HasPrefix(c.BaseURL, "http://") && !strings.HasPrefix(c.BaseURL, "https://") {
 			return nil, fmt.Errorf("invalid MOMUS_JUDGE_URL %q (want http:// or https://)", c.BaseURL)
 		}
-		if c.TargetURL != "" && c.BaseURL == c.TargetURL {
-			return nil, fmt.Errorf("judge URL must differ from the target under test (%q)", c.TargetURL)
+		// Only reject when the same MODEL is also implied. One endpoint serving
+		// several models is the normal local setup, and the resolved-endpoint
+		// check further down catches the rest once the model is known.
+		if c.TargetURL != "" && c.BaseURL == c.TargetURL &&
+			(c.Model == "" || c.TargetModel == "" || strings.EqualFold(c.Model, c.TargetModel)) {
+			return nil, fmt.Errorf("the judge would be the same model at the same endpoint as the "+
+				"target under test (%q), so it would grade its own answers; set MOMUS_JUDGE_MODEL "+
+				"to a different model, or MOMUS_JUDGE_URL to a different endpoint", c.TargetURL)
 		}
 	}
 	if c.APIKey == "" {
@@ -85,13 +93,21 @@ func New(c Config) (Judge, error) {
 	// there must NOT hard-fail the scan — we just don't use a judge. Only an
 	// explicit judge URL/provider colliding with the target is an error the user
 	// should fix.
-	if c.TargetURL != "" && resolvedJudgeURL(base) == c.TargetURL {
+	//
+	// Matching URLs alone is not self-grading. Ollama, vLLM and OpenRouter each
+	// serve many models from one endpoint, so judging llama3.2 with qwen2.5 is a
+	// genuinely different grader at the same address — and a local judge is the
+	// whole answer to "most attacks are inconclusive without one". Only the same
+	// model at the same endpoint is the model grading itself.
+	if c.TargetURL != "" && resolvedJudgeURL(base) == c.TargetURL && sameModel(c, base) {
 		if c.BaseURL != "" || c.Provider != "" {
-			return nil, fmt.Errorf("the configured judge is the same endpoint as the target under test (%q); "+
-				"point MOMUS_JUDGE_URL at a different endpoint", c.TargetURL)
+			return nil, fmt.Errorf("the judge is the same model at the same endpoint as the target "+
+				"under test (%s at %s), so it would be grading its own answers; point "+
+				"MOMUS_JUDGE_MODEL at a different model, or MOMUS_JUDGE_URL elsewhere",
+				orDefault(c.TargetModel, "the same model"), c.TargetURL)
 		}
 		slog.Warn("judge: the auto-selected judge is the target itself; scanning without a judge " +
-			"(set MOMUS_JUDGE_URL to a different endpoint to enable semantic checks)")
+			"(set MOMUS_JUDGE_URL or MOMUS_JUDGE_MODEL to enable semantic checks)")
 		return NoOp{}, nil
 	}
 	// Decorate: cache always; voting only when explicitly requested.
@@ -100,6 +116,28 @@ func New(c Config) (Judge, error) {
 		inner = NewVotingJudge(base, c.Votes)
 	}
 	return NewCachingJudge(inner), nil
+}
+
+// sameModel reports whether the judge would run the very model under test.
+// An unknown model on either side counts as "same", because guessing they
+// differ is the answer that lets a model grade itself.
+func sameModel(c Config, j Judge) bool {
+	judgeModel := resolvedJudgeModel(j)
+	if judgeModel == "" || c.TargetModel == "" {
+		return true
+	}
+	return strings.EqualFold(judgeModel, c.TargetModel)
+}
+
+// resolvedJudgeModel reports the model a concrete judge will actually use.
+func resolvedJudgeModel(j Judge) string {
+	switch t := j.(type) {
+	case *OpenAIJudge:
+		return t.Model
+	case *AnthropicJudge:
+		return t.Model
+	}
+	return ""
 }
 
 // resolvedJudgeURL reports the endpoint a concrete judge will actually call.

@@ -502,3 +502,62 @@ func TestExplicitJudgeKeyWins(t *testing.T) {
 		t.Errorf("APIKey = %q, want the explicit judge key", got)
 	}
 }
+
+// One endpoint serving several models is the normal shape for a local Ollama or
+// vLLM, and a local judge is the whole answer to "most attacks are inconclusive
+// without one". Comparing endpoints alone rejected that setup: judging
+// llama3.2 with qwen2.5 was treated as the model grading itself.
+func TestSelfGradingComparesModelNotJustEndpoint(t *testing.T) {
+	const endpoint = "http://127.0.0.1:11434/v1/chat/completions"
+
+	// Same endpoint, DIFFERENT model — a legitimate local judge.
+	j, err := New(Config{
+		BaseURL: endpoint, Model: "qwen2.5:0.5b",
+		TargetURL: endpoint, TargetModel: "llama3.2:1b",
+		APIKey: "local",
+	})
+	if err != nil {
+		t.Fatalf("a different model at the same endpoint must be allowed: %v", err)
+	}
+	if _, isNoOp := j.(NoOp); isNoOp {
+		t.Error("the judge was disabled even though a different model would grade")
+	}
+
+	// Same endpoint, SAME model — genuinely grading itself.
+	_, err = New(Config{
+		BaseURL: endpoint, Model: "llama3.2:1b",
+		TargetURL: endpoint, TargetModel: "llama3.2:1b",
+		APIKey: "local",
+	})
+	if err == nil {
+		t.Error("the same model at the same endpoint must be refused")
+	}
+
+	// Case differences are still the same model.
+	if _, err = New(Config{
+		BaseURL: endpoint, Model: "LLaMA3.2:1B",
+		TargetURL: endpoint, TargetModel: "llama3.2:1b",
+		APIKey: "local",
+	}); err == nil {
+		t.Error("model comparison must be case-insensitive")
+	}
+
+	// An unknown model on either side must fail SAFE — refuse rather than risk
+	// letting a model grade its own answers.
+	if _, err = New(Config{
+		BaseURL: endpoint, Model: "qwen2.5:0.5b",
+		TargetURL: endpoint, TargetModel: "",
+		APIKey: "local",
+	}); err == nil {
+		t.Error("an unknown target model must be treated as possibly the same")
+	}
+
+	// A different endpoint is fine regardless of model.
+	if _, err = New(Config{
+		BaseURL: "http://other.local/v1/chat/completions", Model: "llama3.2:1b",
+		TargetURL: endpoint, TargetModel: "llama3.2:1b",
+		APIKey: "local",
+	}); err != nil {
+		t.Errorf("a different endpoint must be allowed: %v", err)
+	}
+}
