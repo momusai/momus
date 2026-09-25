@@ -61,7 +61,7 @@ By 2028, Momus should be to AI security what Metasploit was to network security 
 
 **Own the protocols nobody else is testing.**
 
-- [ ] Native MCP adapter (Model Context Protocol servers as first-class targets)
+- [x] Native MCP adapter (Model Context Protocol servers as first-class targets) — *`momus mcp audit` + `momus mcp scan`, stdio and streamable HTTP*
 - [ ] LangChain / LangGraph adapter
 - [ ] LlamaIndex adapter
 - [ ] CrewAI / AutoGen / Semantic Kernel adapters
