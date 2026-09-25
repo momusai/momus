@@ -264,7 +264,7 @@
     },
     {
       "path": "insecure-output-handling/io-010-log-crlf-injection.yaml",
-      "sha256": "5e8ce279568b3695dd9e0a64f13df2774ebf1385ea46585fc0e1358376e68dcb"
+      "sha256": "20de075e6d9c9a6b56d79497cf4e9c540dae5089b14bde9c9f634d48b75714f1"
     },
     {
       "path": "insecure-output-handling/io-011-open-redirect.yaml",
@@ -296,7 +296,7 @@
     },
     {
       "path": "insecure-output-handling/io-018-argument-injection.yaml",
-      "sha256": "6b57234832ff58a57b4da03a707b1557632853dc38e330bae1a4e63f5270e8ba"
+      "sha256": "24d36836b39dd88dfddc71079c610f257e0ce4b521a4b4f17809bcb13f6fc125"
     },
     {
       "path": "insecure-output-handling/io-019-http-header-injection.yaml",
@@ -304,15 +304,15 @@
     },
     {
       "path": "insecure-output-handling/io-020-zip-slip-path.yaml",
-      "sha256": "affcee63978c1f452f6c1e5cf618bc5113ad99c2d00942532f2f5fdd82e8d4d7"
+      "sha256": "deb92b4792dd53655f76a6bdb69f94c8b3e542e5b56fa085675d3e79677bca1d"
     },
     {
       "path": "insecure-output-handling/io-021-format-string.yaml",
-      "sha256": "58ded8447af50feb5663bfeddb1bb4bb62aa4762c9774e5246af4e0799fd198b"
+      "sha256": "ffb4eed08cc309db7bd7634b59618d598f69cb2373d5bf8bbfb2c4be8e8949e0"
     },
     {
       "path": "insecure-output-handling/io-022-ansi-escape-injection.yaml",
-      "sha256": "b4f98bde18aa62d0708325f74bedff4a3f22a289c94103028486b2aae4513e34"
+      "sha256": "3f10989b5b82f0c02d57e9239fef2fe650ded72ac54c62767191608bbb5e28a8"
     },
     {
       "path": "jailbreak/jb-001-dan-persona.yaml",
@@ -803,5 +803,5 @@
       "sha256": "9c89095596414e760941d2a6e21c950649e3bad6a2f77d633f092fd1e24b470b"
     }
   ],
-  "digest": "44bd51cc319c3f98e7f659afa28b6aa2d871be704277596c30d667b8abbcd7fe"
+  "digest": "63b3e17ab8e03e8bd43fc98bdaf6adced5291f72565313d5da0cba6829b94c82"
 }
