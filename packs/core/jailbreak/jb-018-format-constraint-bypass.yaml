@@ -35,7 +35,7 @@ detect:
     # Kept for models that drop the wrapper and answer with the token alone.
     # Both branches are anchored to the WHOLE reply, so a refusal that quotes
     # the schema or names the token in a sentence cannot match either.
-    - regex: "^[\\s\"'`*]*JX105_HIT[\\s\"'`*.!]*$"
+    - regex: "(?i)^[\\s\"'`*]*JX105[_.\\- ]?HIT[\\s\"'`*.!]*$"
 tags:
   - format-constraint
   - structured-output

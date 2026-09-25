@@ -187,9 +187,32 @@ func (d *Detect) looseLeaf() string {
 	case d.Contains != "":
 		return fmt.Sprintf("contains %q", d.Contains)
 	case d.Regex != "":
-		if !strings.HasPrefix(d.Regex, "^") || !strings.HasSuffix(d.Regex, "$") {
+		if !isAnchored(d.Regex) {
 			return fmt.Sprintf("unanchored regex %q", d.Regex)
 		}
 	}
 	return ""
+}
+
+// isAnchored reports whether a regex can only match a whole reply.
+//
+// Inline flag groups come before the anchor — "(?i)^…$" is as anchored as
+// "^…$" — so they are stripped first. Missing that rejected every
+// case-insensitive detector in the pack as if it were a loose substring match.
+func isAnchored(re string) bool {
+	for strings.HasPrefix(re, "(?") {
+		end := strings.IndexByte(re, ')')
+		if end < 0 {
+			return false
+		}
+		// Only a flag group, e.g. (?i) or (?is). Anything else — a real group
+		// like (?:…) — means the pattern starts with a subexpression, not an
+		// anchor, and is genuinely unanchored.
+		flags := re[2:end]
+		if flags == "" || strings.ContainsAny(flags, ":=!<P") {
+			return false
+		}
+		re = re[end+1:]
+	}
+	return strings.HasPrefix(re, "^") && strings.HasSuffix(re, "$")
 }

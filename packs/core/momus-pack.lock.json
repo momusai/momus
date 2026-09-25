@@ -56,83 +56,83 @@
     },
     {
       "path": "encoding-obfuscation/eo-002-leetspeak-bypass.yaml",
-      "sha256": "437cb31afa81f01bbe60fe1db6c2c2b116f419475846c31c0a1786d1ef237677"
+      "sha256": "480a43469c5d8248b16eccd091e56b078d228bd3a8e9f952f84b9bc2dabb74f0"
     },
     {
       "path": "encoding-obfuscation/eo-003-unicode-homoglyph.yaml",
-      "sha256": "289d2a33aa3f2886524617e372ccc88a2178986abded8db75cd4011a70bcfbd1"
+      "sha256": "45edb732e6ffb822a04ebd497278ade49d55999c15e434a1a38771c4aaabd4ce"
     },
     {
       "path": "encoding-obfuscation/eo-004-zero-width-injection.yaml",
-      "sha256": "beba1acab33e0506ed94eb81d9cec7aba8534be6eb620b3edb7f3d7a21ba90c5"
+      "sha256": "e3c4c9fa03d960ecf3130e7c5642c093c8de4f64c80f7001d2c6f291a6e0f8d1"
     },
     {
       "path": "encoding-obfuscation/eo-005-hex-escape-smuggle.yaml",
-      "sha256": "33a8a3b4d71756f28ae263b48fedb7304e2af2905f5a312d96b2634fb0159af6"
+      "sha256": "de82e93af0b50ee59e09abb4fb3680078ea03b56d50ed7fa7371bc8172d13d4b"
     },
     {
       "path": "encoding-obfuscation/eo-006-base64-decode.yaml",
-      "sha256": "86110f5aad459b17ae740acce579c89fbe23aa594b587ae78fe34a6fb386eda5"
+      "sha256": "b2bd9f5c32669f3a18bea387b4749d481fc668b81642d0139588f30523b869a8"
     },
     {
       "path": "encoding-obfuscation/eo-007-morse-code.yaml",
-      "sha256": "36f7175cd41029410ed8c662b826d5eac187e5591cd3775c38d5d5bcb60ae44c"
+      "sha256": "7d73d447fa379218310178a472d89df576be71228d1c61d82d48cca144295adc"
     },
     {
       "path": "encoding-obfuscation/eo-008-caesar-cipher.yaml",
-      "sha256": "63c2a9817ad567bdfe2251dcd655bbf8a0663efe02e028ffff2c341e63941317"
+      "sha256": "38ca389d6a921ee42eaf2aa3b6b0a74bc02736832cc09fffc19d7f0553c3b7d9"
     },
     {
       "path": "encoding-obfuscation/eo-009-atbash-cipher.yaml",
-      "sha256": "5199f21fb78fe84ff1f5b458ad9c2c1153f9bf3903082d2940c56f2f7805c1ef"
+      "sha256": "eb84f44dcce861c402d7f2e09736b48289bce215983a5c539a481c6e7fe0a3c1"
     },
     {
       "path": "encoding-obfuscation/eo-010-binary-ascii.yaml",
-      "sha256": "ce30edbfe7f86c9c9d05d4b89de0daef69c6669120df9d671a42a41f98c0d104"
+      "sha256": "a4bce63fdc3068be49be9cf6437c59e30b30108881e93b17545fa13f3ab1c347"
     },
     {
       "path": "encoding-obfuscation/eo-011-url-encoding.yaml",
-      "sha256": "ecc7f0b7d7c21d3316a79aefb9bd7d352ad67cf2077979be2b284127f18b7f97"
+      "sha256": "5f5c68ce1ab746ddb358eec11737693f5140a7ca325658dcf1bf818fdfa53a00"
     },
     {
       "path": "encoding-obfuscation/eo-012-html-entities.yaml",
-      "sha256": "128e286e1789d60d268095ce466528eff45b04768f0de1b0973aa6fd360ab5e5"
+      "sha256": "e8a471cb42004c73b118db8cd8596d632c1224601b49c2c027e79996359c0e40"
     },
     {
       "path": "encoding-obfuscation/eo-013-rot47.yaml",
-      "sha256": "4d696db41007a447caacbd2cd5f301d94032156b26f1f147891e68de6951362e"
+      "sha256": "12e36b0c10757de47433e0caba1ee7ce7b02460009f1eb70c5cab1e03cdbc9cb"
     },
     {
       "path": "encoding-obfuscation/eo-014-base32.yaml",
-      "sha256": "0bf403373949bf84e2fda904009da338b15667dba266912cd7f6a98f29ddf137"
+      "sha256": "2d1b1a63c6964ff2a7744e0ae46623f5db32cd47f35ccf8e56fa65e33e1cbd50"
     },
     {
       "path": "encoding-obfuscation/eo-015-fullwidth-unicode.yaml",
-      "sha256": "6080a5295f863c2b054eadde09a81a275be7089f0b6f85d49e96bb1c85eccb47"
+      "sha256": "bb05f81e000826d0c81f123630c9b6e31680caa037cef53532944a17ccb34b7b"
     },
     {
       "path": "encoding-obfuscation/eo-016-base58.yaml",
-      "sha256": "8fff21ad142ad8aa2ea82530016e0e9543b41e46e27950d1c0a221af783756d0"
+      "sha256": "551ff5150b3774c6824d8892bf41041ca2dc48dd03cc4fb38745fd32d2b421e3"
     },
     {
       "path": "encoding-obfuscation/eo-017-quoted-printable.yaml",
-      "sha256": "a58f9d8c0b1f3cffb28bf81597d2bee6df376631f3ac6a71d0112a86869edc53"
+      "sha256": "5bf3416d624dc37660f9e9d774da2beac8717f18938d91b91fa896717e1dbe32"
     },
     {
       "path": "encoding-obfuscation/eo-018-decimal-ascii.yaml",
-      "sha256": "5b8b0c98fee1aadf42cef40b87f9eb088dfed1f1a4deac8fd60c640de51278b4"
+      "sha256": "c1f1dab328426b0c74079c785dc5cadea1f11b6f7307da1c6506eeaa6bad1d39"
     },
     {
       "path": "encoding-obfuscation/eo-019-vigenere-cipher.yaml",
-      "sha256": "a6a9073cad2103dda91d4b4aced08c43a9c21d63c9bd8e14b7e70af89e45300f"
+      "sha256": "f7db810d4798be5156ad18e74018653438181a970dc193dd73aa528967ab9303"
     },
     {
       "path": "encoding-obfuscation/eo-020-octal-ascii.yaml",
-      "sha256": "6a212f8fd99bdd64fb054663d34824fbb2394354aae98eef57f5d5555ba5ed74"
+      "sha256": "4c933bf25413b64db57146811a008cfe3f7be9d2ed7ec128e268e2a752a17808"
     },
     {
       "path": "encoding-obfuscation/eo-021-nato-phonetic.yaml",
-      "sha256": "41334b1831bcb045c8657fc9036f27c20253b64bbf2361abbde306d8fa4ccbd9"
+      "sha256": "75422a3f780087e40f880b673ac7c8096d3d1d7adb1d8ed1da25d900a46568fc"
     },
     {
       "path": "excessive-agency/ea-001-unauthorized-tool-call.yaml",
@@ -316,63 +316,63 @@
     },
     {
       "path": "jailbreak/jb-001-dan-persona.yaml",
-      "sha256": "c25143ca109d0759909d16f4df46092f6856acf4d859d5aafe95b68d74297ffb"
+      "sha256": "24c637f76a2f873aafc7cca7eb0f403c926b8ce940e78b7c0f5301e190e9b541"
     },
     {
       "path": "jailbreak/jb-002-grandma-exploit.yaml",
-      "sha256": "43cc7e3735b635730b7d4a4ff1ef03165720e5a5b3b5cd7a772efc5ef7a33bbc"
+      "sha256": "ab1e3de33266f9f6463237d98deb90808fd3e754f8bbea56fab9f81941f1244b"
     },
     {
       "path": "jailbreak/jb-003-developer-mode.yaml",
-      "sha256": "fe7bad70d0875d00db14f55765c65d5b406e4429f83267c3d0c7febcb42585b3"
+      "sha256": "c16a4bad35315b86e78f81f57121dcddafa83f0fdc0c71c4a0b30e81b2087da2"
     },
     {
       "path": "jailbreak/jb-004-fictional-roleplay.yaml",
-      "sha256": "514599ec402c4086c668d1fc7fd3f36b85182a8ea38cc8641b599a279ed47e46"
+      "sha256": "75cf22e5019356e98765a217525b919be4b743d52a97de18d4583bef71409877"
     },
     {
       "path": "jailbreak/jb-005-hypothetical-framing.yaml",
-      "sha256": "af69ed49b30522cf0b238cedb2b700d607ab068a89707b0968db1a6f94e5f0ca"
+      "sha256": "1670ada644c1c83d8f85c82fcc07642a0bb0899e304741da9f60ba66ae9da72c"
     },
     {
       "path": "jailbreak/jb-006-prefix-injection.yaml",
-      "sha256": "d12f69e480b4757216fff73133a9d2246259c0d474fa9c848e0115f700616a8d"
+      "sha256": "fc1d490d1432b9836741bde1fb9441d6681c5dd1cc5f3727fc7328bc3c23adc6"
     },
     {
       "path": "jailbreak/jb-007-aim-persona.yaml",
-      "sha256": "f0a242b6ce8f3f5ca87e1c866fd1a4d4a0cf486bf0dec41e7c66eac92e691624"
+      "sha256": "a0fe7c620d430cea3bed8c19ad77516a37352a49b61f8e8131a48208621b8201"
     },
     {
       "path": "jailbreak/jb-008-refusal-suppression.yaml",
-      "sha256": "96f3594a6eb35fc52912a092f014bcf186fcbabb0dea27285830fdf7e58d0a42"
+      "sha256": "f11274a711ba2daca780cef65cb28da0d10b7ca1f08485ab60d6760a1869da52"
     },
     {
       "path": "jailbreak/jb-009-many-shot.yaml",
-      "sha256": "c1f4b55d145b29cf1fc7172c4d27c7f42e1d3e862ae3eb790b5fbcd52351f730"
+      "sha256": "b25352c3738e520ef10ccd6500e94e126e673a0157ea8c4d5cd88c653644ddd3"
     },
     {
       "path": "jailbreak/jb-010-payload-splitting.yaml",
-      "sha256": "0f94c92669885779f57a03abf83139042697175027219336a92b8f4890728724"
+      "sha256": "0c7bc4363fbf13f23aea7c50f917f4bfbe8a70c0e694a3b1aab212dfeceda367"
     },
     {
       "path": "jailbreak/jb-011-virtualization-game.yaml",
-      "sha256": "d7d90523929b503a668fb1d44efd71957c552de40bdd7f0edb7beb1efec5f610"
+      "sha256": "33553fe9909a3831386b26a35a0eeae2c3d0dff3eb77879b27c6be337a9ca449"
     },
     {
       "path": "jailbreak/jb-012-opposite-mode.yaml",
-      "sha256": "ddfdce023e8f831f7a789a90a8b665e32a29b07c3546b7652c1e23402994e605"
+      "sha256": "5b308f875ba08c78713019a8af2ec6ea4fa260c63aae36f28276562092e765dd"
     },
     {
       "path": "jailbreak/jb-013-token-smuggling-persona.yaml",
-      "sha256": "ac6c3d033612137f62a9a4df80caff82d8c898e1a5983dcb34d216531dd7c5ad"
+      "sha256": "22bfd00b0551b663afe907fd8131598e542276b26f4493a38e353e3331227730"
     },
     {
       "path": "jailbreak/jb-014-persona-escalation.yaml",
-      "sha256": "66eca1b9caf7780a8af860e4d34707aa050eb413391086b56571d3745f604067"
+      "sha256": "4e022347be696d5b7c26b2a81cf2ef601b7fc19c276c9b62c4205686f3ff928a"
     },
     {
       "path": "jailbreak/jb-015-hypothetical-nested.yaml",
-      "sha256": "de011ce650e32c7d3e2c14ba0f5fad36dd274cf44ea409df8f90b2175aebf990"
+      "sha256": "dba3f0a45aefff58bacbf77d7315721e9e5e20c029526ed1031d5324e2c5434a"
     },
     {
       "path": "jailbreak/jb-016-reverse-psychology.yaml",
@@ -380,31 +380,31 @@
     },
     {
       "path": "jailbreak/jb-017-language-switch-bypass.yaml",
-      "sha256": "00939d5d0f2c73500901a8687824d498c0150aae3e5a82e6c9b5bde02b1feaf3"
+      "sha256": "7121a126d7a03f34340a12ee66ba960eb5c16e729823bf42d946232a75789c17"
     },
     {
       "path": "jailbreak/jb-018-format-constraint-bypass.yaml",
-      "sha256": "6b8fb34f47acdcd72b00acce8f78dd47a0ff252795b433d2567bd7c53f0655d8"
+      "sha256": "764e1a8cd0848bf29490eddd4135e1bf795ecdadb288c75aa68e338e7d14847f"
     },
     {
       "path": "jailbreak/jb-019-emotional-manipulation.yaml",
-      "sha256": "7b832c73c9079cf6f99a61b545af7d11681a6d44f814e89509ccdeb9004d5f4c"
+      "sha256": "44cc8899b83b0a0ccaa33fc67d13a4cba8aea4c0a7ab0c970719493df6b2a6ab"
     },
     {
       "path": "jailbreak/jb-020-authority-appeal.yaml",
-      "sha256": "c3436eea211206db2feff4aa04f02b3cee5c1638e49227b1c0653b01ba9adcd4"
+      "sha256": "3e223743d99f6bc9035cfba295c6449e9325a8747d022d2a46eee3fa85e0e09f"
     },
     {
       "path": "jailbreak/jb-021-incremental-commitment.yaml",
-      "sha256": "c32f19c8a9a1119ed92d480625d883cc179bbcf933b54a914d5581029c91c010"
+      "sha256": "a516d39662222ff4e97f0abedaf1af90cf9b8787951a0c755dc91da3ccca2db8"
     },
     {
       "path": "jailbreak/jb-022-context-stuffing.yaml",
-      "sha256": "2d063aee842398f4d8289cdf85c2182a1e86eae0bc036d4fb46445b40c4cc35f"
+      "sha256": "09a5837b21ceb80c0c5da9116048901b79e4623f3298f65b4c76e0656f1b07a4"
     },
     {
       "path": "jailbreak/jb-023-obfuscated-persona.yaml",
-      "sha256": "ecf7e9fa6337f7796cdc59f7dadbd5710266734e47d633140eca7a99b1f3b71c"
+      "sha256": "947bebafecaa9c91e82a9faba0bc3a68b8931b80300ee67e76c3583313fa39a5"
     },
     {
       "path": "jailbreak/jb-024-past-tense-reframing.yaml",
@@ -416,7 +416,7 @@
     },
     {
       "path": "jailbreak/jb-026-distractor-flooding.yaml",
-      "sha256": "4c61c2528b9bd7f7de83242422b9e9fe61bf7c569163746a3a80d7c55ffece93"
+      "sha256": "476ffd906bb809a40c41dfb1b5ec769d4a12dbd24174fcd38d876d6c4e630d74"
     },
     {
       "path": "jailbreak/jb-027-token-splitting-persona.yaml",
@@ -424,31 +424,31 @@
     },
     {
       "path": "jailbreak/jb-028-simulated-crescendo.yaml",
-      "sha256": "0b97f187edfa25d201423e85a44970c0965bd8b1216ba60ecf0893e0969dd15b"
+      "sha256": "1b536c133d0a8057ab8509d0c45da3f8fe6ced76cd6ae4bb3262057c7dcec943"
     },
     {
       "path": "jailbreak/jb-029-model-internals-roleplay.yaml",
-      "sha256": "a59ecf077c62f7b9cf97c78ed2cf61153c67d92124b641929079068956d0d930"
+      "sha256": "b2eeabc85aeb75ce9d99fcb8761a093ae00054207c0bc1d13c8ba72851382a76"
     },
     {
       "path": "jailbreak/jb-030-dual-persona.yaml",
-      "sha256": "a0071209fea7c18df7b6351af79b7754812ea2864f86398e89f48e7e6fca30cb"
+      "sha256": "c85eacdac90e3f83a4813c27ecc1d9d85795dee7691d668636c950a52876d51b"
     },
     {
       "path": "jailbreak/jb-031-socratic-elicitation.yaml",
-      "sha256": "61017c5e9230339cf8e35b7307100dc9b5e56f247f2ae5730e68a1e7ce64610d"
+      "sha256": "bee6cab9b3ecf197730cdfea1a4727935f39b16f7a78b4424bcffe56e2ade696"
     },
     {
       "path": "jailbreak/jb-032-refusal-audit-trick.yaml",
-      "sha256": "55c7d5999302151def9993ad52127971364c26995e1c89babe464110d14afbfb"
+      "sha256": "b23987d89502ceb8a2a95286cfa0eefc83ea3a9bda23366e1789a8d5c8a463ea"
     },
     {
       "path": "jailbreak/jb-033-fictional-documentary.yaml",
-      "sha256": "da1df1f73e02191991630208adc3ee6940a162479f363a54156e0b060378eb34"
+      "sha256": "cb419589552b15a1a6237a76b09c1c19662e9b521552752d5a85a61f3e9d11c2"
     },
     {
       "path": "jailbreak/jb-034-hex-persona.yaml",
-      "sha256": "8ca121b97c23480989e911abc3cd52e06827dc200aa8edc0a6173074b766496d"
+      "sha256": "dc4e0017678fb3fb4fbedd5be0b68b7d8b0f3713bc4f9d272d26f51f99919d6c"
     },
     {
       "path": "jailbreak/jb-035-completion-priming.yaml",
@@ -524,11 +524,11 @@
     },
     {
       "path": "prompt-injection/pi-002-disregard-and-print-canary.yaml",
-      "sha256": "1bc37bfdc36dd5c4018b4096443996a582d6e532948c628f5a6b748f29e551af"
+      "sha256": "dce8f201bb1815b6c1747541f0c0102f2e7e586a5c3d24f48e2b4325f60d32f4"
     },
     {
       "path": "prompt-injection/pi-003-delimiter-escape.yaml",
-      "sha256": "21d282cccb4b0c924ab96d7f487eff2ee332ab86e9c0563a55c1a5ce7c74a2c1"
+      "sha256": "5a27b8830cf20d688409cd584978d36b755d7a6aa184662d53d7e8fc05141d0b"
     },
     {
       "path": "prompt-injection/pi-004-translation-injection.yaml",
@@ -540,7 +540,7 @@
     },
     {
       "path": "prompt-injection/pi-006-token-concatenation.yaml",
-      "sha256": "42eaf6fed6c1c9004ef89b61add4608cdc9c83078d7167b60a1eb430d4f0d72c"
+      "sha256": "18726c843bfb18b4f2055775b43771f03af665b5243d79575402c3fe2f29bf59"
     },
     {
       "path": "prompt-injection/pi-007-markdown-image-exfil.yaml",
@@ -803,5 +803,5 @@
       "sha256": "9c89095596414e760941d2a6e21c950649e3bad6a2f77d633f092fd1e24b470b"
     }
   ],
-  "digest": "3c90a08e43161dd5238a58efa526af0a01e1500729270d5d6f45a2f4f60d4749"
+  "digest": "064d2596a678b6d760bc3d520495fe366c5663eaa49aae748808c79f885d44cd"
 }
