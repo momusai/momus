@@ -533,6 +533,13 @@ func checkWritable(path string) error {
 	if path == "" {
 		return nil
 	}
+	// A path that is itself a directory can never be written as a report. Catch
+	// it here and say so, rather than reporting on its parent — `--sarif /tmp`
+	// used to fail with "cannot write to /", which names the wrong thing.
+	if info, err := os.Stat(path); err == nil && info.IsDir() {
+		return fmt.Errorf("cannot write %s: it is a directory, not a file "+
+			"(give a filename, e.g. %s)", path, filepath.Join(path, "momus.sarif"))
+	}
 	dir := filepath.Dir(path)
 	info, err := os.Stat(dir)
 	if err != nil {
@@ -544,7 +551,7 @@ func checkWritable(path string) error {
 	// Probe with a temp file in the same directory (what the atomic writer does).
 	f, err := os.CreateTemp(dir, ".momus-writecheck-*")
 	if err != nil {
-		return fmt.Errorf("cannot write to %s: %w", dir, err)
+		return fmt.Errorf("cannot write %s: %s is not writable: %w", path, dir, err)
 	}
 	name := f.Name()
 	_ = f.Close()

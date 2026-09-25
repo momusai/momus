@@ -1,6 +1,8 @@
 package main
 
 import (
+	"os"
+	"path/filepath"
 	"strings"
 	"testing"
 
@@ -128,5 +130,48 @@ func TestScanScope(t *testing.T) {
 				t.Errorf("scanScope = %q, want %q", got, tc.want)
 			}
 		})
+	}
+}
+
+// Report paths are checked before a scan runs, because discovering an
+// unwritable path after a long (and possibly paid) scan wastes the whole run.
+// The message has to name what the user actually typed: passing a directory
+// used to report "cannot write to /", which names the parent and reads as
+// though the root filesystem were the problem.
+func TestCheckWritable(t *testing.T) {
+	dir := t.TempDir()
+
+	if err := checkWritable(""); err != nil {
+		t.Errorf("an empty path means no report was requested: %v", err)
+	}
+	if err := checkWritable(filepath.Join(dir, "report.sarif")); err != nil {
+		t.Errorf("a writable path was rejected: %v", err)
+	}
+
+	// The path itself is a directory.
+	err := checkWritable(dir)
+	if err == nil {
+		t.Fatal("a directory was accepted as a report path")
+	}
+	if !strings.Contains(err.Error(), dir) || !strings.Contains(err.Error(), "directory") {
+		t.Errorf("error should name the path given and say it is a directory: %v", err)
+	}
+
+	// The parent does not exist.
+	err = checkWritable(filepath.Join(dir, "no", "such", "report.sarif"))
+	if err == nil {
+		t.Fatal("a path under a missing directory was accepted")
+	}
+	if !strings.Contains(err.Error(), "does not exist") {
+		t.Errorf("error should say the directory is missing: %v", err)
+	}
+
+	// The parent exists but is a file.
+	f := filepath.Join(dir, "afile")
+	if writeErr := os.WriteFile(f, []byte("x"), 0o600); writeErr != nil {
+		t.Fatal(writeErr)
+	}
+	if err = checkWritable(filepath.Join(f, "report.sarif")); err == nil {
+		t.Error("a path whose parent is a file was accepted")
 	}
 }
