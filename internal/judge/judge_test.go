@@ -611,7 +611,7 @@ func TestDiscoveryEndpointsAreLoopbackOnly(t *testing.T) {
 func TestModelListParsing(t *testing.T) {
 	ollama := localEndpoints[0].extract
 	got := ollama([]byte(`{"models":[{"name":"qwen2.5:0.5b"},{"name":"llama3.2:1b"}]}`))
-	if len(got) != 2 || got[0] != "qwen2.5:0.5b" {
+	if len(got) != 2 || got[0].name != "qwen2.5:0.5b" {
 		t.Errorf("ollama list = %v", got)
 	}
 	if n := len(ollama([]byte(`{"models":[]}`))); n != 0 {
@@ -622,7 +622,49 @@ func TestModelListParsing(t *testing.T) {
 	}
 
 	oai := openAIModelList([]byte(`{"data":[{"id":"mistral-7b"}]}`))
-	if len(oai) != 1 || oai[0] != "mistral-7b" {
+	if len(oai) != 1 || oai[0].name != "mistral-7b" {
 		t.Errorf("openai list = %v", oai)
+	}
+}
+
+// Judging is harder than answering: the judge must read an adversarial reply,
+// rule compliance vs refusal, and quote evidence for it. Taking whichever model
+// the server listed first can hand that to a 0.5B while a 7B sits beside it, so
+// discovery ranks by size where the server reports one.
+func TestPickJudgePrefersTheLargestModel(t *testing.T) {
+	models := localEndpoints[0].extract([]byte(`{"models":[
+		{"name":"qwen2.5:0.5b","size":397821319},
+		{"name":"qwen2.5:7b","size":4700000000},
+		{"name":"qwen2.5:3b","size":1929912432}]}`))
+
+	if got := pickJudge(models, ""); got != "qwen2.5:7b" {
+		t.Errorf("pickJudge = %q, want the largest (qwen2.5:7b)", got)
+	}
+	// The model under test is never its own judge, so the next largest wins.
+	if got := pickJudge(models, "qwen2.5:7b"); got != "qwen2.5:3b" {
+		t.Errorf("pickJudge = %q, want qwen2.5:3b when 7b is the target", got)
+	}
+	// Case differences must not defeat the self-grading guard.
+	if got := pickJudge(models, "QWEN2.5:7B"); got != "qwen2.5:3b" {
+		t.Errorf("pickJudge = %q; avoidance must be case-insensitive", got)
+	}
+	// Only the target installed: no judge rather than a self-grading one.
+	if got := pickJudge([]candidate{{name: "solo"}}, "solo"); got != "" {
+		t.Errorf("pickJudge = %q, want \"\" when the only model is the target", got)
+	}
+	if got := pickJudge(nil, ""); got != "" {
+		t.Errorf("pickJudge(nil) = %q, want \"\"", got)
+	}
+}
+
+// A server that reports no size (the OpenAI /v1/models shape) must keep working
+// — it just falls back to list order rather than ranking.
+func TestDiscoveryWithoutSizesKeepsListOrder(t *testing.T) {
+	got := openAIModelList([]byte(`{"data":[{"id":"a"},{"id":"b"}]}`))
+	if len(got) != 2 || got[0].name != "a" || got[0].size != 0 {
+		t.Errorf("openAIModelList = %+v; want unsized candidates in order", got)
+	}
+	if pick := pickJudge(got, ""); pick != "a" {
+		t.Errorf("pickJudge = %q; with no sizes the server's order must stand", pick)
 	}
 }

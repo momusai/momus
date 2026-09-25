@@ -33,24 +33,25 @@ var localEndpoints = []struct {
 	name    string
 	tags    string // model-listing endpoint
 	chat    string // OpenAI-compatible chat endpoint
-	extract func([]byte) []string
+	extract func([]byte) []candidate
 }{
 	{
 		name: "Ollama",
 		tags: "http://127.0.0.1:11434/api/tags",
 		chat: "http://127.0.0.1:11434/v1/chat/completions",
-		extract: func(b []byte) []string {
+		extract: func(b []byte) []candidate {
 			var r struct {
 				Models []struct {
 					Name string `json:"name"`
+					Size int64  `json:"size"`
 				} `json:"models"`
 			}
 			if json.Unmarshal(b, &r) != nil {
 				return nil
 			}
-			out := make([]string, 0, len(r.Models))
+			out := make([]candidate, 0, len(r.Models))
 			for _, m := range r.Models {
-				out = append(out, m.Name)
+				out = append(out, candidate{name: m.Name, size: m.Size})
 			}
 			return out
 		},
@@ -69,7 +70,9 @@ var localEndpoints = []struct {
 	},
 }
 
-func openAIModelList(b []byte) []string {
+// openAIModelList reads the OpenAI /v1/models shape, which carries no size.
+// Those candidates keep size 0 and so stay in the server's own order.
+func openAIModelList(b []byte) []candidate {
 	var r struct {
 		Data []struct {
 			ID string `json:"id"`
@@ -78,11 +81,18 @@ func openAIModelList(b []byte) []string {
 	if json.Unmarshal(b, &r) != nil {
 		return nil
 	}
-	out := make([]string, 0, len(r.Data))
+	out := make([]candidate, 0, len(r.Data))
 	for _, m := range r.Data {
-		out = append(out, m.ID)
+		out = append(out, candidate{name: m.ID})
 	}
 	return out
+}
+
+// candidate is a model that could act as judge. size is bytes on disk, 0 when
+// the server does not report it.
+type candidate struct {
+	name string
+	size int64
 }
 
 // LocalJudge describes a discovered local inference server.
@@ -108,16 +118,7 @@ func DiscoverLocal(ctx context.Context, avoidModel string) *LocalJudge {
 		if len(models) == 0 {
 			continue
 		}
-		// Prefer a model that is not the one under test. Falling back to the
-		// same model would be self-grading, which New() then refuses — so
-		// return nothing rather than something that will be rejected.
-		pick := ""
-		for _, m := range models {
-			if !strings.EqualFold(m, avoidModel) {
-				pick = m
-				break
-			}
-		}
+		pick := pickJudge(models, avoidModel)
 		if pick == "" {
 			continue
 		}
@@ -126,7 +127,7 @@ func DiscoverLocal(ctx context.Context, avoidModel string) *LocalJudge {
 	return nil
 }
 
-func probe(ctx context.Context, c *http.Client, url string, extract func([]byte) []string) []string {
+func probe(ctx context.Context, c *http.Client, url string, extract func([]byte) []candidate) []candidate {
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 	if err != nil {
 		return nil
@@ -154,4 +155,30 @@ func probe(ctx context.Context, c *http.Client, url string, extract func([]byte)
 func (l *LocalJudge) Describe() string {
 	return fmt.Sprintf("auto-detected %s (%s) — local, nothing leaves this machine",
 		l.Server, l.Model)
+}
+
+// pickJudge chooses which discovered model should grade the scan, or "" when
+// none can.
+//
+// The model under test is always skipped: grading its own answers is
+// self-grading, which New() refuses outright.
+//
+// Among the rest it takes the LARGEST. Judging is harder than answering — the
+// judge reads an adversarial reply, rules compliance vs refusal, and has to
+// quote evidence for the call — and taking whatever the server listed first can
+// hand that job to a 0.5B model while a 7B sits right beside it. Size on disk
+// is a crude proxy for capability, but it is the only signal the listing
+// carries and it beats list order. Servers that report no size (the OpenAI
+// /v1/models shape) leave every candidate at 0, so they keep their own order.
+func pickJudge(models []candidate, avoidModel string) string {
+	best := candidate{}
+	for _, m := range models {
+		if m.name == "" || strings.EqualFold(m.name, avoidModel) {
+			continue
+		}
+		if best.name == "" || m.size > best.size {
+			best = m
+		}
+	}
+	return best.name
 }
