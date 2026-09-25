@@ -249,9 +249,26 @@ func runScanWith(ctx context.Context, tgt target.Target, url string, opts *scanO
 	// So one endpoint serving several models is not mistaken for the model
 	// grading itself — the usual shape for a local Ollama or vLLM.
 	jcfg.TargetModel = os.Getenv("MOMUS_MODEL")
+
+	// Nothing configured? Look for a local model before giving up. Without a
+	// judge, 170 of the pack's 200 attacks resolve inconclusive, and a first run
+	// that prints a wall of "???" reads as a broken tool rather than an honest
+	// one. Loopback only, sub-second, and announced — see judge.DiscoverLocal.
+	autoLocal := ""
+	if jcfg.BaseURL == "" && jcfg.Provider == "" && jcfg.APIKey == "" &&
+		os.Getenv("OPENAI_API_KEY") == "" && os.Getenv("ANTHROPIC_API_KEY") == "" {
+		if l := judge.DiscoverLocal(ctx, jcfg.TargetModel); l != nil {
+			jcfg.BaseURL, jcfg.Model = l.URL, l.Model
+			autoLocal = l.Describe()
+		}
+	}
+
 	j, err := judge.New(jcfg)
 	if err != nil {
 		return err
+	}
+	if autoLocal != "" {
+		fmt.Fprintf(os.Stderr, "Judge:  %s\n", autoLocal)
 	}
 
 	if opts.dryRun {

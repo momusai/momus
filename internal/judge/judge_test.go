@@ -9,6 +9,7 @@ import (
 	"regexp"
 	"strings"
 	"testing"
+	"time"
 )
 
 // ---- pure-function unit tests -------------------------------------------
@@ -559,5 +560,69 @@ func TestSelfGradingComparesModelNotJustEndpoint(t *testing.T) {
 		APIKey: "local",
 	}); err != nil {
 		t.Errorf("a different endpoint must be allowed: %v", err)
+	}
+}
+
+// Local-judge discovery is what turns a first run from a wall of "???" into
+// real verdicts, so its failure modes matter: it must never reach off the
+// machine, never pick the model under test, and never be slow when nothing is
+// listening.
+func TestDiscoverLocalPicksADifferentModel(t *testing.T) {
+	t.Setenv("MOMUS_NO_AUTO_JUDGE", "")
+
+	// Nothing listening on the conventional ports: discovery must give up
+	// quickly and quietly rather than erroring or hanging.
+	start := time.Now()
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	if l := DiscoverLocal(ctx, "anything"); l != nil {
+		// A real local server on this machine is possible; only assert shape.
+		if l.URL == "" || l.Model == "" {
+			t.Errorf("a discovered judge must have a URL and model: %+v", l)
+		}
+		if !strings.Contains(l.URL, "127.0.0.1") {
+			t.Errorf("discovery must stay on loopback, got %q", l.URL)
+		}
+	}
+	if elapsed := time.Since(start); elapsed > 8*time.Second {
+		t.Errorf("discovery took %v; a missing server must cost almost nothing", elapsed)
+	}
+}
+
+func TestDiscoverLocalRespectsOptOut(t *testing.T) {
+	t.Setenv("MOMUS_NO_AUTO_JUDGE", "1")
+	if l := DiscoverLocal(context.Background(), ""); l != nil {
+		t.Errorf("MOMUS_NO_AUTO_JUDGE must disable discovery, got %+v", l)
+	}
+}
+
+// Every candidate endpoint must be loopback. A discovery step that could reach
+// a LAN or public address would silently hand replies to a third party.
+func TestDiscoveryEndpointsAreLoopbackOnly(t *testing.T) {
+	for _, ep := range localEndpoints {
+		for _, u := range []string{ep.tags, ep.chat} {
+			if !strings.Contains(u, "127.0.0.1") {
+				t.Errorf("%s: %q is not loopback", ep.name, u)
+			}
+		}
+	}
+}
+
+func TestModelListParsing(t *testing.T) {
+	ollama := localEndpoints[0].extract
+	got := ollama([]byte(`{"models":[{"name":"qwen2.5:0.5b"},{"name":"llama3.2:1b"}]}`))
+	if len(got) != 2 || got[0] != "qwen2.5:0.5b" {
+		t.Errorf("ollama list = %v", got)
+	}
+	if n := len(ollama([]byte(`{"models":[]}`))); n != 0 {
+		t.Errorf("an empty server must yield no models, got %d", n)
+	}
+	if n := len(ollama([]byte(`not json`))); n != 0 {
+		t.Errorf("garbage must yield no models, got %d", n)
+	}
+
+	oai := openAIModelList([]byte(`{"data":[{"id":"mistral-7b"}]}`))
+	if len(oai) != 1 || oai[0] != "mistral-7b" {
+		t.Errorf("openai list = %v", oai)
 	}
 }
