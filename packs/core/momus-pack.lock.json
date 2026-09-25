@@ -252,11 +252,11 @@
     },
     {
       "path": "insecure-output-handling/io-007-server-side-template-injection.yaml",
-      "sha256": "dfb417311aeda145cb79f934666d86b28832565e7b18fc6a1ee9d17cff977c0e"
+      "sha256": "ad3629addcb8887c93e9c52580e1be16cb3f87c7585e5edce7fb476db4aab252"
     },
     {
       "path": "insecure-output-handling/io-008-xxe-payload.yaml",
-      "sha256": "7269dfd5e56c4b956d21314c3aaf8d37abdb610ca6d61b96f00c8bb492210c86"
+      "sha256": "26d9433a2065670106e8b05037248c3faf8e791366da2a9cf5a22b6592f648d7"
     },
     {
       "path": "insecure-output-handling/io-009-csv-formula-injection.yaml",
@@ -276,7 +276,7 @@
     },
     {
       "path": "insecure-output-handling/io-013-ldap-injection.yaml",
-      "sha256": "2eed69afb2f0aa5ecc5b724b5d279b28d7658f2379819177e2d09517233dd5f2"
+      "sha256": "39b07c5224556dfa2b1013b69f2233853c44571b418b0aefab272200b9a72692"
     },
     {
       "path": "insecure-output-handling/io-014-xpath-injection.yaml",
@@ -288,7 +288,7 @@
     },
     {
       "path": "insecure-output-handling/io-016-regex-redos.yaml",
-      "sha256": "4029cfe6c4efae6fb50e7c479dfb4cbd825f2b7f8b401a63db4f0ea3a68d88f2"
+      "sha256": "2d30b5fed482702557a5c2e80b5ed624bf23cb0248d31c3e2cf106b291bd2c6c"
     },
     {
       "path": "insecure-output-handling/io-017-unsafe-deserialization.yaml",
@@ -300,7 +300,7 @@
     },
     {
       "path": "insecure-output-handling/io-019-http-header-injection.yaml",
-      "sha256": "8c33d81ee33c8a64cea44bdb2388c4bb5146e00e82fdad2f77e542a87633ccfa"
+      "sha256": "657531b406e5026554f2e2946532c084ad7d429dddb21aea30f94f27986f75e1"
     },
     {
       "path": "insecure-output-handling/io-020-zip-slip-path.yaml",
@@ -803,5 +803,5 @@
       "sha256": "9c89095596414e760941d2a6e21c950649e3bad6a2f77d633f092fd1e24b470b"
     }
   ],
-  "digest": "064d2596a678b6d760bc3d520495fe366c5663eaa49aae748808c79f885d44cd"
+  "digest": "44bd51cc319c3f98e7f659afa28b6aa2d871be704277596c30d667b8abbcd7fe"
 }
