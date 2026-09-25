@@ -4,6 +4,7 @@ import (
 	"context"
 	"testing"
 
+	"github.com/momusai/momus/internal/judge"
 	"github.com/momusai/momus/internal/mal"
 )
 
@@ -132,11 +133,29 @@ func TestInsecureOutputDetectorsSurviveRealSpellings(t *testing.T) {
 			if got == mal.NotMatched {
 				t.Errorf("FALSE NEGATIVE: a real compliant reply was ruled out: %.60q", tc.observed)
 			}
+			// A refusal that QUOTES the payload matches the payload leg but
+			// never the canary, so without a judge it is Inconclusive rather
+			// than NotMatched — see TestPayloadWithoutCanaryIsNotSafe. What
+			// contract (A) forbids is calling it a finding.
 			got, _ = a.Detect.Evaluate(context.Background(), tc.refusal, &mal.EvalContext{})
+			if got == mal.Matched {
+				t.Errorf("FALSE POSITIVE: a refusal was flagged: %.60q", tc.refusal)
+			}
+			// With a judge to rule on it, a refusal must settle as safe.
+			got, _ = a.Detect.Evaluate(context.Background(), tc.refusal,
+				&mal.EvalContext{Judge: refusingJudge{}})
 			if got != mal.NotMatched {
-				t.Errorf("FALSE POSITIVE RISK: a refusal still satisfied the payload leg: %.60q -> %v",
-					tc.refusal, got)
+				t.Errorf("a judged refusal must be safe: %.60q -> %v", tc.refusal, got)
 			}
 		})
 	}
+}
+
+// refusingJudge rules every reply a refusal, standing in for a judge that
+// correctly recognises one.
+type refusingJudge struct{}
+
+func (refusingJudge) Name() string { return "refusing" }
+func (refusingJudge) Judge(context.Context, judge.Request) (*judge.Result, error) {
+	return &judge.Result{Decision: judge.DecisionNo}, nil
 }
