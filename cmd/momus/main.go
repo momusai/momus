@@ -97,6 +97,7 @@ type scanOpts struct {
 	category      string
 	dryRun        bool
 	skipProbe     bool
+	showAll       bool
 	judgeURL      string
 	judgeModel    string
 	judgeProvider string
@@ -184,6 +185,7 @@ func (opts *scanOpts) addFlags(cmd *cobra.Command) {
 	cmd.Flags().IntVar(&opts.concurrency, "concurrency", 8, "number of attacks to run in flight at once")
 	cmd.Flags().IntVar(&opts.limit, "limit", 0, "run at most N attacks (0 = the whole pack); useful against paid endpoints")
 	cmd.Flags().StringVar(&opts.category, "category", "", "only run attacks in this category (e.g. prompt-injection)")
+	cmd.Flags().BoolVar(&opts.showAll, "show-all", false, "print a line for every attack, not just the findings")
 	cmd.Flags().BoolVar(&opts.skipProbe, "skip-probe", false, "skip the liveness probe that checks the target behaves like a model")
 	cmd.Flags().BoolVar(&opts.dryRun, "dry-run", false, "print what would be sent (attack and judge call counts) without calling the target")
 	cmd.Flags().StringVar(&opts.judgeURL, "judge-url", "", "judge endpoint (else MOMUS_JUDGE_URL); enables llm_judge scoring")
@@ -318,7 +320,7 @@ func runScanWith(ctx context.Context, tgt target.Target, url string, opts *scanO
 			return err
 		}
 	} else {
-		renderTerminal(findings)
+		renderTerminal(findings, opts.showAll)
 	}
 
 	// Diagnostics go to stderr so they never corrupt the JSON on stdout — and
@@ -687,9 +689,18 @@ func failCount(findings []scanner.Finding, failOn string) int {
 	return n
 }
 
-func renderTerminal(findings []scanner.Finding) {
+// renderTerminal prints the scan result.
+//
+// Findings lead; everything else collapses. A full pack is 200 attacks, and
+// printing a line each buried the handful that mattered under a wall of "safe"
+// and "???" — the single most common reason a first run reads as a broken tool
+// rather than a careful one. The detail is not lost: --show-all prints every
+// line, and the JSON and HTML reports always carry all of it.
+func renderTerminal(findings []scanner.Finding, showAll bool) {
 	bold := color.New(color.Bold).SprintFunc()
 	vuln, safe, inc := 0, 0, 0
+	incByReason := map[string]int{}
+
 	for _, f := range findings {
 		switch f.Verdict {
 		case scanner.VerdictVulnerable:
@@ -699,22 +710,60 @@ func renderTerminal(findings []scanner.Finding) {
 				bold(f.AttackID), f.AttackName)
 		case scanner.VerdictSafe:
 			safe++
-			fmt.Fprintf(color.Output, "  %s  %s  %s\n",
-				color.New(color.FgGreen).Sprint(" safe "),
-				f.AttackID, f.AttackName)
+			if showAll {
+				fmt.Fprintf(color.Output, "  %s  %s  %s\n",
+					color.New(color.FgGreen).Sprint(" safe "), f.AttackID, f.AttackName)
+			}
 		case scanner.VerdictInconclusive:
 			inc++
-			fmt.Fprintf(color.Output, "  %s  %s  %s  (%s)\n",
-				color.New(color.FgYellow).Sprint(" ???  "),
-				f.AttackID, f.AttackName, f.Reason)
+			incByReason[f.Reason]++
+			if showAll {
+				fmt.Fprintf(color.Output, "  %s  %s  %s  (%s)\n",
+					color.New(color.FgYellow).Sprint(" ???  "), f.AttackID, f.AttackName, f.Reason)
+			}
 		}
 	}
+
+	if vuln == 0 {
+		fmt.Fprintf(color.Output, "  %s\n", color.GreenString("No attack got through."))
+	}
+
+	// Why things were undecided is the actionable part, so group by reason
+	// rather than listing every attack that shared one.
+	if inc > 0 && !showAll {
+		fmt.Fprintln(color.Output)
+		for _, r := range sortedReasons(incByReason) {
+			fmt.Fprintf(color.Output, "  %s  %s\n",
+				color.YellowString("%4d undecided", incByReason[r]), r)
+		}
+	}
+
 	fmt.Fprintln(color.Output)
 	fmt.Fprintf(color.Output, "%s: %s vulnerable, %s safe, %s inconclusive\n",
 		bold("Summary"),
 		color.RedString("%d", vuln),
 		color.GreenString("%d", safe),
 		color.YellowString("%d", inc))
+	if !showAll && (safe > 0 || inc > 0) {
+		fmt.Fprintf(color.Output, "%s\n",
+			color.HiBlackString("(--show-all lists every attack; --json and --html always carry them)"))
+	}
+}
+
+// sortedReasons orders reasons by how many attacks shared them, commonest
+// first, with the text as a tiebreak so runs are reproducible.
+func sortedReasons(counts map[string]int) []string {
+	out := make([]string, 0, len(counts))
+	for r := range counts {
+		out = append(out, r)
+	}
+	sort.Slice(out, func(i, j int) bool {
+		if counts[out[i]] != counts[out[j]] {
+			return counts[out[i]] > counts[out[j]]
+		}
+		return out[i] < out[j]
+	})
+	return out
 }
 
 // judgeDiagnostics explains an "inconclusive" count so a user can tell apart the
