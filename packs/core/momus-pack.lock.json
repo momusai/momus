@@ -32,7 +32,7 @@
     },
     {
       "path": "data-exfil/le-008-steganographic-exfil.yaml",
-      "sha256": "ea335efcd04335f536711f8eba70b2a9506194d8b44b8e90db4d92a104e21140"
+      "sha256": "44a8f15367d346cffb61b2c6b013beaa5155d886fee0eaeb31ff626c9cbbc25f"
     },
     {
       "path": "data-exfil/le-009-summary-channel-exfil.yaml",
@@ -40,15 +40,15 @@
     },
     {
       "path": "data-exfil/le-010-markdown-image-beacon.yaml",
-      "sha256": "e408c1d6822df9705359cd0dd59eb08f73beceeccdcd6387ac19ea1067894955"
+      "sha256": "18ff866bcc69e3c8fb26645cee2335f75e54e335c7dd52785b7bafbc4cea4ae3"
     },
     {
       "path": "data-exfil/le-011-hidden-comment-exfil.yaml",
-      "sha256": "2936df097141279632b6b3f83753b92afcf247b6366778dcade367d6845f3fd7"
+      "sha256": "8edb9c34a6de1a141d83574248e9b8d1339f9b12914868ec788fd5ad2a04f263"
     },
     {
       "path": "data-exfil/le-012-base64-blob-exfil.yaml",
-      "sha256": "dc93c338fab9e6ce5ca3527c6e56c8790a68861cdc3db1b0fd519dbb8e440f1b"
+      "sha256": "2e8443a1bf0b32b45893b5732aa56226a1dfc018d180a016c4f6a0607cce0b15"
     },
     {
       "path": "encoding-obfuscation/eo-001-rot13-smuggle.yaml",
@@ -132,7 +132,7 @@
     },
     {
       "path": "encoding-obfuscation/eo-021-nato-phonetic.yaml",
-      "sha256": "75422a3f780087e40f880b673ac7c8096d3d1d7adb1d8ed1da25d900a46568fc"
+      "sha256": "d85cedb28773bcf94200c43dbc5f62001e761bb072c3dbf6a10c5bf99c4628db"
     },
     {
       "path": "excessive-agency/ea-001-unauthorized-tool-call.yaml",
@@ -144,7 +144,7 @@
     },
     {
       "path": "excessive-agency/ea-003-privilege-escalation.yaml",
-      "sha256": "7709c26e7b3f4de5fdba7d8197de25434a12f0b253c33dc47f7c4f88f63389ce"
+      "sha256": "7047a74e3e652f967c6a2f76f04913c964d37495dab3a08657bb60020fd75512"
     },
     {
       "path": "excessive-agency/ea-004-unsafe-shell-emission.yaml",
@@ -232,7 +232,7 @@
     },
     {
       "path": "insecure-output-handling/io-002-sql-injection.yaml",
-      "sha256": "f3e5898c3edabbf4f3193836b31ec8322370c36944dccb1a452b75f102f06dfb"
+      "sha256": "df066df79c3d7fc8c2fb6df96ee1ab0e88c55b34705dd78e8d4367441128c184"
     },
     {
       "path": "insecure-output-handling/io-003-markdown-link-exfil.yaml",
@@ -240,7 +240,7 @@
     },
     {
       "path": "insecure-output-handling/io-004-shell-command-injection.yaml",
-      "sha256": "ea5af0fa77f61b02246ae750692749b2c2406e7f2c9c038c5c9eb14d22a4bb4a"
+      "sha256": "2b88f19732d2fb9af110bfff01421272a3754933eb3fac68c98e91347e72fea2"
     },
     {
       "path": "insecure-output-handling/io-005-ssrf-url.yaml",
@@ -268,11 +268,11 @@
     },
     {
       "path": "insecure-output-handling/io-011-open-redirect.yaml",
-      "sha256": "a428e2d603b14c4abd874e9e2488925449a32241644a863b5e22ca388b4720c3"
+      "sha256": "7e78bb54c8ca4b4dac54dc23fe9696f644a1955d3a8fdb222b9a310551ec9869"
     },
     {
       "path": "insecure-output-handling/io-012-prototype-pollution.yaml",
-      "sha256": "b26b9d69d8e070ba05cdd60d095860e504b67cd18a5336a1e6b328676ae065b2"
+      "sha256": "6605c86ae19afbe1b0bd9d43f20398ca4c7e3450e3a91705e932d26f1b6b655e"
     },
     {
       "path": "insecure-output-handling/io-013-ldap-injection.yaml",
@@ -376,7 +376,7 @@
     },
     {
       "path": "jailbreak/jb-016-reverse-psychology.yaml",
-      "sha256": "598dccab8672b31b28aea80ab059081b9725c2e0b3bb9d8395c31f1717084223"
+      "sha256": "2cf19162145f665dbd9ceb9dea870e05cfa50c4ebab4d43a2f0653c7cc21d1a1"
     },
     {
       "path": "jailbreak/jb-017-language-switch-bypass.yaml",
@@ -520,7 +520,7 @@
     },
     {
       "path": "prompt-injection/pi-001-ignore-previous.yaml",
-      "sha256": "59761f39c912bce7f89c0b884b003135bf682cde7d62765e495345b62fdf2cad"
+      "sha256": "69b8e7a94f8d935a5e635eea1d204b78044a483b0e86b6cc0853204576709e84"
     },
     {
       "path": "prompt-injection/pi-002-disregard-and-print-canary.yaml",
@@ -536,7 +536,7 @@
     },
     {
       "path": "prompt-injection/pi-005-base64-smuggle.yaml",
-      "sha256": "4c6248e294cf1c7aa3d1588c990f627e3b0c71b473b310bc48bad7545c9172fe"
+      "sha256": "037914d1e8e469c5d8ea74203cb446f7a3db5216537520bb79b3dd8f33c7f32f"
     },
     {
       "path": "prompt-injection/pi-006-token-concatenation.yaml",
@@ -588,7 +588,7 @@
     },
     {
       "path": "prompt-injection/pi-018-invisible-unicode-tags.yaml",
-      "sha256": "c433388d9d739d0045e94e25b65dcb58c99188dcdffd9a540503e1b4039fc900"
+      "sha256": "3933c1b8add589027f9c54e8dc756a4f94f41762cabb67b6b71f69ad028144f9"
     },
     {
       "path": "prompt-injection/pi-019-role-marker-override.yaml",
@@ -748,7 +748,7 @@
     },
     {
       "path": "sensitive-info-disclosure/si-007-user-data-inference.yaml",
-      "sha256": "c6e75b2d876db6f18b71e2c088ebadcbb92c9b2f8806be89c15e65652e47cce3"
+      "sha256": "7e5e61976db9557f0162e40f3c94d88ef54e3a4b4cad6f3b3a7dc93a0698f2e6"
     },
     {
       "path": "sensitive-info-disclosure/si-008-model-metadata-leak.yaml",
@@ -803,5 +803,5 @@
       "sha256": "9c89095596414e760941d2a6e21c950649e3bad6a2f77d633f092fd1e24b470b"
     }
   ],
-  "digest": "22f5d517a48652d2d108b2b70056067669ca0239c420a732aae9234d9a1d5594"
+  "digest": "7c662f7097fecebe117627bcf335961695b92e0227b04ef952eaec97f7cdbab0"
 }
