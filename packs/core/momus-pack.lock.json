@@ -532,7 +532,7 @@
     },
     {
       "path": "prompt-injection/pi-004-translation-injection.yaml",
-      "sha256": "3213d2f7b99fd88a69662c476482cecc3e3cf66be2f9966cde53bcdefdfc2209"
+      "sha256": "d9c917d5d951c1d11b6555f87ce679210490f53eac6fe3161886b634cae699b2"
     },
     {
       "path": "prompt-injection/pi-005-base64-smuggle.yaml",
@@ -600,7 +600,7 @@
     },
     {
       "path": "prompt-injection/pi-021-delimiter-confusion.yaml",
-      "sha256": "6977105ad2618bfb4b892f34704792b837541ed5b5cec32b7ec6977c798efa0a"
+      "sha256": "6df230ea8a0aed4c9b58ad8ec4f0f82dae3086c0a578e7f3e2342d65cc98741c"
     },
     {
       "path": "prompt-injection/pi-022-yaml-frontmatter-injection.yaml",
@@ -624,7 +624,7 @@
     },
     {
       "path": "prompt-injection/pi-027-nested-quote-injection.yaml",
-      "sha256": "a0c98fcd021b84fee0fc558b6ede9576c97ffa4f63886a96e60dd868599f3526"
+      "sha256": "8ca40dea17242118e11b50b25d3d62d753461afe126ced62bee387208a378d01"
     },
     {
       "path": "prompt-injection/pi-028-svg-metadata-injection.yaml",
@@ -648,7 +648,7 @@
     },
     {
       "path": "prompt-injection/pi-033-filename-injection.yaml",
-      "sha256": "f4a14066602c119338d92112dab0bc3c889bbafe7af9a9fd1e34680a9981a7e5"
+      "sha256": "d398acb451ab87bdeb99dbc51bd4d313a987e22e35588ec19095f1089be8185c"
     },
     {
       "path": "rag-injection/rag-001-poisoned-document.yaml",
@@ -803,5 +803,5 @@
       "sha256": "9c89095596414e760941d2a6e21c950649e3bad6a2f77d633f092fd1e24b470b"
     }
   ],
-  "digest": "022f452f269ea4318ffdc75a90c9164216caa1560040f4b643320b441a563aed"
+  "digest": "931989523eba40ce6690f590c08476c692be006f59722235fa9961f964463687"
 }
