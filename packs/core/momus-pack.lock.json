@@ -456,11 +456,11 @@
     },
     {
       "path": "misinformation/mi-001-confident-fabrication.yaml",
-      "sha256": "f621b2b96d67466a637a51cff274a272e9a70cfe216d969b1042015ea0d271cf"
+      "sha256": "f1e9d46275ea6bccbcf45dbe667ef45e7147fa3b9119c4cebbbc1d39e734bb8e"
     },
     {
       "path": "misinformation/mi-002-fake-citation.yaml",
-      "sha256": "65c9691858ffc51304136cb38f8985a34da3f23aa9ea611f366bfc597be60565"
+      "sha256": "23f688f589ac5bf4d23e7cf9e9e9f0585bd00dfb12959fc31a704a5bf0195d2a"
     },
     {
       "path": "misinformation/mi-003-safety-guidance-bypass.yaml",
@@ -468,51 +468,51 @@
     },
     {
       "path": "misinformation/mi-004-fabricated-statistic.yaml",
-      "sha256": "87090aa2d62b54bb81bb2d976a406f72c19f7ddf16263c28fa64fdfa86fd85e8"
+      "sha256": "13897afec79b7c40c90817c27894a82ae25ccfecd603a6380b362caffdcb5da5"
     },
     {
       "path": "misinformation/mi-005-false-attribution.yaml",
-      "sha256": "9582f8198e6afd515a6442ef917334bd46db5977990d1787499f3b06c580deb7"
+      "sha256": "38b2f4d520515b053fda69194ace3dfe7e621151a4469b524f9c6cb7e8252393"
     },
     {
       "path": "misinformation/mi-006-conspiracy-amplification.yaml",
-      "sha256": "30d50a9133023074c093f7933c0aa59f0a5d0cd67d7583e785e2b993e58cee45"
+      "sha256": "d3f0b4e10be548fe52101c997132415ec90f2c605e004ea336decde1e874097b"
     },
     {
       "path": "misinformation/mi-007-fake-legal-precedent.yaml",
-      "sha256": "43a4c646246f9ec97e6c1fd47666dbad0ad6b470430ab9f6c38670025a14a41c"
+      "sha256": "5a293e6b0183c5c77f963a362df1188f144e70e38efd027171504d949f550663"
     },
     {
       "path": "misinformation/mi-008-fabricated-medical-dosage.yaml",
-      "sha256": "7675f2d154fd75c73ede22783aadafef64abb2f73cf595e716a5c4800a682371"
+      "sha256": "80ee6cf5b0acd05d4c4453f9455e981c6f8c08f1872dd4c34624b38f0495d833"
     },
     {
       "path": "misinformation/mi-009-made-up-financial-figure.yaml",
-      "sha256": "4c800c4f234da8f013bd195baff7c3771060670dfead184f31e9c32bc36d412b"
+      "sha256": "6b70ef1a42733dacb6c132f14fbf2307198224f9af38bca8df58446c49f370dc"
     },
     {
       "path": "misinformation/mi-010-fake-cve.yaml",
-      "sha256": "0bdf05117f7fb329b8b066a7dd83d4f54f844dbc24f1a1a319abd3ce3c420d6c"
+      "sha256": "2e3ca2c3f8d5108ee900ebfaf32fa16575067e7cf5f6710021387df6f49a7f1d"
     },
     {
       "path": "misinformation/mi-011-fabricated-historical-event.yaml",
-      "sha256": "121f5f73521ed34d6404b2fb095efdcbe93763ce9ce650704b3363d2a7e3b4ce"
+      "sha256": "401d8a946b8ac94ca47bec6935d67e6ee6094c7f966c5b8f814809070bcb417c"
     },
     {
       "path": "misinformation/mi-012-wrong-safety-threshold.yaml",
-      "sha256": "43478623b56d353efd677ba96004348819bfbac175f847488d31a91d0b0f9372"
+      "sha256": "1a1f47f7280b784246927940ded02000e7b50792daaf557cb51b1362ed0d3763"
     },
     {
       "path": "package-hallucination/ph-001-hallucinated-npm-package.yaml",
-      "sha256": "39841137a92443b438970d8885c0e0d26a7ae247303b086c094ed56793018486"
+      "sha256": "c859e1bd524a4fd2d65f30d115203e545711b558411064170b5a8825d6f07135"
     },
     {
       "path": "package-hallucination/ph-002-hallucinated-pip-package.yaml",
-      "sha256": "00a886604f4287d1f269177a1a1ff2a08be555f131687b9f562f648268776276"
+      "sha256": "ab77eb75a24756417adce1800e2250425b606de83e55b75bbd5b0ac2644b7a67"
     },
     {
       "path": "package-hallucination/ph-003-nonexistent-api-method.yaml",
-      "sha256": "5f41dd15d2272c05785b2d38f95680af2803980293cc4e3e1c28aec6332c8aff"
+      "sha256": "5034815f7ec3b2eb9004d0c9c995ac21cc35871463a0f772317e52c3b24f72db"
     },
     {
       "path": "package-hallucination/ph-004-made-up-cli-flag.yaml",
@@ -803,5 +803,5 @@
       "sha256": "9c89095596414e760941d2a6e21c950649e3bad6a2f77d633f092fd1e24b470b"
     }
   ],
-  "digest": "931989523eba40ce6690f590c08476c692be006f59722235fa9961f964463687"
+  "digest": "22f5d517a48652d2d108b2b70056067669ca0239c420a732aae9234d9a1d5594"
 }
