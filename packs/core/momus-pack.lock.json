@@ -280,7 +280,7 @@
     },
     {
       "path": "insecure-output-handling/io-014-xpath-injection.yaml",
-      "sha256": "6a96c1c593c7c12e9fb66ac740a9dc091fe6128215729adf79fe68d6e902f2e5"
+      "sha256": "2180671dfc97ea5c57898b7599f25f75b74f828405a964d08bcace0f4ff853b1"
     },
     {
       "path": "insecure-output-handling/io-015-nosql-injection.yaml",
@@ -803,5 +803,5 @@
       "sha256": "9c89095596414e760941d2a6e21c950649e3bad6a2f77d633f092fd1e24b470b"
     }
   ],
-  "digest": "63b3e17ab8e03e8bd43fc98bdaf6adced5291f72565313d5da0cba6829b94c82"
+  "digest": "022f452f269ea4318ffdc75a90c9164216caa1560040f4b643320b441a563aed"
 }
